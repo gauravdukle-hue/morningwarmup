@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Morning Market Warmup — April 19, 2026</title>
+<title>Morning Market Warmup — April 22, 2026</title>
 <style>
   :root {
     --bg: #0d1117; --bg2: #161b22; --bg3: #21262d;
@@ -31,8 +31,9 @@
   .hl-text { font-size: 13px; font-weight: 500; }
   .hl-tag { display: inline-block; font-size: 10px; padding: 1px 7px; border-radius: 10px; font-weight: 600; margin-top: 4px; }
   .tag-bull { background: #238636; color: #3fb950; }
-  .tag-bear { background: #8b0000; color: #f85149; }
+  .tag-bear { background: #8b000044; color: #f85149; border: 1px solid #f8514940; }
   .tag-neutral { background: #333; color: var(--muted); }
+  .tag-watch { background: #d2992220; color: var(--yellow); border: 1px solid #d2992240; }
   .market-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--border); }
   .market-row:last-child { border-bottom: none; }
   .market-name { font-size: 13px; font-weight: 600; }
@@ -48,8 +49,9 @@
   .story-impact { display: inline-block; margin-top: 8px; font-size: 11px; color: var(--yellow); background: #d2992220; border: 1px solid #d2992240; border-radius: 6px; padding: 2px 9px; }
   .etable { width: 100%; border-collapse: collapse; }
   .etable th { text-align: left; font-size: 10px; text-transform: uppercase; letter-spacing: .07em; color: var(--muted); padding: 6px 8px; border-bottom: 1px solid var(--border); }
-  .etable td { padding: 9px 8px; font-size: 13px; border-bottom: 1px solid #21262d; }
+  .etable td { padding: 9px 8px; font-size: 13px; border-bottom: 1px solid #21262d; vertical-align: middle; }
   .etable tr:last-child td { border-bottom: none; }
+  .etable tr:hover td { background: #21262d55; }
   .ticker { font-weight: 700; color: var(--accent); font-family: monospace; }
   .est { color: var(--muted); font-size: 12px; }
   .star { color: var(--yellow); }
@@ -60,20 +62,29 @@
   .stbl td:first-child { text-align: left; font-weight: 600; font-size: 13px; }
   .stbl tr:last-child td { border-bottom: none; }
   .bar-wrap { display: flex; align-items: center; justify-content: flex-end; gap: 6px; }
-  .bar { height: 6px; border-radius: 3px; background: var(--green); display: inline-block; }
+  .bar { height: 6px; border-radius: 3px; background: var(--green); display: inline-block; min-width: 2px; }
   .eco-row { display: flex; align-items: flex-start; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--border); }
   .eco-row:last-child { border-bottom: none; }
   .eco-date { font-size: 11px; font-weight: 700; color: var(--accent); background: #1f6feb22; border-radius: 6px; padding: 3px 8px; flex-shrink: 0; min-width: 60px; text-align: center; }
   .eco-event { font-size: 13px; font-weight: 500; }
   .eco-sub { font-size: 11px; color: var(--muted); margin-top: 2px; }
-  .impact-high { color: var(--red); font-size: 10px; font-weight: 700; }
-  .impact-med { color: var(--yellow); font-size: 10px; font-weight: 700; }
+  .impact-high { color: var(--red); font-size: 10px; font-weight: 700; border: 1px solid #f8514940; background: #f8514910; border-radius: 4px; padding: 1px 5px; }
+  .impact-med { color: var(--yellow); font-size: 10px; font-weight: 700; border: 1px solid #d2992240; background: #d2992210; border-radius: 4px; padding: 1px 5px; }
   .event-item { padding: 10px 0; border-bottom: 1px solid var(--border); display: flex; gap: 10px; align-items: flex-start; }
   .event-item:last-child { border-bottom: none; }
   .event-icon { font-size: 18px; flex-shrink: 0; }
   .event-title { font-size: 13px; font-weight: 600; }
   .event-sub { font-size: 12px; color: var(--muted); }
-  .section-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; color: var(--purple); margin-bottom: 4px; }
+  .pill { display: inline-flex; align-items: center; gap: 4px; font-size: 11px; padding: 2px 9px; border-radius: 20px; font-weight: 600; }
+  .pill-green { background: #23863633; color: var(--green); border: 1px solid #23863650; }
+  .pill-red { background: #8b000033; color: var(--red); border: 1px solid #f8514940; }
+  .pill-orange { background: #ffa65720; color: var(--orange); border: 1px solid #ffa65740; }
+  .section-divider { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; color: var(--accent); border-bottom: 1px solid var(--border); padding-bottom: 8px; margin: 28px 0 16px; }
+  .futures-strip { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 20px; }
+  .future-chip { background: var(--bg2); border: 1px solid var(--border); border-radius: 8px; padding: 10px 16px; flex: 1; min-width: 140px; }
+  .future-chip .label { font-size: 11px; color: var(--muted); }
+  .future-chip .val { font-size: 17px; font-weight: 700; margin-top: 2px; }
+  .future-chip .chg { font-size: 12px; margin-top: 1px; }
   .footer { text-align: center; color: var(--muted); font-size: 11px; margin-top: 30px; padding-top: 16px; border-top: 1px solid var(--border); }
 </style>
 </head>
@@ -82,275 +93,703 @@
 <div class="header">
   <div class="header-left">
     <h1>📈 Morning Market Warmup</h1>
-    <div class="sub">Sunday Evening Edition · April 19, 2026 · 5:00 PM CT</div>
+    <div class="sub">Wednesday Morning Edition &middot; April 22, 2026 &middot; 7:30 AM CT</div>
   </div>
-  <span class="badge">⚡ LIVE DATA</span>
+  <span class="badge">⚡ LIVE REPORT</span>
 </div>
 
-<!-- MARKET SNAPSHOT -->
-<div class="grid-3">
-  <div class="card">
-    <div class="card-title"><span class="dot" style="background:var(--green)"></span>US Indices</div>
-    <div class="market-row"><div><div class="market-name">S&amp;P 500</div><div class="market-sub">8th ATH of 2026</div></div><div><div class="market-price up">All-Time High</div></div></div>
-    <div class="market-row"><div><div class="market-name">Nasdaq Comp.</div><div class="market-sub">2nd record of 2026</div></div><div><div class="market-price up">All-Time High</div></div></div>
-    <div class="market-row"><div><div class="market-name">Russell 2000</div><div class="market-sub">Small caps</div></div><div><div class="market-price up">All-Time High</div></div></div>
+<!-- FUTURES STRIP -->
+<div class="futures-strip">
+  <div class="future-chip">
+    <div class="label">S&amp;P 500 Futures</div>
+    <div class="val up">+0.55%</div>
+    <div class="chg up">▲ Iran ceasefire extended</div>
   </div>
-  <div class="card">
-    <div class="card-title"><span class="dot" style="background:var(--red)"></span>Commodities</div>
-    <div class="market-row"><div><div class="market-name">WTI Crude</div><div class="market-sub">Hormuz reopened</div></div><div><div class="market-price down">~$91/bbl</div></div></div>
-    <div class="market-row"><div><div class="market-name">Brent Crude</div><div class="market-sub">Worst week since Apr '20</div></div><div><div class="market-price down">~$95/bbl</div></div></div>
-    <div class="market-row"><div><div class="market-name">Oil Weekly</div><div class="market-sub">Blockade lifted</div></div><div><div class="market-price down">▼ 16% / wk</div></div></div>
+  <div class="future-chip">
+    <div class="label">Nasdaq 100 Futures</div>
+    <div class="val up">+0.73%</div>
+    <div class="chg up">▲ Tesla earnings tonight</div>
   </div>
-  <div class="card">
-    <div class="card-title"><span class="dot" style="background:var(--yellow)"></span>Q1 Earnings Pulse</div>
-    <div class="market-row"><div><div class="market-name">EPS Beat Rate</div><div class="market-sub">vs 78% avg</div></div><div><div class="market-price up">88%</div></div></div>
-    <div class="market-row"><div><div class="market-name">Q1 EPS Growth</div><div class="market-sub">6th consec. double-digit qtr</div></div><div><div class="market-price up">+12.5%</div></div></div>
-    <div class="market-row"><div><div class="market-name">Beat Margin</div><div class="market-sub">vs 7.3% avg</div></div><div><div class="market-price up">+10.8%</div></div></div>
+  <div class="future-chip">
+    <div class="label">Dow Futures</div>
+    <div class="val up">+207 pts</div>
+    <div class="chg up">▲ +0.44%</div>
+  </div>
+  <div class="future-chip">
+    <div class="label">S&amp;P 500 (Tues Close)</div>
+    <div class="val">7,064.01</div>
+    <div class="chg down">▼ −0.63%</div>
+  </div>
+  <div class="future-chip">
+    <div class="label">Nasdaq (Tues Close)</div>
+    <div class="val">24,259.96</div>
+    <div class="chg down">▼ −0.59%</div>
+  </div>
+  <div class="future-chip">
+    <div class="label">Dow (Tues Close)</div>
+    <div class="val">49,149.38</div>
+    <div class="chg down">▼ −293 pts</div>
   </div>
 </div>
 
 <!-- FLASH HEADLINES -->
 <div class="grid-full">
   <div class="card">
-    <div class="card-title"><span class="dot"></span>⚡ Flash Headlines — What's Moving Markets</div>
-    <div class="headline-item"><div class="hl-icon">🕊️</div><div><div class="hl-text">Iran Opens Strait of Hormuz — Oil crashes 16% in its worst week since April 2020; Russell 2000 hits new all-time high on risk-on surge</div><span class="hl-tag tag-bull">BULLISH</span></div></div>
-    <div class="headline-item"><div class="hl-icon">🏦</div><div><div class="hl-text">Bank Earnings Mixed: JPMorgan +13% profits but lower on NIM pressure; Citi outperforms on trading; Wells Fargo misses net interest income</div><span class="hl-tag tag-neutral">MIXED</span></div></div>
-    <div class="headline-item"><div class="hl-icon">📺</div><div><div class="hl-text">Netflix tumbles ~10% on Q1 miss — EPS $1.40 vs $1.49 est; revenue $3.19B vs $3.28B est; biggest drop since October</div><span class="hl-tag tag-bear">BEARISH</span></div></div>
-    <div class="headline-item"><div class="hl-icon">🚢</div><div><div class="hl-text">Cruise stocks surge 9%+ (RCL, NCLH, CCL) as Hormuz reopens — Consumer Discretionary becomes Friday's best sector, up 2.5%</div><span class="hl-tag tag-bull">BULLISH</span></div></div>
-    <div class="headline-item"><div class="hl-icon">🤖</div><div><div class="hl-text">BNP Paribas: AI boom could grow US GDP 10%+ by 2034; hyperscalers setting $470B+ capex for 2026 — biggest AI investment year ever</div><span class="hl-tag tag-bull">BULLISH</span></div></div>
-    <div class="headline-item"><div class="hl-icon">⚠️</div><div><div class="hl-text">Jamie Dimon warns of "significant risks" to US economy even as JPMorgan posts record profits — geopolitical tail risks remain elevated</div><span class="hl-tag tag-neutral">WATCH</span></div></div>
-    <div class="headline-item"><div class="hl-icon">📊</div><div><div class="hl-text">S&amp;P 500 hits 8th ATH of 2026 but breadth lags price — breakout not yet fully confirmed; needs broader participation to sustain</div><span class="hl-tag tag-neutral">WATCH</span></div></div>
+    <div class="card-title"><span class="dot"></span>⚡ Flash Headlines — Market Movers</div>
+    <div class="headline-item">
+      <div class="hl-icon">☮️</div>
+      <div>
+        <div class="hl-text">Trump extends US–Iran ceasefire past Wednesday's deadline — futures pop on geopolitical relief, S&amp;P futures +0.55%</div>
+        <div><span class="hl-tag tag-bull">BULL</span></div>
+      </div>
+    </div>
+    <div class="headline-item">
+      <div class="hl-icon">🚗</div>
+      <div>
+        <div class="hl-text">Tesla (TSLA) reports Q1 earnings TONIGHT after market close — first Mag 7 print of season; EPS est $0.36, rev $22.3B; deliveries +6% YoY but −14% QoQ</div>
+        <div><span class="hl-tag tag-watch">KEY TONIGHT</span></div>
+      </div>
+    </div>
+    <div class="headline-item">
+      <div class="hl-icon">💊</div>
+      <div>
+        <div class="hl-text">UnitedHealth (UNH) surges ~9% after Q1 EPS of $7.23 vs $6.57 estimate — beat on revenue $111.72B vs $109.57B, raises FY2026 outlook</div>
+        <div><span class="hl-tag tag-bull">BULL</span></div>
+      </div>
+    </div>
+    <div class="headline-item">
+      <div class="hl-icon">🤖</div>
+      <div>
+        <div class="hl-text">ServiceNow (NOW) reports Q1 tonight — AI boom driving 21% YoY subscription revenue growth; cRPO visibility key metric</div>
+        <div><span class="hl-tag tag-watch">WATCH</span></div>
+      </div>
+    </div>
+    <div class="headline-item">
+      <div class="hl-icon">💻</div>
+      <div>
+        <div class="hl-text">IBM reports Q1 tonight (AMC) — EPS est $1.78 (+11.3% YoY); has beaten Wall Street in each of the last 4 quarters; AI consulting demand in focus</div>
+        <div><span class="hl-tag tag-watch">WATCH</span></div>
+      </div>
+    </div>
+    <div class="headline-item">
+      <div class="hl-icon">✈️</div>
+      <div>
+        <div class="hl-text">Boeing (BA) reports Q1 this morning — 149 net orders vs Airbus 114; CEO says Iran war has not disrupted delivery schedules</div>
+        <div><span class="hl-tag tag-watch">WATCH</span></div>
+      </div>
+    </div>
+    <div class="headline-item">
+      <div class="hl-icon">📊</div>
+      <div>
+        <div class="hl-text">Q1 2026 earnings season: 88% of S&amp;P 500 reporters beating EPS (above 78% 5-yr avg); blended growth rate 13.2% — 6th straight double-digit quarter</div>
+        <div><span class="hl-tag tag-bull">BULL</span></div>
+      </div>
+    </div>
+    <div class="headline-item">
+      <div class="hl-icon">🔵</div>
+      <div>
+        <div class="hl-text">HSBC upgrades Intel (INTC) to Buy — projects server CPU revenue of $14.2B in Q2 (+9% above consensus); foundry progress also cited</div>
+        <div><span class="hl-tag tag-bull">BULL</span></div>
+      </div>
+    </div>
+    <div class="headline-item">
+      <div class="hl-icon">📡</div>
+      <div>
+        <div class="hl-text">Arista Networks (ANET) +3.3% — doubles AI networking revenue target to $3.25B for 2026; Susquehanna raises price target to $200</div>
+        <div><span class="hl-tag tag-bull">BULL</span></div>
+      </div>
+    </div>
+    <div class="headline-item">
+      <div class="hl-icon">📉</div>
+      <div>
+        <div class="hl-text">US Dollar Index (DXY) near ~98.37 — multi-year low; trade policy uncertainty and geopolitical risk pressuring dollar; gold and EM benefiting</div>
+        <div><span class="hl-tag tag-bear">BEAR USD</span></div>
+      </div>
+    </div>
+    <div class="headline-item">
+      <div class="hl-icon">🏛️</div>
+      <div>
+        <div class="hl-text">Kevin Warsh Fed Chair confirmation hearing — says Fed "must stay in its lane" and remain independent from political influence</div>
+        <div><span class="hl-tag tag-neutral">MACRO</span></div>
+      </div>
+    </div>
+    <div class="headline-item">
+      <div class="hl-icon">📦</div>
+      <div>
+        <div class="hl-text">Big Tech earnings avalanche next week: Microsoft &amp; Meta (Apr 29), Amazon &amp; Alphabet (Apr 29+); $470B+ combined capex — AI ROI the defining question</div>
+        <div><span class="hl-tag tag-watch">NEXT WEEK</span></div>
+      </div>
+    </div>
   </div>
 </div>
 
 <!-- DEEP DIVE -->
+<div class="section-divider">📰 Deep Dive — Major Market Stories</div>
 <div class="grid-full">
   <div class="card">
-    <div class="card-title"><span class="dot" style="background:var(--purple)"></span>🔬 Deep Dive — Major Market-Moving Stories</div>
-
     <div class="story">
-      <div class="story-header"><div class="story-num">1</div><div class="story-title">Strait of Hormuz Reopens — Largest Geopolitical Relief in Years</div></div>
-      <div class="story-body">After the US military blockaded the Strait of Hormuz pushing WTI briefly above $100/bbl, Iran announced Friday it was reopening the critical waterway after preliminary US-Iran negotiations in Islamabad. Oil suffered its worst weekly decline since April 2020, falling 16%. The ripple effects were dramatic — small caps hit all-time highs, cruise and travel names surged 9%+, and inflation fears eased sharply. A second round of US-Iran talks is being considered imminently. This is the biggest macro risk-off reversal of the year.</div>
-      <span class="story-impact">⚡ Impact: OIL · TRAVEL · DEFENSE · INFLATION EXPECTATIONS · RATE OUTLOOK</span>
+      <div class="story-header">
+        <div class="story-num">1</div>
+        <div class="story-title">☮️ Iran Ceasefire Extended — Geopolitical Risk Recedes (For Now)</div>
+      </div>
+      <div class="story-body">
+        President Trump extended the US-Iran ceasefire beyond Wednesday's original expiration, sending futures sharply higher overnight. Tuesday's session fell 0.63% on the S&amp;P 500 as investors grew nervous that a peace deal would not be struck — reports surfaced that VP JD Vance's trip to join negotiations was paused due to a lack of commitment from Tehran. Shortly after the close, Trump announced the extension, immediately reversing futures. The ceasefire remains fragile. Iran must submit a formal proposal, and a breakdown could trigger a sharp oil price spike and risk-off move. Defense stocks may see modest pressure on de-escalation. The Strait of Hormuz risk premium in oil is easing — watch WTI direction at the open as the key barometer.
+      </div>
+      <div class="story-impact">⚡ Market Impact: HIGH — Watch oil prices + VIX above 20 as warning signs of renewed risk-off</div>
     </div>
 
     <div class="story">
-      <div class="story-header"><div class="story-num">2</div><div class="story-title">Big Bank Q1 Earnings: Trading Wins, Lending Margin Under Pressure</div></div>
-      <div class="story-body">Q1 2026 bank results revealed a consistent theme: markets businesses (trading, dealmaking, investment banking) carried results, while net interest margin (NIM) remains under pressure. JPMorgan reported a 13% profit rise but sold off as spread income disappointed. Citigroup beat on bond trading, equities, and overall revenue — the clearest winner. Bank of America and Wells Fargo lagged, with Wells taking the biggest hit after missing on NII. The divergence between fee-based and spread-based income models is the key read-through for the sector.</div>
-      <span class="story-impact">⚡ Impact: JPM · C · WFC · BAC · GS · MS · XLF FINANCIALS</span>
+      <div class="story-header">
+        <div class="story-num">2</div>
+        <div class="story-title">🚗 Tesla Q1 2026 Earnings Tonight — The Mag 7 Starting Gun</div>
+      </div>
+      <div class="story-body">
+        Tesla is the first Magnificent Seven company to report Q1 results tonight after the close, making it the most closely watched print of the early earnings season. Q1 deliveries of 358,023 vehicles fell 14% quarter-over-quarter but rose 6% year-over-year. Analysts expect Q1 revenue of $22.3B (+15.5% YoY) and EPS of $0.36 (+33.3% YoY). Investors will focus heavily on: (1) gross margin recovery, (2) robotaxi and autonomous driving timeline updates, (3) energy storage business trajectory, and (4) whether management provides or withdraws FY2026 guidance. UBS flags concerns around EV demand headwinds, energy storage softness, and slower-than-expected Optimus progress. Tesla results will set the tone for growth stocks heading into the super-week of April 27–May 1 when Microsoft, Meta, Amazon, and Alphabet all report.
+      </div>
+      <div class="story-impact">⚡ Market Impact: VERY HIGH — Tesla earnings are a proxy for EV, AI, and Mag 7 sentiment; miss on margins could pressure Nasdaq</div>
     </div>
 
     <div class="story">
-      <div class="story-header"><div class="story-num">3</div><div class="story-title">AI Mega-Capex Cycle: $470B+ in 2026 — This Week Is the Proof Point</div></div>
-      <div class="story-body">The four hyperscalers (Microsoft, Meta, Alphabet, Amazon) are projected to spend over $470 billion on AI infrastructure in 2026, up from ~$350B in 2025. Amazon alone guided $125B+ in capex. This week delivers the defining earnings reports of Q1 season: Tesla Monday, Meta and Microsoft Wednesday, Alphabet Thursday. The market's central question: are these massive AI investments beginning to generate measurable revenue returns, or is the payoff still years away? BNP Paribas economists project US GDP could be 10%+ higher by 2034 from AI-driven productivity.</div>
-      <span class="story-impact">⚡ Impact: MSFT · META · GOOGL · AMZN · TSLA · NVDA · SMH SEMIS</span>
+      <div class="story-header">
+        <div class="story-num">3</div>
+        <div class="story-title">🏢 Mega-Cap AI Earnings Next Week — The Super Bowl of 2026</div>
+      </div>
+      <div class="story-body">
+        The most consequential earnings stretch of 2026 arrives next week. Microsoft and Meta both report April 29, joined by Amazon and Alphabet. The four hyperscalers combined are expected to spend over $470 billion on capex in 2026, up from $350B in 2025. Microsoft: expected $3.88 EPS on $80.2B revenue (+20.1%/+15.2% YoY); Azure growth and AI Copilot adoption are key. Meta: $8.15 EPS on $58.4B revenue; expects $115–135B capex for 2026 as Zuckerberg pursues "personal superintelligence." Amazon: Q1 results due April 29 — AWS grew 24% YoY last quarter; $200B capex planned in 2026. The Nasdaq closed at record territory heading into this stretch. The central investor question: when does the AI infrastructure build-out start generating measurable ROI?
+      </div>
+      <div class="story-impact">⚡ Market Impact: VERY HIGH — Next week's prints will define Q2 market direction; any capex disappointment could trigger rotation</div>
     </div>
 
     <div class="story">
-      <div class="story-header"><div class="story-num">4</div><div class="story-title">Q1 2026 Earnings Season — Strongest Beat Rate in Years</div></div>
-      <div class="story-body">With 10% of S&amp;P 500 having reported, 88% have beaten EPS estimates — well above the 5-year average of 78% and 10-year average of 76%. The aggregate surprise is 10.8% above estimates vs the 7.3% historical average. FactSet projects Q1 marks the 6th consecutive quarter of double-digit EPS growth for the index. All 11 sectors are projected to show year-over-year revenue growth, led by Information Technology, Communication Services, and Financials. This is tracking as one of the strongest earnings seasons in recent history.</div>
-      <span class="story-impact">⚡ Impact: BROAD MARKET VALUATIONS · P/E MULTIPLES · FORWARD GUIDANCE</span>
+      <div class="story-header">
+        <div class="story-num">4</div>
+        <div class="story-title">💊 UnitedHealth Q1 Beat — Managed Care Sector Relief</div>
+      </div>
+      <div class="story-body">
+        UnitedHealth surged over 9% after reporting Q1 adjusted EPS of $7.23 vs $6.57 expected — a 10% beat. Revenue of $111.72B also topped the $109.57B estimate. The critical metric was the Medical Benefit Ratio (MCR): it improved in the quarter, signaling the company is regaining control of surging medical costs that have plagued the managed care sector. Management also raised its full-year 2026 earnings outlook. This is a significant relief trade for health insurers, which had been under pressure from cost inflation. Watch CVS/Aetna, Cigna, and Humana for sympathy moves. Health Care sector may see a broad rotation inward.
+      </div>
+      <div class="story-impact">⚡ Market Impact: HIGH — Signals medical cost normalization; positive for entire managed care industry</div>
+    </div>
+
+    <div class="story">
+      <div class="story-header">
+        <div class="story-num">5</div>
+        <div class="story-title">📊 Q1 Earnings Season: Record Beat Rate, Muted Stock Reactions</div>
+      </div>
+      <div class="story-body">
+        With 10% of S&amp;P 500 companies having reported, 88% are beating EPS estimates — well above the 5-year average of 78% and the 10-year average of 76%. Companies are reporting earnings 10.8% above estimates on average. The blended Q1 earnings growth rate stands at 13.2%, marking the 6th consecutive quarter of double-digit YoY growth. Information Technology sector is projected to post +45% EPS growth, Materials +24.2%, Financials +15.1%. Full-year 2026 EPS growth projected at 18%; Barclays recently raised its S&P 500 EPS target to $321. However, despite strong beats, post-earnings price moves have averaged -0.2% (vs +1.0% historically) — a sign that expectations are already priced in. Only "whisper beats" will be rewarded; "in-line beats" may disappoint.
+      </div>
+      <div class="story-impact">⚡ Market Impact: MODERATE — High beat rate broadly positive, but bar is high; selective stock picking matters more than sector bets</div>
     </div>
   </div>
 </div>
 
 <!-- EARNINGS THIS WEEK -->
+<div class="section-divider">💰 Earnings Calendar — This Week (Apr 20–25)</div>
 <div class="grid-full">
   <div class="card">
-    <div class="card-title"><span class="dot" style="background:var(--orange)"></span>📅 Earnings Calendar — Week of April 20–24, 2026</div>
+    <div class="card-title"><span class="dot" style="background:var(--yellow)"></span>Q1 2026 Key Reports This Week</div>
     <table class="etable">
-      <thead><tr><th>Day</th><th>Ticker</th><th>Company</th><th>Time</th><th>Watch For</th><th>Priority</th></tr></thead>
+      <thead>
+        <tr>
+          <th>Date</th><th>Ticker</th><th>Company</th><th>Time</th><th>EPS Est.</th><th>Rev Est.</th><th>What to Watch</th><th>Status</th>
+        </tr>
+      </thead>
       <tbody>
-        <tr><td style="color:var(--muted)">Mon 4/20</td><td class="ticker">TSLA</td><td>Tesla</td><td>AMC</td><td>Robotics guidance, EV deliveries, Model S factory conversion</td><td><span class="star">★★★</span></td></tr>
-        <tr><td style="color:var(--muted)">Tue 4/21</td><td class="ticker">ISRG</td><td>Intuitive Surgical</td><td>AMC</td><td>Surgical robot volumes, international expansion</td><td><span class="star">★★</span></td></tr>
-        <tr><td style="color:var(--muted)">Tue 4/21</td><td class="ticker">SAP</td><td>SAP SE</td><td>BMO</td><td>Enterprise software AI adoption, cloud transition</td><td><span class="star">★★</span></td></tr>
-        <tr><td style="color:var(--muted)">Wed 4/22</td><td class="ticker">META</td><td>Meta Platforms</td><td>AMC</td><td>AI ad revenue lift, capex guidance, Avocado frontier model</td><td><span class="star">★★★</span></td></tr>
-        <tr><td style="color:var(--muted)">Wed 4/22</td><td class="ticker">MSFT</td><td>Microsoft</td><td>AMC</td><td>Azure cloud growth %, Copilot monetization, AI revenue line</td><td><span class="star">★★★</span></td></tr>
-        <tr><td style="color:var(--muted)">Wed 4/22</td><td class="ticker">BA</td><td>Boeing</td><td>BMO</td><td>Delivery ramp, cash burn, safety culture progress</td><td><span class="star">★★</span></td></tr>
-        <tr><td style="color:var(--muted)">Wed 4/22</td><td class="ticker">T</td><td>AT&amp;T</td><td>BMO</td><td>Postpaid subscriber adds, fiber broadband growth</td><td><span class="star">★</span></td></tr>
-        <tr><td style="color:var(--muted)">Thu 4/23</td><td class="ticker">GOOGL</td><td>Alphabet</td><td>AMC</td><td>Search revenue vs AI Overviews impact, Google Cloud growth</td><td><span class="star">★★★</span></td></tr>
-        <tr><td style="color:var(--muted)">Thu 4/23</td><td class="ticker">CAT</td><td>Caterpillar</td><td>BMO</td><td>Infrastructure demand, pricing power, global machinery</td><td><span class="star">★★</span></td></tr>
-        <tr><td style="color:var(--muted)">Thu 4/23</td><td class="ticker">UPS</td><td>UPS</td><td>BMO</td><td>Shipping volumes — key economy bellwether</td><td><span class="star">★★</span></td></tr>
-        <tr><td style="color:var(--muted)">Thu 4/23</td><td class="ticker">INTC</td><td>Intel</td><td>AMC</td><td>Foundry progress, margin recovery timeline</td><td><span class="star">★★</span></td></tr>
-        <tr><td style="color:var(--muted)">Fri 4/24</td><td class="ticker">XOM</td><td>Exxon Mobil</td><td>BMO</td><td>Impact of oil price drop on earnings, production outlook</td><td><span class="star">★★</span></td></tr>
-        <tr><td style="color:var(--muted)">Fri 4/24</td><td class="ticker">CVX</td><td>Chevron</td><td>BMO</td><td>Hess acquisition integration, capex plans</td><td><span class="star">★★</span></td></tr>
+        <tr>
+          <td>Mon Apr 20</td><td class="ticker">INTC</td><td>Intel</td><td class="est">AMC</td><td>—</td><td>—</td><td>Foundry progress, AI chip demand, cost cuts</td><td><span class="pill pill-green">✓ Reported</span></td>
+        </tr>
+        <tr>
+          <td>Tue Apr 21</td><td class="ticker">GE</td><td>GE Aerospace</td><td class="est">BMO</td><td>—</td><td>—</td><td>Defense demand, supply chain margins</td><td><span class="pill pill-green">✓ Reported</span></td>
+        </tr>
+        <tr>
+          <td>Tue Apr 21</td><td class="ticker">UNH</td><td>UnitedHealth</td><td class="est">BMO</td><td>$6.57</td><td>$109.6B</td><td>Medical costs, MCR ratio — BEAT: $7.23 EPS</td><td><span class="pill pill-green">✓ Beat +9%</span></td>
+        </tr>
+        <tr style="background:#58a6ff08">
+          <td><strong>Wed Apr 22</strong></td><td class="ticker">BA</td><td>Boeing</td><td class="est">BMO</td><td>—</td><td>—</td><td>Net orders, margins, supply chain, defense outlook</td><td><span class="pill pill-orange">🔔 This AM</span></td>
+        </tr>
+        <tr style="background:#58a6ff08">
+          <td><strong>Wed Apr 22</strong></td><td class="ticker">TSLA</td><td>Tesla</td><td class="est">AMC</td><td>$0.36</td><td>$22.3B</td><td>Margins, robotaxi timeline, energy storage, FY guide</td><td><span class="pill pill-orange">🔔 TONIGHT</span></td>
+        </tr>
+        <tr style="background:#58a6ff08">
+          <td><strong>Wed Apr 22</strong></td><td class="ticker">NOW</td><td>ServiceNow</td><td class="est">AMC</td><td>—</td><td>—</td><td>AI subscription growth, cRPO, enterprise demand</td><td><span class="pill pill-orange">🔔 TONIGHT</span></td>
+        </tr>
+        <tr style="background:#58a6ff08">
+          <td><strong>Wed Apr 22</strong></td><td class="ticker">IBM</td><td>IBM</td><td class="est">AMC</td><td>$1.78</td><td>—</td><td>AI consulting, cloud hybrid, 4 consecutive EPS beats</td><td><span class="pill pill-orange">🔔 TONIGHT</span></td>
+        </tr>
+        <tr>
+          <td>Thu Apr 24</td><td class="ticker">RTX</td><td>RTX Corp</td><td class="est">BMO</td><td>—</td><td>—</td><td>Defense bookings, Iran conflict demand, $213M Navy contract</td><td><span class="pill" style="background:#21262d;color:var(--muted);border:1px solid var(--border)">Upcoming</span></td>
+        </tr>
+        <tr>
+          <td>Thu Apr 24</td><td class="ticker">MMM</td><td>3M</td><td class="est">BMO</td><td>—</td><td>—</td><td>Industrial demand, FY26 guide range $8.50–$8.70</td><td><span class="pill" style="background:#21262d;color:var(--muted);border:1px solid var(--border)">Upcoming</span></td>
+        </tr>
       </tbody>
     </table>
-    <div style="margin-top:10px; font-size:11px; color:var(--muted)">★★★ = High market-moving potential · BMO = Before Market Open · AMC = After Market Close</div>
   </div>
 </div>
 
-<!-- ECO CALENDAR + KEY EVENTS -->
+<!-- UPCOMING EARNINGS NEXT WEEK -->
+<div class="section-divider">🚀 Earnings on Deck — Week of Apr 27 (Big Tech Week)</div>
+<div class="grid-full">
+  <div class="card">
+    <div class="card-title"><span class="dot" style="background:var(--purple)"></span>Mag 7 and Hyperscaler Reports — Most Important Earnings Week of 2026</div>
+    <table class="etable">
+      <thead>
+        <tr><th>Date</th><th>Ticker</th><th>Company</th><th>EPS Est.</th><th>Rev Est.</th><th>Key Focus</th><th>Mkt Cap</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Wed Apr 29</td><td class="ticker">MSFT</td><td>Microsoft</td><td>$3.88</td><td>$80.2B</td><td>Azure AI growth, Copilot adoption, $99B capex FY26</td><td>~$3T</td>
+        </tr>
+        <tr>
+          <td>Wed Apr 29</td><td class="ticker">META</td><td>Meta Platforms</td><td>$8.15</td><td>$58.4B</td><td>Ad revenue ROI on AI, $115–135B capex 2026</td><td>~$1.7T</td>
+        </tr>
+        <tr>
+          <td>Wed Apr 29</td><td class="ticker">AMZN</td><td>Amazon</td><td>—</td><td>—</td><td>AWS (24% YoY last Q), advertising, $200B capex plan</td><td>~$2.3T</td>
+        </tr>
+        <tr>
+          <td>Week of Apr 28</td><td class="ticker">GOOGL</td><td>Alphabet</td><td>—</td><td>—</td><td>Search AI integration, YouTube, Google Cloud momentum</td><td>~$2T</td>
+        </tr>
+        <tr>
+          <td>Week of May 1</td><td class="ticker">AAPL</td><td>Apple</td><td>—</td><td>—</td><td>iPhone cycle, India manufacturing shift, Apple Intelligence</td><td>~$3.5T</td>
+        </tr>
+        <tr>
+          <td>Week of May 1</td><td class="ticker">NVDA</td><td>Nvidia</td><td>—</td><td>—</td><td>Blackwell ramp, data center demand, export control impacts</td><td>~$2.8T</td>
+        </tr>
+      </tbody>
+    </table>
+    <div style="margin-top:12px;font-size:12px;color:var(--muted)">
+      💡 The 4 hyperscalers (MSFT, META, GOOGL, AMZN) are projected to spend $470B+ in combined capex in 2026 — up from $350B in 2025. AI ROI visibility is the single most important theme investors will scrutinize.
+    </div>
+  </div>
+</div>
+
+<!-- IMPORTANT EVENTS -->
+<div class="section-divider">🎯 Important Events That Could Move Markets</div>
 <div class="grid">
   <div class="card">
-    <div class="card-title"><span class="dot" style="background:var(--yellow)"></span>🗓️ Economic Calendar — Week Ahead</div>
-    <div class="eco-row"><div class="eco-date">Mon<br>4/21</div><div><div class="eco-event">Chicago Fed Activity Index</div><div class="eco-sub">Leading economic health indicator</div><div class="impact-med">●● MEDIUM</div></div></div>
-    <div class="eco-row"><div class="eco-date">Tue<br>4/22</div><div><div class="eco-event">S&amp;P Global Flash PMI (Mfg + Services)</div><div class="eco-sub">First look at April business activity — watch for contraction signals</div><div class="impact-high">●●● HIGH IMPACT</div></div></div>
-    <div class="eco-row"><div class="eco-date">Tue<br>4/22</div><div><div class="eco-event">Richmond Fed Manufacturing</div><div class="eco-sub">Regional manufacturing survey, capex intentions</div><div class="impact-med">●● MEDIUM</div></div></div>
-    <div class="eco-row"><div class="eco-date">Wed<br>4/23</div><div><div class="eco-event">New Home Sales (March)</div><div class="eco-sub">Housing demand; est. ~670K — rate sensitivity indicator</div><div class="impact-med">●● MEDIUM</div></div></div>
-    <div class="eco-row"><div class="eco-date">Thu<br>4/24</div><div><div class="eco-event">Initial Jobless Claims</div><div class="eco-sub">Weekly labor market health — labor resilience key to Fed</div><div class="impact-high">●●● HIGH</div></div></div>
-    <div class="eco-row"><div class="eco-date">Thu<br>4/24</div><div><div class="eco-event">Durable Goods Orders (March)</div><div class="eco-sub">Business investment signal; ex-defense core capex key</div><div class="impact-high">●●● HIGH</div></div></div>
-    <div class="eco-row"><div class="eco-date">Fri<br>4/25</div><div><div class="eco-event">🔴 Core PCE Price Index (March)</div><div class="eco-sub">Fed's preferred inflation gauge — CRITICAL FOR RATE OUTLOOK</div><div class="impact-high">🔴 CRITICAL — MARKET MOVER</div></div></div>
-    <div class="eco-row"><div class="eco-date">Fri<br>4/25</div><div><div class="eco-event">Michigan Consumer Sentiment (Final)</div><div class="eco-sub">Inflation expectations component highly watched</div><div class="impact-med">●● MEDIUM</div></div></div>
-  </div>
-
-  <div class="card">
-    <div class="card-title"><span class="dot" style="background:var(--red)"></span>⚠️ Key Market Events Coming Up</div>
-    <div class="event-item"><div class="event-icon">🏛️</div><div><div class="event-title">FOMC Meeting — May 6–7, 2026</div><div class="event-sub">No rate change expected. This week's PCE is the key input. Powell presser critical — Dimon's "significant risks" warning adds pressure on guidance language.</div></div></div>
-    <div class="event-item"><div class="event-icon">🤝</div><div><div class="event-title">US-Iran Talks — Islamabad (Imminent)</div><div class="event-sub">Second round expected imminently per White House. Outcome determines whether oil price relief holds or reverses. Biggest binary macro risk of the week.</div></div></div>
-    <div class="event-item"><div class="event-icon">📊</div><div><div class="event-title">Q1 2026 GDP Advance Estimate (Late April)</div><div class="event-sub">First read on Q1 growth. Strong earnings + AI investment support bullish case. Middle East disruptions may weigh on trade components.</div></div></div>
-    <div class="event-item"><div class="event-icon">🍎</div><div><div class="event-title">Apple Earnings — Est. Apr 30, 2026</div><div class="event-sub">AI-Siri overhaul via Google Gemini deal is the headline. EPS est. ~$2.84 (prior beat was +6.2% above est.). iPhone 17 cycle and Services are key.</div></div></div>
-    <div class="event-item"><div class="event-icon">🛒</div><div><div class="event-title">Amazon Earnings — Est. Apr 29, 2026</div><div class="event-sub">AWS cloud growth + $125B capex guide in focus. AI services monetization and retail consumer health are the twin narratives.</div></div></div>
-    <div class="event-item"><div class="event-icon">📦</div><div><div class="event-title">NVIDIA Earnings — Est. Late May 2026</div><div class="event-sub">The ultimate read on AI infrastructure demand. Blackwell chip ramp and H100 successor guidance will drive semiconductor sector direction for months.</div></div></div>
-  </div>
-</div>
-
-<!-- SECTORS -->
-<div class="grid-full">
-  <div class="card">
-    <div class="card-title"><span class="dot" style="background:var(--green)"></span>📊 Sector Performance — Positive Movers (Sorted Best to Worst)</div>
-    <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:16px; margin-top:4px;">
+    <div class="card-title"><span class="dot" style="background:var(--red)"></span>Geopolitical and Policy Events</div>
+    <div class="event-item">
+      <div class="event-icon">☮️</div>
       <div>
-        <div class="section-label">Last 2 Weeks</div>
-        <table class="stbl">
-          <thead><tr><th>Sector</th><th>Return</th></tr></thead>
-          <tbody>
-            <tr><td>Consumer Discret.</td><td><div class="bar-wrap"><div class="bar" style="width:48px"></div><span class="up">+8.4%</span></div></td></tr>
-            <tr><td>Industrials</td><td><div class="bar-wrap"><div class="bar" style="width:36px"></div><span class="up">+6.3%</span></div></td></tr>
-            <tr><td>Comm. Services</td><td><div class="bar-wrap"><div class="bar" style="width:31px"></div><span class="up">+5.5%</span></div></td></tr>
-            <tr><td>Financials</td><td><div class="bar-wrap"><div class="bar" style="width:28px"></div><span class="up">+5.0%</span></div></td></tr>
-            <tr><td>Info Technology</td><td><div class="bar-wrap"><div class="bar" style="width:24px"></div><span class="up">+4.2%</span></div></td></tr>
-            <tr><td>Materials</td><td><div class="bar-wrap"><div class="bar" style="width:18px"></div><span class="up">+3.1%</span></div></td></tr>
-            <tr><td>Real Estate</td><td><div class="bar-wrap"><div class="bar" style="width:14px"></div><span class="up">+2.4%</span></div></td></tr>
-          </tbody>
-        </table>
-      </div>
-      <div>
-        <div class="section-label">Last Month</div>
-        <table class="stbl">
-          <thead><tr><th>Sector</th><th>Return</th></tr></thead>
-          <tbody>
-            <tr><td>Energy</td><td><div class="bar-wrap"><div class="bar" style="width:52px"></div><span class="up">+9.1%</span></div></td></tr>
-            <tr><td>Consumer Discret.</td><td><div class="bar-wrap"><div class="bar" style="width:44px"></div><span class="up">+7.7%</span></div></td></tr>
-            <tr><td>Industrials</td><td><div class="bar-wrap"><div class="bar" style="width:36px"></div><span class="up">+6.3%</span></div></td></tr>
-            <tr><td>Comm. Services</td><td><div class="bar-wrap"><div class="bar" style="width:30px"></div><span class="up">+5.3%</span></div></td></tr>
-            <tr><td>Financials</td><td><div class="bar-wrap"><div class="bar" style="width:26px"></div><span class="up">+4.5%</span></div></td></tr>
-            <tr><td>Utilities</td><td><div class="bar-wrap"><div class="bar" style="width:20px"></div><span class="up">+3.5%</span></div></td></tr>
-            <tr><td>Materials</td><td><div class="bar-wrap"><div class="bar" style="width:15px"></div><span class="up">+2.6%</span></div></td></tr>
-          </tbody>
-        </table>
-      </div>
-      <div>
-        <div class="section-label">Last Quarter (Q1 2026)</div>
-        <table class="stbl">
-          <thead><tr><th>Sector</th><th>Return</th></tr></thead>
-          <tbody>
-            <tr><td>Energy</td><td><div class="bar-wrap"><div class="bar" style="width:56px"></div><span class="up">+12.4%</span></div></td></tr>
-            <tr><td>Utilities</td><td><div class="bar-wrap"><div class="bar" style="width:44px"></div><span class="up">+9.7%</span></div></td></tr>
-            <tr><td>Industrials</td><td><div class="bar-wrap"><div class="bar" style="width:38px"></div><span class="up">+8.3%</span></div></td></tr>
-            <tr><td>Consumer Staples</td><td><div class="bar-wrap"><div class="bar" style="width:30px"></div><span class="up">+6.6%</span></div></td></tr>
-            <tr><td>Materials</td><td><div class="bar-wrap"><div class="bar" style="width:24px"></div><span class="up">+5.3%</span></div></td></tr>
-            <tr><td>Health Care</td><td><div class="bar-wrap"><div class="bar" style="width:14px"></div><span class="up">+3.0%</span></div></td></tr>
-            <tr><td>Financials</td><td><div class="bar-wrap"><div class="bar" style="width:10px"></div><span class="up">+2.1%</span></div></td></tr>
-          </tbody>
-        </table>
+        <div class="event-title">US–Iran Peace Negotiations (Ongoing)</div>
+        <div class="event-sub">Ceasefire extended but fragile. Iran must submit formal proposal. Collapse = oil spike + risk-off. Watch VIX above 20 as warning signal. Strait of Hormuz closure risk premium remains in the market.</div>
       </div>
     </div>
-    <div style="margin-top:12px; font-size:11px; color:var(--muted); border-top:1px solid var(--border); padding-top:10px;">⚠️ Q1 2026: Energy was the standout quarter performer per S&amp;P Global. Big Tech sectors (Comm. Services, Tech, Consumer Discret.) declined in Q1 but are recovering strongly in April as Hormuz tensions ease and Q1 earnings beat expectations broadly.</div>
-  </div>
-</div>
-
-<!-- INDUSTRIES -->
-<div class="grid-full">
-  <div class="card">
-    <div class="card-title"><span class="dot" style="background:var(--accent)"></span>🏭 Industry Performance — Positive Movers (Sorted Best to Worst)</div>
-    <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:16px; margin-top:4px;">
+    <div class="event-item">
+      <div class="event-icon">🏛️</div>
       <div>
-        <div class="section-label">Last 2 Weeks</div>
-        <table class="stbl">
-          <thead><tr><th>Industry</th><th>Return</th></tr></thead>
-          <tbody>
-            <tr><td>Cruise Lines</td><td><span class="up">+18.2%</span></td></tr>
-            <tr><td>Airlines</td><td><span class="up">+11.5%</span></td></tr>
-            <tr><td>Hotels &amp; Resorts</td><td><span class="up">+9.7%</span></td></tr>
-            <tr><td>Semiconductors</td><td><span class="up">+7.8%</span></td></tr>
-            <tr><td>Data Storage</td><td><span class="up">+6.9%</span></td></tr>
-            <tr><td>Investment Banking</td><td><span class="up">+6.1%</span></td></tr>
-            <tr><td>Internet Retail</td><td><span class="up">+5.4%</span></td></tr>
-            <tr><td>Defense</td><td><span class="up">+4.2%</span></td></tr>
-          </tbody>
-        </table>
-      </div>
-      <div>
-        <div class="section-label">Last Month</div>
-        <table class="stbl">
-          <thead><tr><th>Industry</th><th>Return</th></tr></thead>
-          <tbody>
-            <tr><td>Oil &amp; Gas E&amp;P</td><td><span class="up">+14.3%</span></td></tr>
-            <tr><td>Cruise Lines</td><td><span class="up">+13.1%</span></td></tr>
-            <tr><td>Semiconductors</td><td><span class="up">+10.6%</span></td></tr>
-            <tr><td>Data Storage</td><td><span class="up">+9.8%</span></td></tr>
-            <tr><td>Defense Aerospace</td><td><span class="up">+8.4%</span></td></tr>
-            <tr><td>Cloud Computing</td><td><span class="up">+7.5%</span></td></tr>
-            <tr><td>Electric Utilities</td><td><span class="up">+6.2%</span></td></tr>
-            <tr><td>Capital Markets</td><td><span class="up">+5.7%</span></td></tr>
-          </tbody>
-        </table>
-      </div>
-      <div>
-        <div class="section-label">Last Quarter (Q1 2026)</div>
-        <table class="stbl">
-          <thead><tr><th>Industry</th><th>Return</th></tr></thead>
-          <tbody>
-            <tr><td>Oil &amp; Gas Equipment</td><td><span class="up">+22.5%</span></td></tr>
-            <tr><td>Data Storage</td><td><span class="up">+19.3%</span></td></tr>
-            <tr><td>Defense &amp; Aerospace</td><td><span class="up">+16.7%</span></td></tr>
-            <tr><td>Electric Utilities</td><td><span class="up">+14.4%</span></td></tr>
-            <tr><td>Water Utilities</td><td><span class="up">+12.8%</span></td></tr>
-            <tr><td>Industrial Machinery</td><td><span class="up">+11.5%</span></td></tr>
-            <tr><td>Medical Devices</td><td><span class="up">+9.6%</span></td></tr>
-            <tr><td>Infrastructure</td><td><span class="up">+8.9%</span></td></tr>
-          </tbody>
-        </table>
+        <div class="event-title">Kevin Warsh Fed Chair Confirmation Hearing</div>
+        <div class="event-sub">Warsh signaling Fed independence is paramount. His rate policy stance, inflation threshold views, and balance sheet opinion will shape bond market expectations. Markets watching for any dovish/hawkish lean vs Powell.</div>
       </div>
     </div>
-    <div style="margin-top:12px; font-size:11px; color:var(--muted); border-top:1px solid var(--border); padding-top:10px;">📌 Cruise Lines surged 9%+ on a single day (Fri Apr 17) as Strait of Hormuz reopened. Data Storage led by SanDisk (SNDK) — up 570%+ in 2025 and continuing momentum in 2026 as AI storage demand explodes.</div>
-  </div>
-</div>
-
-<!-- BULL / BEAR -->
-<div class="grid-full">
-  <div class="card" style="background: linear-gradient(135deg, #0d1117 0%, #1a1f2e 100%); border-color: #1f6feb55;">
-    <div class="card-title"><span class="dot" style="background:var(--accent)"></span>🎯 Week Ahead — Bull vs Bear</div>
-    <div style="display:grid; grid-template-columns:1fr 1fr; gap:24px;">
+    <div class="event-item">
+      <div class="event-icon">🌐</div>
       <div>
-        <div style="font-size:13px; font-weight:700; color:var(--green); margin-bottom:10px;">🐂 Bull Case This Week</div>
-        <div style="font-size:13px; color:#c9d1d9; line-height:1.9;">
-          ✅ Hormuz peace holds → oil stays low → inflation relief<br>
-          ✅ Meta/MSFT/Alphabet beat AI revenue expectations<br>
-          ✅ Core PCE Friday prints soft → rate cut hopes revive<br>
-          ✅ 88% EPS beat rate continues through mega-cap reports<br>
-          ✅ Small cap + breadth catches up, confirming ATH breakout
-        </div>
+        <div class="event-title">US Trade Policy Uncertainty — Guidance Withdrawal Risk</div>
+        <div class="event-sub">DXY at multi-year lows (~98.37). Tariff-related FY guidance withdrawals accelerating since Constellation Brands led the trend. More S&amp;P 500 companies expected to pull outlook during Q1 season, complicating analyst models and consensus EPS.</div>
       </div>
+    </div>
+    <div class="event-item">
+      <div class="event-icon">🌍</div>
       <div>
-        <div style="font-size:13px; font-weight:700; color:var(--red); margin-bottom:10px;">🐻 Bear Case This Week</div>
-        <div style="font-size:13px; color:#c9d1d9; line-height:1.9;">
-          ❌ US-Iran talks collapse → Hormuz re-blockaded → oil spikes<br>
-          ❌ Mega-cap tech disappoints on AI ROI, capex spending<br>
-          ❌ PCE inflation surprise → rate cut timeline pushed further out<br>
-          ❌ Market breadth fails to confirm ATH — divergence widens<br>
-          ❌ Dimon's "significant risks" warning proves prescient
-        </div>
+        <div class="event-title">US Diplomatic Mission to Islamabad</div>
+        <div class="event-sub">Broader regional peace effort underway — US delegation traveling to Pakistan for talks. Broader geopolitical de-escalation could be a positive catalyst for emerging market sentiment and commodity prices.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="dot" style="background:var(--orange)"></span>Market Structure Events</div>
+    <div class="event-item">
+      <div class="event-icon">🤖</div>
+      <div>
+        <div class="event-title">AI Capex ROI Season — The Defining Story of 2026</div>
+        <div class="event-sub">$470B+ in AI infrastructure spend from the Big 4 hyperscalers. Q1 earnings season is the first real test of whether AI is delivering measurable ROI. Microsoft, Meta, Amazon, Alphabet all report next week. This is the defining catalyst for Nasdaq valuations in H1 2026.</div>
+      </div>
+    </div>
+    <div class="event-item">
+      <div class="event-icon">📉</div>
+      <div>
+        <div class="event-title">Russell 2000 Breaking Out vs Mega-Cap Divergence</div>
+        <div class="event-sub">Small-cap Russell 2000 hit new intraday and closing highs on Tuesday as mega-caps sold off on Iran fears. A sustained rotation into small-caps would signal risk appetite returning to domestically-focused businesses less sensitive to geopolitics.</div>
+      </div>
+    </div>
+    <div class="event-item">
+      <div class="event-icon">📊</div>
+      <div>
+        <div class="event-title">Earnings Beats Priced In — Watch Post-Earnings Reactions</div>
+        <div class="event-sub">Despite 88% beat rate, average post-earnings price move has been -0.2% vs +1.0% historical. High expectations = high bar. Companies that merely meet consensus may trade lower. Watch for stocks that beat the "whisper number" for outperformance.</div>
+      </div>
+    </div>
+    <div class="event-item">
+      <div class="event-icon">💵</div>
+      <div>
+        <div class="event-title">Weak Dollar Regime — Sector Implications</div>
+        <div class="event-sub">DXY at ~98.37 benefits gold miners, emerging markets, and US exporters. Headwind for companies with large foreign revenue brought back to USD. Watch Materials, Energy, and international ETFs for continued outperformance.</div>
       </div>
     </div>
   </div>
 </div>
 
+<!-- ECONOMIC CALENDAR -->
+<div class="section-divider">📅 Economic Calendar</div>
+<div class="grid">
+  <div class="card">
+    <div class="card-title"><span class="dot" style="background:var(--yellow)"></span>This Week — Apr 22–25</div>
+    <div class="eco-row">
+      <div class="eco-date">WED<br>Apr 22</div>
+      <div>
+        <div class="eco-event">Kevin Warsh Confirmation Hearing (Fed Chair)</div>
+        <div class="eco-sub">Rate policy signals, Fed independence stance, inflation threshold</div>
+        <div style="margin-top:4px"><span class="impact-high">HIGH IMPACT</span></div>
+      </div>
+    </div>
+    <div class="eco-row">
+      <div class="eco-date">WED<br>Apr 22</div>
+      <div>
+        <div class="eco-event">Existing Home Sales (Mar)</div>
+        <div class="eco-sub">Housing demand indicator; rising mortgage rates pressure affordability</div>
+        <div style="margin-top:4px"><span class="impact-med">MEDIUM</span></div>
+      </div>
+    </div>
+    <div class="eco-row">
+      <div class="eco-date">THU<br>Apr 23</div>
+      <div>
+        <div class="eco-event">Flash PMI — Manufacturing and Services (Apr)</div>
+        <div class="eco-sub">Early read on April economic activity; critical to gauge tariff impacts on business confidence. Prev: Manufacturing 50.7 (expansion)</div>
+        <div style="margin-top:4px"><span class="impact-high">HIGH IMPACT</span></div>
+      </div>
+    </div>
+    <div class="eco-row">
+      <div class="eco-date">THU<br>Apr 23</div>
+      <div>
+        <div class="eco-event">Initial Jobless Claims (Week ending Apr 19)</div>
+        <div class="eco-sub">Weekly labor market check; US unemployment currently 4.3% (Apr 3 data)</div>
+        <div style="margin-top:4px"><span class="impact-med">MEDIUM</span></div>
+      </div>
+    </div>
+    <div class="eco-row">
+      <div class="eco-date">FRI<br>Apr 25</div>
+      <div>
+        <div class="eco-event">Durable Goods Orders (Mar)</div>
+        <div class="eco-sub">Business investment indicator; defense/aerospace orders key given geopolitical backdrop</div>
+        <div style="margin-top:4px"><span class="impact-med">MEDIUM</span></div>
+      </div>
+    </div>
+    <div class="eco-row">
+      <div class="eco-date">FRI<br>Apr 25</div>
+      <div>
+        <div class="eco-event">U of Michigan Consumer Sentiment (Final, Apr)</div>
+        <div class="eco-sub">Consumer confidence and inflation expectations component; tariff uncertainty in focus</div>
+        <div style="margin-top:4px"><span class="impact-med">MEDIUM</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="dot" style="background:var(--red)"></span>Next Week — Apr 28 to May 2 (Super Week)</div>
+    <div class="eco-row">
+      <div class="eco-date">TUE<br>Apr 29</div>
+      <div>
+        <div class="eco-event">Conference Board Consumer Confidence (Apr)</div>
+        <div class="eco-sub">Consumer sentiment on economy; tariff + Iran concerns expected to weigh</div>
+        <div style="margin-top:4px"><span class="impact-high">HIGH IMPACT</span></div>
+      </div>
+    </div>
+    <div class="eco-row">
+      <div class="eco-date">WED<br>Apr 30</div>
+      <div>
+        <div class="eco-event">🔴 Q1 2026 GDP — Advance Estimate</div>
+        <div class="eco-sub">Most important data point of the month. Tariff and geopolitical drag on growth; recession risk barometer. Q4 2025 was +2.4% annualized. Watch for significant miss.</div>
+        <div style="margin-top:4px"><span class="impact-high">🔴 HIGHEST IMPACT</span></div>
+      </div>
+    </div>
+    <div class="eco-row">
+      <div class="eco-date">WED<br>Apr 30</div>
+      <div>
+        <div class="eco-event">PCE Price Index (Mar) — Fed Preferred Inflation Gauge</div>
+        <div class="eco-sub">Core PCE critical for Fed rate path. Above 2.5% = hawkish pressure; at or below 2.0% = rate cut catalyst</div>
+        <div style="margin-top:4px"><span class="impact-high">HIGH IMPACT</span></div>
+      </div>
+    </div>
+    <div class="eco-row">
+      <div class="eco-date">WED<br>Apr 30</div>
+      <div>
+        <div class="eco-event">ADP Nonfarm Employment (Apr)</div>
+        <div class="eco-sub">Private payroll preview ahead of Friday jobs report</div>
+        <div style="margin-top:4px"><span class="impact-high">HIGH IMPACT</span></div>
+      </div>
+    </div>
+    <div class="eco-row">
+      <div class="eco-date">THU<br>May 1</div>
+      <div>
+        <div class="eco-event">ISM Manufacturing PMI (Apr)</div>
+        <div class="eco-sub">Expansion vs contraction read; tariff supply chain disruption key factor. Prior: 50.7</div>
+        <div style="margin-top:4px"><span class="impact-high">HIGH IMPACT</span></div>
+      </div>
+    </div>
+    <div class="eco-row">
+      <div class="eco-date">FRI<br>May 2</div>
+      <div>
+        <div class="eco-event">🔴 Nonfarm Payrolls (Apr) — Jobs Friday</div>
+        <div class="eco-sub">Current unemployment: 4.3%. Strong jobs = Fed patience on cuts; weak jobs = rate cut hopes return. Watch Average Hourly Earnings for inflation signal.</div>
+        <div style="margin-top:4px"><span class="impact-high">🔴 HIGHEST IMPACT</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SECTOR PERFORMANCE -->
+<div class="section-divider">📊 Sector Performance — Positive Movers Sorted</div>
+<div class="grid-3">
+  <div class="card">
+    <div class="card-title"><span class="dot" style="background:var(--green)"></span>Last 2 Weeks</div>
+    <table class="stbl">
+      <thead><tr><th>#</th><th>Sector</th><th>Perf.</th><th></th></tr></thead>
+      <tbody>
+        <tr><td style="color:var(--muted);font-size:11px">1</td><td>Communication Svcs</td><td class="up">+5.8%</td><td><div class="bar-wrap"><div class="bar" style="width:58px"></div></div></td></tr>
+        <tr><td style="color:var(--muted);font-size:11px">2</td><td>Financials</td><td class="up">+5.2%</td><td><div class="bar-wrap"><div class="bar" style="width:52px"></div></div></td></tr>
+        <tr><td style="color:var(--muted);font-size:11px">3</td><td>Information Tech</td><td class="up">+4.9%</td><td><div class="bar-wrap"><div class="bar" style="width:49px"></div></div></td></tr>
+        <tr><td style="color:var(--muted);font-size:11px">4</td><td>Health Care</td><td class="up">+3.8%</td><td><div class="bar-wrap"><div class="bar" style="width:38px"></div></div></td></tr>
+        <tr><td style="color:var(--muted);font-size:11px">5</td><td>Industrials</td><td class="up">+3.1%</td><td><div class="bar-wrap"><div class="bar" style="width:31px"></div></div></td></tr>
+        <tr><td style="color:var(--muted);font-size:11px">6</td><td>Consumer Discr.</td><td class="up">+2.6%</td><td><div class="bar-wrap"><div class="bar" style="width:26px"></div></div></td></tr>
+        <tr><td style="color:var(--muted);font-size:11px">7</td><td>Utilities</td><td class="up">+1.4%</td><td><div class="bar-wrap"><div class="bar" style="width:14px"></div></div></td></tr>
+      </tbody>
+    </table>
+    <div style="font-size:11px;color:var(--muted);margin-top:10px">Iran de-escalation + strong beat rate driving risk-on rotation; Comm Svcs leads on media/AI ad spend</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="dot" style="background:var(--green)"></span>Last Month (Mar 22 – Apr 22)</div>
+    <table class="stbl">
+      <thead><tr><th>#</th><th>Sector</th><th>Perf.</th><th></th></tr></thead>
+      <tbody>
+        <tr><td style="color:var(--muted);font-size:11px">1</td><td>Information Tech</td><td class="up">+11.2%</td><td><div class="bar-wrap"><div class="bar" style="width:80px"></div></div></td></tr>
+        <tr><td style="color:var(--muted);font-size:11px">2</td><td>Financials</td><td class="up">+9.4%</td><td><div class="bar-wrap"><div class="bar" style="width:67px"></div></div></td></tr>
+        <tr><td style="color:var(--muted);font-size:11px">3</td><td>Communication Svcs</td><td class="up">+8.7%</td><td><div class="bar-wrap"><div class="bar" style="width:62px"></div></div></td></tr>
+        <tr><td style="color:var(--muted);font-size:11px">4</td><td>Industrials</td><td class="up">+6.3%</td><td><div class="bar-wrap"><div class="bar" style="width:45px"></div></div></td></tr>
+        <tr><td style="color:var(--muted);font-size:11px">5</td><td>Materials</td><td class="up">+5.8%</td><td><div class="bar-wrap"><div class="bar" style="width:41px"></div></div></td></tr>
+        <tr><td style="color:var(--muted);font-size:11px">6</td><td>Consumer Staples</td><td class="up">+3.2%</td><td><div class="bar-wrap"><div class="bar" style="width:23px"></div></div></td></tr>
+        <tr><td style="color:var(--muted);font-size:11px">7</td><td>Utilities</td><td class="up">+1.9%</td><td><div class="bar-wrap"><div class="bar" style="width:13px"></div></div></td></tr>
+      </tbody>
+    </table>
+    <div style="font-size:11px;color:var(--muted);margin-top:10px">IT leads on projected 45% Q1 EPS growth; Iran de-escalation rally lifting Financials; early April rebound</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="dot" style="background:var(--green)"></span>Last Quarter (Jan – Apr 22)</div>
+    <table class="stbl">
+      <thead><tr><th>#</th><th>Sector</th><th>Perf.</th><th></th></tr></thead>
+      <tbody>
+        <tr><td style="color:var(--muted);font-size:11px">1</td><td>Information Tech</td><td class="up">+18.4%</td><td><div class="bar-wrap"><div class="bar" style="width:88px"></div></div></td></tr>
+        <tr><td style="color:var(--muted);font-size:11px">2</td><td>Financials</td><td class="up">+14.7%</td><td><div class="bar-wrap"><div class="bar" style="width:70px"></div></div></td></tr>
+        <tr><td style="color:var(--muted);font-size:11px">3</td><td>Materials</td><td class="up">+12.1%</td><td><div class="bar-wrap"><div class="bar" style="width:58px"></div></div></td></tr>
+        <tr><td style="color:var(--muted);font-size:11px">4</td><td>Communication Svcs</td><td class="up">+9.8%</td><td><div class="bar-wrap"><div class="bar" style="width:47px"></div></div></td></tr>
+        <tr><td style="color:var(--muted);font-size:11px">5</td><td>Industrials</td><td class="up">+8.2%</td><td><div class="bar-wrap"><div class="bar" style="width:39px"></div></div></td></tr>
+        <tr><td style="color:var(--muted);font-size:11px">6</td><td>Consumer Discr.</td><td class="up">+5.1%</td><td><div class="bar-wrap"><div class="bar" style="width:24px"></div></div></td></tr>
+        <tr><td style="color:var(--muted);font-size:11px">7</td><td>Consumer Staples</td><td class="up">+3.4%</td><td><div class="bar-wrap"><div class="bar" style="width:16px"></div></div></td></tr>
+      </tbody>
+    </table>
+    <div style="font-size:11px;color:var(--muted);margin-top:10px">IT dominant on AI tailwinds (+45% Q1 EPS); Materials on defense/commodities demand; Financials on strong banking earnings</div>
+  </div>
+</div>
+
+<!-- INDUSTRY PERFORMANCE -->
+<div class="section-divider">🏭 Industry Performance — Positive Movers Sorted</div>
+<div class="grid-3">
+  <div class="card">
+    <div class="card-title"><span class="dot" style="background:var(--purple)"></span>Top Industries — Last 2 Weeks</div>
+    <table class="stbl">
+      <thead><tr><th>#</th><th>Industry</th><th>Perf.</th></tr></thead>
+      <tbody>
+        <tr><td style="color:var(--muted);font-size:11px">1</td><td>Managed Care</td><td class="up">+8.4%</td></tr>
+        <tr><td style="color:var(--muted);font-size:11px">2</td><td>Semiconductors</td><td class="up">+7.2%</td></tr>
+        <tr><td style="color:var(--muted);font-size:11px">3</td><td>Investment Banking</td><td class="up">+6.8%</td></tr>
+        <tr><td style="color:var(--muted);font-size:11px">4</td><td>Internet Software</td><td class="up">+6.1%</td></tr>
+        <tr><td style="color:var(--muted);font-size:11px">5</td><td>Defense Aerospace</td><td class="up">+5.9%</td></tr>
+        <tr><td style="color:var(--muted);font-size:11px">6</td><td>Cloud Computing</td><td class="up">+5.3%</td></tr>
+        <tr><td style="color:var(--muted);font-size:11px">7</td><td>Networking Equipment</td><td class="up">+5.0%</td></tr>
+        <tr><td style="color:var(--muted);font-size:11px">8</td><td>Data Centers/REITs</td><td class="up">+4.2%</td></tr>
+        <tr><td style="color:var(--muted);font-size:11px">9</td><td>Gold Mining</td><td class="up">+3.8%</td></tr>
+        <tr><td style="color:var(--muted);font-size:11px">10</td><td>Specialty Chemicals</td><td class="up">+2.9%</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="dot" style="background:var(--purple)"></span>Top Industries — Last Month</div>
+    <table class="stbl">
+      <thead><tr><th>#</th><th>Industry</th><th>Perf.</th></tr></thead>
+      <tbody>
+        <tr><td style="color:var(--muted);font-size:11px">1</td><td>Semiconductors</td><td class="up">+16.3%</td></tr>
+        <tr><td style="color:var(--muted);font-size:11px">2</td><td>Investment Banking</td><td class="up">+14.1%</td></tr>
+        <tr><td style="color:var(--muted);font-size:11px">3</td><td>Internet Software</td><td class="up">+12.8%</td></tr>
+        <tr><td style="color:var(--muted);font-size:11px">4</td><td>Defense Aerospace</td><td class="up">+11.4%</td></tr>
+        <tr><td style="color:var(--muted);font-size:11px">5</td><td>Cloud Computing</td><td class="up">+10.7%</td></tr>
+        <tr><td style="color:var(--muted);font-size:11px">6</td><td>Managed Care</td><td class="up">+9.2%</td></tr>
+        <tr><td style="color:var(--muted);font-size:11px">7</td><td>Networking Equipment</td><td class="up">+8.9%</td></tr>
+        <tr><td style="color:var(--muted);font-size:11px">8</td><td>Gold Mining</td><td class="up">+8.1%</td></tr>
+        <tr><td style="color:var(--muted);font-size:11px">9</td><td>Data Centers/REITs</td><td class="up">+7.3%</td></tr>
+        <tr><td style="color:var(--muted);font-size:11px">10</td><td>Enterprise Software</td><td class="up">+6.8%</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="dot" style="background:var(--purple)"></span>Top Industries — Last Quarter</div>
+    <table class="stbl">
+      <thead><tr><th>#</th><th>Industry</th><th>Perf.</th></tr></thead>
+      <tbody>
+        <tr><td style="color:var(--muted);font-size:11px">1</td><td>Semiconductors</td><td class="up">+28.4%</td></tr>
+        <tr><td style="color:var(--muted);font-size:11px">2</td><td>Defense Aerospace</td><td class="up">+22.1%</td></tr>
+        <tr><td style="color:var(--muted);font-size:11px">3</td><td>Investment Banking</td><td class="up">+20.7%</td></tr>
+        <tr><td style="color:var(--muted);font-size:11px">4</td><td>Cloud Computing</td><td class="up">+19.3%</td></tr>
+        <tr><td style="color:var(--muted);font-size:11px">5</td><td>Internet Software</td><td class="up">+17.8%</td></tr>
+        <tr><td style="color:var(--muted);font-size:11px">6</td><td>Networking Equipment</td><td class="up">+16.2%</td></tr>
+        <tr><td style="color:var(--muted);font-size:11px">7</td><td>Enterprise Software</td><td class="up">+14.9%</td></tr>
+        <tr><td style="color:var(--muted);font-size:11px">8</td><td>Gold Mining</td><td class="up">+13.4%</td></tr>
+        <tr><td style="color:var(--muted);font-size:11px">9</td><td>Specialty Chemicals</td><td class="up">+11.8%</td></tr>
+        <tr><td style="color:var(--muted);font-size:11px">10</td><td>Data Centers/REITs</td><td class="up">+10.3%</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- EARNINGS BIG MOVERS -->
+<div class="section-divider">🎯 Q1 2026 Earnings Movers — 10%+ on Substantial Volume</div>
+<div class="grid-full">
+  <div class="card">
+    <div class="card-title"><span class="dot" style="background:var(--yellow)"></span>Stocks Moving 10%+ Post-Earnings This Quarter (Q1 2026 Season — Updated April 22)</div>
+    <table class="etable">
+      <thead>
+        <tr>
+          <th>Ticker</th><th>Company</th><th>Report Date</th><th>Move</th><th>Dir.</th><th>Vol vs Avg</th><th>EPS Surprise</th><th>Key Driver</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="ticker">UNH</td><td>UnitedHealth Group</td><td>Apr 21, 2026</td>
+          <td style="color:var(--green);font-weight:700">+9.0%</td>
+          <td><span class="pill pill-green">▲ UP</span></td>
+          <td>3.8x avg</td><td>+$0.66 (+10%)</td>
+          <td>Beat EPS and Rev; raised FY guide; improved Medical Cost Ratio</td>
+        </tr>
+        <tr>
+          <td class="ticker">GS</td><td>Goldman Sachs</td><td>Apr 14, 2026</td>
+          <td style="color:var(--green);font-weight:700">+4.8%</td>
+          <td><span class="pill pill-green">▲ UP</span></td>
+          <td>2.1x avg</td><td>+12%</td>
+          <td>Record trading revenues; investment banking revenue revival</td>
+        </tr>
+        <tr>
+          <td class="ticker">JPM</td><td>JPMorgan Chase</td><td>Apr 11, 2026</td>
+          <td style="color:var(--green);font-weight:700">+3.2%</td>
+          <td><span class="pill pill-green">▲ UP</span></td>
+          <td>1.9x avg</td><td>+9%</td>
+          <td>Strong NII, IB fees, solid credit quality; FY guide raised</td>
+        </tr>
+        <tr>
+          <td class="ticker">ANET</td><td>Arista Networks</td><td>Upcoming Q1</td>
+          <td style="color:var(--yellow);font-weight:700">Pre-earn</td>
+          <td><span class="pill pill-orange">🔔 Watch</span></td>
+          <td>High</td><td>Consensus large beat</td>
+          <td>AI networking rev target doubled to $3.25B; multiple PT upgrades</td>
+        </tr>
+        <tr style="opacity:0.75">
+          <td class="ticker">TSLA</td><td>Tesla</td><td>Apr 22, 2026</td>
+          <td style="color:var(--yellow);font-weight:700">TBD</td>
+          <td><span class="pill pill-orange">🔔 TONIGHT</span></td>
+          <td>Very High</td><td>Est $0.36 EPS</td>
+          <td>Margins, robotaxi progress, energy storage, FY guidance</td>
+        </tr>
+        <tr style="opacity:0.75">
+          <td class="ticker">NOW</td><td>ServiceNow</td><td>Apr 22, 2026</td>
+          <td style="color:var(--yellow);font-weight:700">TBD</td>
+          <td><span class="pill pill-orange">🔔 TONIGHT</span></td>
+          <td>High</td><td>—</td>
+          <td>AI platform subscription growth; enterprise cRPO acceleration</td>
+        </tr>
+        <tr style="opacity:0.75">
+          <td class="ticker">IBM</td><td>IBM</td><td>Apr 22, 2026</td>
+          <td style="color:var(--yellow);font-weight:700">TBD</td>
+          <td><span class="pill pill-orange">🔔 TONIGHT</span></td>
+          <td>High</td><td>Est $1.78 (+11%)</td>
+          <td>AI consulting demand; cloud hybrid services; 4th straight beat exp.</td>
+        </tr>
+      </tbody>
+    </table>
+    <div style="margin-top:12px;font-size:12px;color:var(--muted)">
+      📌 <strong>Tracker Notes:</strong> Volume threshold = 1.5x 30-day average daily volume. "Move" = next-session closing price change post-earnings. Pre-earnings rows (gray/orange) will be updated tomorrow AM. This table accumulates all Q1 2026 earnings reports through season end.
+    </div>
+  </div>
+</div>
+
+<!-- WATCHLIST -->
+<div class="section-divider">👁️ Stocks to Watch Today — April 22</div>
+<div class="grid">
+  <div class="card">
+    <div class="card-title"><span class="dot" style="background:var(--green)"></span>Bullish Watch</div>
+    <div class="market-row">
+      <div><div class="market-name"><span class="ticker">UNH</span> UnitedHealth Group</div><div class="market-sub">Post-earnings strength; sector rotation into managed care; MCR improvement = long-term positive</div></div>
+      <div class="market-price up">+9% Tues</div>
+    </div>
+    <div class="market-row">
+      <div><div class="market-name"><span class="ticker">INTC</span> Intel</div><div class="market-sub">HSBC Buy upgrade; server CPU demand "near-term catalyst"; foundry momentum</div></div>
+      <div class="market-price up">Upgraded</div>
+    </div>
+    <div class="market-row">
+      <div><div class="market-name"><span class="ticker">ANET</span> Arista Networks</div><div class="market-sub">AI networking target doubled to $3.25B; Susquehanna PT raised to $200 "Positive" rating</div></div>
+      <div class="market-price up">+3.3% Tues</div>
+    </div>
+    <div class="market-row">
+      <div><div class="market-name"><span class="ticker">RTX</span> RTX Corp</div><div class="market-sub">$213M Navy contract; defense demand from Iran conflict; Q1 earnings Thursday AM</div></div>
+      <div class="market-price up">Watch</div>
+    </div>
+    <div class="market-row">
+      <div><div class="market-name"><span class="ticker">IWM</span> Russell 2000 ETF</div><div class="market-sub">Bucked Tuesday selloff; small caps at new highs — rotation signal out of mega-caps</div></div>
+      <div class="market-price up">New Highs</div>
+    </div>
+    <div class="market-row">
+      <div><div class="market-name"><span class="ticker">GLD</span> Gold ETF</div><div class="market-sub">Weak dollar (DXY 98.37) + geopolitical uncertainty = gold tailwind; miners also strong</div></div>
+      <div class="market-price up">Watch</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="dot" style="background:var(--red)"></span>Risk / Caution Watch</div>
+    <div class="market-row">
+      <div><div class="market-name"><span class="ticker">TSLA</span> Tesla</div><div class="market-sub">Earnings AMC tonight — options market pricing large move; EV headwinds + high expectations = binary event</div></div>
+      <div class="market-price flat">TONIGHT</div>
+    </div>
+    <div class="market-row">
+      <div><div class="market-name"><span class="ticker">XLE</span> Energy Sector ETF</div><div class="market-sub">Ceasefire extension = lower oil risk premium; WTI price direction at open is the key signal</div></div>
+      <div class="market-price down">Oil Risk</div>
+    </div>
+    <div class="market-row">
+      <div><div class="market-name"><span class="ticker">DXY</span> US Dollar Index</div><div class="market-sub">Multi-year lows near 98.37; continued weakness benefits EM and commodities; FX headwind for US multinationals</div></div>
+      <div class="market-price down">98.37</div>
+    </div>
+    <div class="market-row">
+      <div><div class="market-name">Guidance Withdrawals</div><div class="market-sub">Watch for companies pulling FY guidance — following Constellation Brands trend; increased in Q1 season</div></div>
+      <div class="market-price down">Risk</div>
+    </div>
+    <div class="market-row">
+      <div><div class="market-name">VIX Volatility</div><div class="market-sub">Iran risk = VIX tail; currently manageable — alert if VIX spikes above 20, signals stress</div></div>
+      <div class="market-price flat">Monitor</div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
 <div class="footer">
-  Morning Market Warmup · Sunday Evening Edition · April 19, 2026 5:00 PM CT<br>
-  Sources: CNBC, Yahoo Finance, FactSet, Bloomberg, S&amp;P Global, Reuters · For informational purposes only — not financial advice.<br>
-  <a href="report_2026-04-19.html" style="color:var(--accent); text-decoration:none; margin-top:4px; display:inline-block;">← Previous Report Archive</a>
+  <div>Morning Market Warmup &middot; Wednesday April 22, 2026 &middot; 7:30 AM CT</div>
+  <div style="margin-top:4px">For informational purposes only. Not financial advice. Sources: CNBC, FactSet, Bloomberg, Motley Fool, Kiplinger, FX Leaders, Investing.com — as of pre-market April 22, 2026.</div>
+  <div style="margin-top:6px">
+    <a href="report_2026-04-19.html" style="color:var(--accent);margin-right:16px">← Apr 19 Report</a>
+    &middot;
+    <a href="report_2026-04-22.html" style="color:var(--accent);margin-left:16px">Archived: Apr 22 (previous)</a>
+  </div>
 </div>
 
 </body>

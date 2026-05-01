@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Morning Warmup — April 30, 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #08090d;
+    --surface: #0f1117;
+    --surface2: #151820;
+    --border: #1e2330;
+    --accent: #00d4ff;
+    --accent2: #00ff9d;
+    --warn: #ff6b35;
+    --red: #ff3d5a;
+    --green: #00ff9d;
+    --yellow: #ffd60a;
+    --text: #e8eaf0;
+    --muted: #5a6278;
+    --mono: 'IBM Plex Mono', monospace;
+    --sans: 'Space Grotesk', sans-serif;
+  }
+  * { margin:0;padding:0;box-sizing:border-box; }
+  body { background:var(--bg);color:var(--text);font-family:var(--sans);font-size:14px;line-height:1.5;min-height:100vh; }
+  body::before { content:'';position:fixed;top:0;left:0;right:0;bottom:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.03) 2px,rgba(0,0,0,0.03) 4px);pointer-events:none;z-index:1000; }
+
+  .header { background:var(--surface);border-bottom:1px solid var(--border);padding:18px 32px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100; }
+  .logo { font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:3px;color:var(--accent);text-transform:uppercase; }
+  .logo span { color:var(--muted);font-weight:300; }
+  .header-right { display:flex;align-items:center;gap:24px;font-family:var(--mono);font-size:11px;color:var(--muted); }
+  .live-dot { width:7px;height:7px;border-radius:50%;background:var(--green);display:inline-block;margin-right:6px;animation:pulse 1.8s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1}50%{opacity:0.3} }
+
+  .market-bar { background:var(--surface2);border-bottom:1px solid var(--border);padding:10px 32px;display:flex;gap:32px;overflow-x:auto;scrollbar-width:none; }
+  .market-bar::-webkit-scrollbar { display:none; }
+  .market-ticker { display:flex;align-items:center;gap:10px;white-space:nowrap; }
+  .market-ticker .sym { font-family:var(--mono);font-weight:700;font-size:11px;letter-spacing:1px;color:var(--accent); }
+  .market-ticker .val { font-family:var(--mono);font-size:13px;font-weight:600;color:var(--text); }
+  .up { color:var(--green) !important; }
+  .dn { color:var(--red) !important; }
+  .flat { color:var(--yellow) !important; }
+  .market-ticker .chg { font-family:var(--mono);font-size:11px; }
+
+  .container { max-width:1440px;margin:0 auto;padding:24px 32px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px; }
+  .section { background:var(--surface);border:1px solid var(--border);border-radius:4px;overflow:hidden; }
+  .section.wide { grid-column:span 2; }
+  .section.full { grid-column:span 3; }
+
+  .sec-header { padding:12px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between; }
+  .sec-title { font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:2px;color:var(--accent);text-transform:uppercase; }
+  .sec-sub { font-family:var(--mono);font-size:9px;color:var(--muted); }
+  .sec-body { padding:14px 16px; }
+
+  .outlook-grid { display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px; }
+  .outlook-card { background:var(--surface2);border:1px solid var(--border);border-radius:3px;padding:12px; }
+  .outlook-tf { font-family:var(--mono);font-size:9px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:6px; }
+  .verdict-badge { display:inline-block;padding:2px 8px;border-radius:2px;font-family:var(--mono);font-size:9px;font-weight:700;letter-spacing:1px;margin-bottom:6px; }
+  .badge-bull { background:rgba(0,255,157,0.12);color:var(--green);border:1px solid rgba(0,255,157,0.25); }
+  .badge-bear { background:rgba(255,61,90,0.12);color:var(--red);border:1px solid rgba(255,61,90,0.25); }
+  .badge-neutral { background:rgba(255,214,10,0.12);color:var(--yellow);border:1px solid rgba(255,214,10,0.25); }
+  .badge-neutral-bull { background:rgba(0,255,157,0.06);color:#80e0a7;border:1px solid rgba(0,255,157,0.15); }
+  .outlook-verdict { font-size:15px;font-weight:700;margin-bottom:6px; }
+  .outlook-neutral-bull { color:#80e0a7; }
+  .outlook-neutral { color:var(--yellow); }
+  .outlook-reason { font-size:11px;color:var(--muted);line-height:1.4; }
+
+  .headline-item { padding:9px 0;border-bottom:1px solid var(--border);display:flex;align-items:flex-start;gap:10px; }
+  .headline-item:last-child { border-bottom:none; }
+  .hl-tag { font-family:var(--mono);font-size:9px;font-weight:700;letter-spacing:1px;padding:2px 6px;border-radius:2px;white-space:nowrap;margin-top:1px; }
+  .tag-macro { background:rgba(0,212,255,0.1);color:var(--accent);border:1px solid rgba(0,212,255,0.2); }
+  .tag-earn { background:rgba(0,255,157,0.1);color:var(--green);border:1px solid rgba(0,255,157,0.2); }
+  .tag-geo { background:rgba(255,107,53,0.1);color:var(--warn);border:1px solid rgba(255,107,53,0.2); }
+  .tag-risk { background:rgba(255,61,90,0.1);color:var(--red);border:1px solid rgba(255,61,90,0.2); }
+  .hl-text { font-size:12px;line-height:1.45;color:var(--text); }
+  .hl-num { font-family:var(--mono);font-size:10px;color:var(--muted);margin-right:4px; }
+
+  .earn-day { margin-bottom:16px; }
+  .earn-day-label { font-family:var(--mono);font-size:9px;color:var(--accent);letter-spacing:2px;text-transform:uppercase;margin-bottom:8px;padding-bottom:4px;border-bottom:1px solid var(--border); }
+  .earn-session { margin-bottom:10px; }
+  .earn-session-label { font-family:var(--mono);font-size:9px;color:var(--muted);letter-spacing:1px;margin-bottom:6px; }
+  .earn-row { display:flex;align-items:center;gap:10px;padding:5px 8px;background:var(--surface2);border-radius:3px;margin-bottom:4px;border:1px solid var(--border); }
+  .earn-ticker { font-family:var(--mono);font-weight:700;font-size:12px;color:var(--accent);min-width:52px; }
+  .earn-name { font-size:11px;color:var(--text);flex:1; }
+  .earn-est { font-family:var(--mono);font-size:10px;color:var(--muted); }
+  .earn-result { font-family:var(--mono);font-size:11px;font-weight:600; }
+  .hot-tag { font-family:var(--mono);font-size:8px;font-weight:700;padding:1px 5px;border-radius:2px;background:rgba(255,214,10,0.15);color:var(--yellow);border:1px solid rgba(255,214,10,0.3); }
+
+  .cal-row { display:grid;grid-template-columns:100px 1fr 90px 60px;align-items:center;gap:10px;padding:7px 0;border-bottom:1px solid rgba(30,35,48,0.7); }
+  .cal-row:last-child { border-bottom:none; }
+  .cal-date { font-family:var(--mono);font-size:10px;color:var(--muted); }
+  .cal-event { font-size:12px;color:var(--text); }
+  .cal-prev { font-family:var(--mono);font-size:10px;color:var(--muted); }
+  .cal-imp { font-family:var(--mono);font-size:9px;font-weight:700;padding:2px 6px;border-radius:2px;text-align:center; }
+  .imp-high { background:rgba(255,61,90,0.15);color:var(--red);border:1px solid rgba(255,61,90,0.25); }
+  .imp-med { background:rgba(255,214,10,0.1);color:var(--yellow);border:1px solid rgba(255,214,10,0.2); }
+  .imp-low { background:rgba(90,98,120,0.15);color:var(--muted);border:1px solid rgba(90,98,120,0.2); }
+
+  .perf-grid { display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px; }
+  .perf-col-header { font-family:var(--mono);font-size:9px;color:var(--accent);letter-spacing:2px;text-transform:uppercase;margin-bottom:8px;padding-bottom:4px;border-bottom:1px solid var(--border); }
+  .perf-row { display:flex;align-items:center;justify-content:space-between;padding:5px 0;border-bottom:1px solid rgba(30,35,48,0.5); }
+  .perf-row:last-child { border-bottom:none; }
+  .perf-name { font-size:11px;color:var(--text); }
+  .perf-val { font-family:var(--mono);font-size:12px;font-weight:700; }
+  .rank-num { font-family:var(--mono);font-size:9px;color:var(--muted);margin-right:6px; }
+
+  .mover-row { display:grid;grid-template-columns:60px 1fr 70px 1fr 80px 60px;align-items:center;gap:8px;padding:7px 0;border-bottom:1px solid rgba(30,35,48,0.7); }
+  .mover-row:last-child { border-bottom:none; }
+  .ticker-badge { font-family:var(--mono);font-size:10px;font-weight:700;padding:2px 5px;background:rgba(0,212,255,0.08);border:1px solid rgba(0,212,255,0.2);border-radius:2px;color:var(--accent); }
+  .vol-badge { font-family:var(--mono);font-size:9px;padding:2px 5px;background:rgba(255,214,10,0.07);border:1px solid rgba(255,214,10,0.18);border-radius:2px;color:var(--yellow); }
+
+  .trend-grid { display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px; }
+  .trend-col-header { font-family:var(--mono);font-size:9px;color:var(--accent);letter-spacing:2px;text-transform:uppercase;margin-bottom:8px;padding-bottom:4px;border-bottom:1px solid var(--border); }
+  .trend-item { display:flex;align-items:flex-start;gap:8px;padding:6px 0;border-bottom:1px solid rgba(30,35,48,0.5); }
+  .trend-item:last-child { border-bottom:none; }
+  .trend-dot { width:6px;height:6px;border-radius:50%;margin-top:4px;flex-shrink:0; }
+  .hot-dot { background:var(--green); }
+  .warm-dot { background:var(--yellow); }
+  .trend-name { font-size:11px;color:var(--text); }
+  .trend-desc { font-size:10px;color:var(--muted); }
+
+  .note-box { padding:8px 10px;background:rgba(255,107,53,0.04);border-radius:3px;border:1px solid rgba(255,107,53,0.15);margin-top:10px; }
+  .note-label { font-family:var(--mono);font-size:9px;color:var(--warn); }
+  .note-text { font-size:11px;color:var(--muted);margin-left:8px; }
+  .sep-line { border:none;border-top:1px solid var(--border);margin:10px 0; }
+
+  .footer { text-align:center;padding:20px 32px;font-family:var(--mono);font-size:9px;color:var(--muted);border-top:1px solid var(--border);margin-top:8px;letter-spacing:1px; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="logo">MORNING WARMUP <span>/ PRE-MARKET BRIEF</span></div>
+  <div class="header-right">
+    <span><span class="live-dot"></span>LIVE</span>
+    <span>THU APR 30, 2026</span>
+    <span>07:00 ET PRE-MARKET</span>
+    <span style="color:var(--yellow)">⚡ APPLE REPORTS TONIGHT · PCE + GDP AT 8:30AM</span>
+  </div>
+</div>
+
+<div class="market-bar">
+  <div class="market-ticker"><span class="sym">S&amp;P FUT</span><span class="val">5,624</span><span class="chg up">+0.42%</span></div>
+  <div class="market-ticker"><span class="sym">NQ FUT</span><span class="val">19,810</span><span class="chg up">+0.51%</span></div>
+  <div class="market-ticker"><span class="sym">DOW FUT</span><span class="val">+303 pts</span><span class="chg up">+0.63%</span></div>
+  <div class="market-ticker"><span class="sym">GOOGL</span><span class="val">+7.2%</span><span class="chg up">PMkt Beat</span></div>
+  <div class="market-ticker"><span class="sym">LLY</span><span class="val">+7.1%</span><span class="chg up">BMO Beat</span></div>
+  <div class="market-ticker"><span class="sym">CAT</span><span class="val">+6.2%</span><span class="chg up">BMO Beat</span></div>
+  <div class="market-ticker"><span class="sym">META</span><span class="val">−9.0%</span><span class="chg dn">CapEx Shock</span></div>
+  <div class="market-ticker"><span class="sym">MSFT</span><span class="val">−3.1%</span><span class="chg dn">Cloud Miss</span></div>
+  <div class="market-ticker"><span class="sym">AMZN</span><span class="val">−3.0%</span><span class="chg dn">CapEx ↑↑</span></div>
+  <div class="market-ticker"><span class="sym">OIL (WTI)</span><span class="val">$79.40</span><span class="chg up">Iran Risk</span></div>
+  <div class="market-ticker"><span class="sym">10Y YIELD</span><span class="val">4.32%</span><span class="chg flat">─ Steady</span></div>
+  <div class="market-ticker"><span class="sym">VIX</span><span class="val">18.4</span><span class="chg flat">─ Moderate</span></div>
+  <div class="market-ticker"><span class="sym">GOLD</span><span class="val">$3,220</span><span class="chg up">+0.3%</span></div>
+  <div class="market-ticker"><span class="sym">AAPL</span><span class="val">TONIGHT</span><span class="chg flat">AMC ⏳</span></div>
+</div>
+
+<div class="container">
+
+  <!-- MARKET OUTLOOK -->
+  <div class="section full">
+    <div class="sec-header">
+      <span class="sec-title">📊 Market Outlook &amp; Bias — Gav's Conviction Map</span>
+      <span class="sec-sub">Thu Apr 30, 2026 · Pre-Market Assessment</span>
+    </div>
+    <div class="sec-body">
+      <div class="outlook-grid">
+        <div class="outlook-card">
+          <div class="outlook-tf">⚡ Intraday</div>
+          <div class="verdict-badge badge-neutral-bull">NEUTRAL-BULLISH</div>
+          <div class="outlook-verdict outlook-neutral-bull">Lean Long — Selective</div>
+          <div class="outlook-reason">Futures up modestly (S&P +0.42%, NQ +0.51%, Dow +303pts). GOOGL +7%, LLY +7%, CAT +6% are strong tailwinds. BUT META −9%, MSFT/AMZN −3% will weigh on Mag7/QQQ. <br><br><b>Key risks today:</b> PCE inflation + GDP Q1 Advance drop at 8:30am — hot readings = hawkish selloff. Apple reports after close — expect elevated vol into close. <br><br><b>Trade idea:</b> Long healthcare (LLY, NVO), energy (XOM, CVX), industrials (CAT, HON). Fade META/MSFT weakness early. Watch $5,600 SPX as key support.</div>
+        </div>
+        <div class="outlook-card">
+          <div class="outlook-tf">📅 Short Term (1–2 Weeks)</div>
+          <div class="verdict-badge badge-neutral">NEUTRAL</div>
+          <div class="outlook-verdict outlook-neutral">Wait &amp; See — Consolidation Likely</div>
+          <div class="outlook-reason">Fed voted 8-4 to hold rates at 3.5–3.75% — the most divided vote since 1992. This hawkish undercurrent signals rate-cut timeline may be pushed out further. AI CapEx overhang (Meta/MSFT/AMZN spending $125–145B+) creates multiple compression risk. S&P has logged 4 consecutive winning weeks — mean reversion risk is elevated. Apple tonight = final major Mag7 catalyst this season. <br><br><b>Strategy:</b> Reduce tech overweights, rotate to energy (Iran premium), healthcare, and cash on bounces. NFP on Friday = next major binary risk event.</div>
+        </div>
+        <div class="outlook-card">
+          <div class="outlook-tf">📆 Long Term (Monthly/Quarterly)</div>
+          <div class="verdict-badge badge-neutral-bull">NEUTRAL-BULLISH</div>
+          <div class="outlook-verdict outlook-neutral-bull">Structural Bull — Tactical Patience</div>
+          <div class="outlook-reason">The AI infrastructure buildout is a 3–5 year secular theme — GOOGL Cloud +63%, AWS at 15-quarter high growth, massive CapEx all confirm. All 11 S&P 500 sectors showing YoY revenue growth (rare). GLP-1/pharma cycle (LLY +56% rev growth), memory chip recovery (SNDK, WDC), and energy geopolitical premium are durable multi-quarter themes. <br><br><b>Long-term overweights:</b> AI infrastructure, GLP-1 pharma, energy (Iran), memory semis, optical/fiber networking. Underweight: consumer discretionary discretionary, high-multiple SaaS.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- HEADLINES -->
+  <div class="section wide">
+    <div class="sec-header">
+      <span class="sec-title">📰 Key Market Headlines</span>
+      <span class="sec-sub">Market-Moving News · Thu Apr 30, 2026</span>
+    </div>
+    <div class="sec-body">
+      <div class="headline-item">
+        <span class="hl-tag tag-macro">MACRO</span>
+        <span class="hl-text"><span class="hl-num">01</span><b>Fed Holds Rates at 3.5–3.75% — Historic 8-4 Dissent Vote</b> (most divided since 1992). Powell signals patience. 4 officials dissented, likely hawks wanting cuts. Market watching H2 2026 cut probability.</span>
+      </div>
+      <div class="headline-item">
+        <span class="hl-tag tag-earn">EARN</span>
+        <span class="hl-text"><span class="hl-num">02</span><b>Alphabet (GOOGL) +7% Premarket After Q1 Blowout</b> — Revenue $109.9B vs $107.2B est. Google Cloud revenue +63% YoY. Net income +81% to $62.57B. EPS $5.11 vs ~$4.42 est.</span>
+      </div>
+      <div class="headline-item">
+        <span class="hl-tag tag-risk">RISK</span>
+        <span class="hl-text"><span class="hl-num">03</span><b>Meta (META) −9% on AI CapEx Shock</b> — Full-year capex guidance raised to $125B–$145B. Q2 revenue growth guide flat vs expectations. Market punishes unbounded AI spending despite Q1 beat.</span>
+      </div>
+      <div class="headline-item">
+        <span class="hl-tag tag-earn">EARN</span>
+        <span class="hl-text"><span class="hl-num">04</span><b>Microsoft (MSFT) −3%</b> — Revenue $82.9B (+18% YoY), net income +23%. Azure growth missed elevated expectations despite AI biz reaching $37B annual run rate (+123% YoY).</span>
+      </div>
+      <div class="headline-item">
+        <span class="hl-tag tag-earn">EARN</span>
+        <span class="hl-text"><span class="hl-num">05</span><b>Amazon (AMZN) −3%</b> — AWS hits 15-quarter high growth. BUT Q1 CapEx surged to $44.2B (vs $25B in Q1 2025). AI infrastructure investment spooked investors despite top/bottom line beat.</span>
+      </div>
+      <div class="headline-item">
+        <span class="hl-tag tag-earn">EARN</span>
+        <span class="hl-text"><span class="hl-num">06</span><b>Eli Lilly (LLY) +7% BMO Today</b> — Q1 revenue +56% YoY. Mounjaro worldwide revenue +125% to $8.66B (vs $7.26B est). Full-year revenue guidance raised by $2B. GLP-1 cycle intact and accelerating.</span>
+      </div>
+      <div class="headline-item">
+        <span class="hl-tag tag-earn">EARN</span>
+        <span class="hl-text"><span class="hl-num">07</span><b>Caterpillar (CAT) +6% BMO Today</b> — Q1 EPS &amp; revenue beat. CAT +160% in last year on AI data center construction boom. Raised demand outlook for construction equipment.</span>
+      </div>
+      <div class="headline-item">
+        <span class="hl-tag tag-geo">GEO</span>
+        <span class="hl-text"><span class="hl-num">08</span><b>Trump Prepares Extended Iran Blockade — Oil Spikes</b> — WSJ: Trump told aides to prepare extended Strait of Hormuz blockade. Axios: Iran's reopening proposal rejected. WTI crude climbs. Energy sector surges on geopolitical risk premium.</span>
+      </div>
+      <div class="headline-item">
+        <span class="hl-tag tag-earn">EARN</span>
+        <span class="hl-text"><span class="hl-num">09</span><b>Apple (AAPL) Reports TONIGHT After Close — Final Mag7 Catalyst</b> — Consensus: EPS $1.92, Rev $109.45B. Watch: Services growth, iPhone demand, China commentary, AI/Siri monetization plans. Beaten EPS in 3 of last 4 qtrs.</span>
+      </div>
+      <div class="headline-item">
+        <span class="hl-tag tag-macro">MACRO</span>
+        <span class="hl-text"><span class="hl-num">10</span><b>PCE Core Inflation + Q1 GDP Advance Estimate at 8:30am Today</b> — Critical for Fed rate-cut timeline. Hot PCE = pushes out cuts, sends yields higher. Weak GDP = stagflation fear. Both = market-moving before open.</span>
+      </div>
+      <div class="headline-item">
+        <span class="hl-tag tag-earn">EARN</span>
+        <span class="hl-text"><span class="hl-num">11</span><b>Visa (V) +6% on Q1 Earnings Beat</b> — Revenue growth of 17% (biggest since 2022). Consumer spending resilient. Mastercard (MA) reports this morning.</span>
+      </div>
+      <div class="headline-item">
+        <span class="hl-tag tag-earn">EARN</span>
+        <span class="hl-text"><span class="hl-num">12</span><b>Starbucks (SBUX) +5%</b> — Global same-store sales +6.2%. FY26 EPS raised above consensus. Turnaround gaining credibility under new management. Restaurant sector shows bifurcation (DPZ −10%).</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ECONOMIC CALENDAR -->
+  <div class="section">
+    <div class="sec-header">
+      <span class="sec-title">📅 Economic Calendar</span>
+      <span class="sec-sub">Apr 30 – May 7, 2026</span>
+    </div>
+    <div class="sec-body">
+      <div class="cal-row" style="font-family:var(--mono);font-size:9px;color:var(--muted);border-bottom:1px solid var(--border);padding-bottom:5px;margin-bottom:2px;">
+        <span>DATE / TIME ET</span><span>EVENT</span><span>PREV</span><span>IMP</span>
+      </div>
+      <div class="cal-row">
+        <div class="cal-date">Apr 30 8:30am</div>
+        <div class="cal-event"><b>PCE Core Inflation (Mar)</b></div>
+        <div class="cal-prev">+2.8% YoY</div>
+        <div><span class="cal-imp imp-high">HIGH ⚡</span></div>
+      </div>
+      <div class="cal-row">
+        <div class="cal-date">Apr 30 8:30am</div>
+        <div class="cal-event"><b>GDP Q1 2026 (Advance Est.)</b></div>
+        <div class="cal-prev">+2.4% Q4</div>
+        <div><span class="cal-imp imp-high">HIGH ⚡</span></div>
+      </div>
+      <div class="cal-row">
+        <div class="cal-date">Apr 30 8:30am</div>
+        <div class="cal-event">Initial Jobless Claims</div>
+        <div class="cal-prev">215K</div>
+        <div><span class="cal-imp imp-med">MED</span></div>
+      </div>
+      <div class="cal-row">
+        <div class="cal-date">Apr 30 9:45am</div>
+        <div class="cal-event">Chicago PMI (Apr)</div>
+        <div class="cal-prev">47.6</div>
+        <div><span class="cal-imp imp-med">MED</span></div>
+      </div>
+      <div class="cal-row">
+        <div class="cal-date">Apr 30 AMC</div>
+        <div class="cal-event"><b>Apple (AAPL) Earnings</b></div>
+        <div class="cal-prev">$1.92 EPS est</div>
+        <div><span class="cal-imp imp-high">HIGH ⚡</span></div>
+      </div>
+      <div class="cal-row">
+        <div class="cal-date">May 1 8:30am</div>
+        <div class="cal-event"><b>Nonfarm Payrolls (Apr)</b></div>
+        <div class="cal-prev">+228K</div>
+        <div><span class="cal-imp imp-high">HIGH ⚡</span></div>
+      </div>
+      <div class="cal-row">
+        <div class="cal-date">May 1 8:30am</div>
+        <div class="cal-event">Unemployment Rate (Apr)</div>
+        <div class="cal-prev">4.1%</div>
+        <div><span class="cal-imp imp-high">HIGH</span></div>
+      </div>
+      <div class="cal-row">
+        <div class="cal-date">May 1 8:30am</div>
+        <div class="cal-event">Avg. Hourly Earnings MoM</div>
+        <div class="cal-prev">+0.3%</div>
+        <div><span class="cal-imp imp-high">HIGH</span></div>
+      </div>
+      <div class="cal-row">
+        <div class="cal-date">May 1 10:00am</div>
+        <div class="cal-event"><b>ISM Manufacturing PMI</b></div>
+        <div class="cal-prev">49.0</div>
+        <div><span class="cal-imp imp-high">HIGH</span></div>
+      </div>
+      <div class="cal-row">
+        <div class="cal-date">May 4 10:00am</div>
+        <div class="cal-event">ISM Services PMI (Apr)</div>
+        <div class="cal-prev">51.4</div>
+        <div><span class="cal-imp imp-high">HIGH</span></div>
+      </div>
+      <div class="cal-row">
+        <div class="cal-date">May 6–7</div>
+        <div class="cal-event"><b>FOMC Meeting</b></div>
+        <div class="cal-prev">3.50–3.75%</div>
+        <div><span class="cal-imp imp-high">HIGH ⚡</span></div>
+      </div>
+      <div class="note-box">
+        <span class="note-label">⚠ TODAY CRITICAL</span>
+        <span class="note-text">PCE + GDP at 8:30am = market-moving pre-open. Hot PCE or weak GDP = hawkish/stagflation reaction.</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- EARNINGS -->
+  <div class="section wide">
+    <div class="sec-header">
+      <span class="sec-title">💰 Earnings Calendar This Week</span>
+      <span class="sec-sub">Apr 29–May 1 · BMO = Before Open · AMC = After Close</span>
+    </div>
+    <div class="sec-body">
+
+      <div class="earn-day">
+        <div class="earn-day-label">📅 THURSDAY APR 30 — TODAY &nbsp;<span class="hot-tag">⚡ APPLE AFTER CLOSE</span></div>
+        <div class="earn-session">
+          <div class="earn-session-label">☀ BEFORE MARKET OPEN (BMO)</div>
+          <div class="earn-row">
+            <span class="earn-ticker">LLY</span>
+            <span class="earn-name">Eli Lilly &amp; Co.</span>
+            <span class="earn-est" style="color:var(--green)">✅ BEAT</span>
+            <span class="earn-result up">+7.1% · Rev +56% · Mounjaro +125%</span>
+          </div>
+          <div class="earn-row">
+            <span class="earn-ticker">CAT</span>
+            <span class="earn-name">Caterpillar Inc.</span>
+            <span class="earn-est" style="color:var(--green)">✅ BEAT</span>
+            <span class="earn-result up">+6.2% · Q1 Rev beat · Construction demand</span>
+          </div>
+          <div class="earn-row">
+            <span class="earn-ticker">XOM</span>
+            <span class="earn-name">Exxon Mobil</span>
+            <span class="earn-est">Est: $1.74 EPS</span>
+            <span class="earn-result flat">⏳ Results Pending</span>
+          </div>
+          <div class="earn-row">
+            <span class="earn-ticker">CVX</span>
+            <span class="earn-name">Chevron Corp.</span>
+            <span class="earn-est">Est: $2.54 EPS</span>
+            <span class="earn-result flat">⏳ Results Pending</span>
+          </div>
+          <div class="earn-row">
+            <span class="earn-ticker">MA</span>
+            <span class="earn-name">Mastercard Inc.</span>
+            <span class="earn-est">Est: $14.20 EPS</span>
+            <span class="earn-result flat">⏳ Results Pending</span>
+          </div>
+          <div class="earn-row">
+            <span class="earn-ticker">MRK</span>
+            <span class="earn-name">Merck &amp; Co.</span>
+            <span class="earn-est">Est: $2.14 EPS</span>
+            <span class="earn-result flat">⏳ Results Pending</span>
+          </div>
+          <div class="earn-row">
+            <span class="earn-ticker">HON</span>
+            <span class="earn-name">Honeywell Intl.</span>
+            <span class="earn-est">Est: $2.26 EPS</span>
+            <span class="earn-result flat">⏳ Results Pending</span>
+          </div>
+        </div>
+        <div class="earn-session">
+          <div class="earn-session-label">🌙 AFTER MARKET CLOSE (AMC)</div>
+          <div class="earn-row" style="border:1px solid rgba(255,214,10,0.35);background:rgba(255,214,10,0.03)">
+            <span class="earn-ticker" style="color:var(--yellow)">AAPL</span>
+            <span class="earn-name">Apple Inc. &nbsp;<span class="hot-tag">🎯 MEGA CAP WATCH</span></span>
+            <span class="earn-est">$1.92 EPS · $109.45B Rev</span>
+            <span class="earn-result flat">⏳ After Close · Key: Services, China, AI</span>
+          </div>
+          <div class="earn-row">
+            <span class="earn-ticker">COIN</span>
+            <span class="earn-name">Coinbase Global</span>
+            <span class="earn-est">Est: $1.84 EPS</span>
+            <span class="earn-result flat">⏳ After Close</span>
+          </div>
+          <div class="earn-row">
+            <span class="earn-ticker">DDOG</span>
+            <span class="earn-name">Datadog Inc.</span>
+            <span class="earn-est">Est: $0.46 EPS</span>
+            <span class="earn-result flat">⏳ After Close</span>
+          </div>
+        </div>
+      </div>
+
+      <hr class="sep-line">
+
+      <div class="earn-day">
+        <div class="earn-day-label">✅ WEDNESDAY APR 29 — REPORTED RESULTS</div>
+        <div class="earn-session">
+          <div class="earn-session-label">🌙 AFTER MARKET CLOSE (AMC) — RESULTS</div>
+          <div class="earn-row">
+            <span class="earn-ticker">GOOGL</span>
+            <span class="earn-name">Alphabet Inc.</span>
+            <span class="earn-est" style="color:var(--green)">✅ $109.9B Rev</span>
+            <span class="earn-result up">+7.2% PM · Cloud +63% · Net Inc +81%</span>
+          </div>
+          <div class="earn-row">
+            <span class="earn-ticker">META</span>
+            <span class="earn-name">Meta Platforms</span>
+            <span class="earn-est" style="color:var(--green)">✅ EPS Beat</span>
+            <span class="earn-result dn">−9.0% · CapEx $125–145B full year</span>
+          </div>
+          <div class="earn-row">
+            <span class="earn-ticker">MSFT</span>
+            <span class="earn-name">Microsoft Corp.</span>
+            <span class="earn-est" style="color:var(--green)">✅ $82.9B Rev</span>
+            <span class="earn-result dn">−3.1% · Azure missed high bar</span>
+          </div>
+          <div class="earn-row">
+            <span class="earn-ticker">AMZN</span>
+            <span class="earn-name">Amazon.com</span>
+            <span class="earn-est" style="color:var(--green)">✅ AWS 15Q high</span>
+            <span class="earn-result dn">−3.0% · CapEx $44.2B shock</span>
+          </div>
+        </div>
+      </div>
+
+      <hr class="sep-line">
+
+      <div class="earn-day">
+        <div class="earn-day-label">📅 FRIDAY MAY 1 — TOMORROW · JOBS DAY + EARNINGS</div>
+        <div class="earn-session">
+          <div class="earn-session-label">☀ BEFORE MARKET OPEN (BMO)</div>
+          <div class="earn-row">
+            <span class="earn-ticker">AON</span>
+            <span class="earn-name">Aon PLC</span>
+            <span class="earn-est">Est: $5.42 EPS</span>
+            <span class="earn-result flat">⏳ Tomorrow</span>
+          </div>
+          <div class="earn-row">
+            <span class="earn-ticker">BKR</span>
+            <span class="earn-name">Baker Hughes Co.</span>
+            <span class="earn-est">Est: $0.67 EPS</span>
+            <span class="earn-result flat">⏳ Tomorrow</span>
+          </div>
+          <div class="earn-row">
+            <span class="earn-ticker">ABBV</span>
+            <span class="earn-name">AbbVie Inc.</span>
+            <span class="earn-est">Est: $2.93 EPS</span>
+            <span class="earn-result flat">⏳ Tomorrow</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- SECTOR PERFORMANCE -->
+  <div class="section full">
+    <div class="sec-header">
+      <span class="sec-title">📈 Sector Performance — Positive Movers (Sorted)</span>
+      <span class="sec-sub">S&amp;P 500 GICS Sectors · Data through Apr 29, 2026</span>
+    </div>
+    <div class="sec-body">
+      <div class="perf-grid">
+        <div>
+          <div class="perf-col-header">⚡ Last 2 Weeks (MTD)</div>
+          <div class="perf-row"><span class="perf-name"><span class="rank-num">1</span>Communication Services</span><span class="perf-val up">+13.0%</span></div>
+          <div class="perf-row"><span class="perf-name"><span class="rank-num">2</span>Information Technology</span><span class="perf-val up">+12.7%</span></div>
+          <div class="perf-row"><span class="perf-name"><span class="rank-num">3</span>Consumer Discretionary</span><span class="perf-val up">+10.3%</span></div>
+          <div class="perf-row"><span class="perf-name"><span class="rank-num">4</span>Industrials</span><span class="perf-val up">+7.8%</span></div>
+          <div class="perf-row"><span class="perf-name"><span class="rank-num">5</span>Healthcare</span><span class="perf-val up">+6.2%</span></div>
+          <div class="perf-row"><span class="perf-name"><span class="rank-num">6</span>Financials</span><span class="perf-val up">+4.9%</span></div>
+          <div class="perf-row"><span class="perf-name"><span class="rank-num">7</span>Energy</span><span class="perf-val up">+3.1%</span></div>
+          <div class="perf-row"><span class="perf-name"><span class="rank-num">8</span>Materials</span><span class="perf-val up">+2.4%</span></div>
+          <div class="perf-row"><span class="perf-name">Real Estate</span><span class="perf-val dn">−1.2%</span></div>
+          <div class="perf-row"><span class="perf-name">Utilities</span><span class="perf-val dn">−2.3%</span></div>
+        </div>
+        <div>
+          <div class="perf-col-header">📅 Last Month (30 Days)</div>
+          <div class="perf-row"><span class="perf-name"><span class="rank-num">1</span>Energy</span><span class="perf-val up">+18.4%</span></div>
+          <div class="perf-row"><span class="perf-name"><span class="rank-num">2</span>Communication Services</span><span class="perf-val up">+11.2%</span></div>
+          <div class="perf-row"><span class="perf-name"><span class="rank-num">3</span>Industrials</span><span class="perf-val up">+9.6%</span></div>
+          <div class="perf-row"><span class="perf-name"><span class="rank-num">4</span>Information Technology</span><span class="perf-val up">+8.3%</span></div>
+          <div class="perf-row"><span class="perf-name"><span class="rank-num">5</span>Healthcare</span><span class="perf-val up">+7.5%</span></div>
+          <div class="perf-row"><span class="perf-name"><span class="rank-num">6</span>Consumer Discretionary</span><span class="perf-val up">+6.8%</span></div>
+          <div class="perf-row"><span class="perf-name"><span class="rank-num">7</span>Financials</span><span class="perf-val up">+5.3%</span></div>
+          <div class="perf-row"><span class="perf-name"><span class="rank-num">8</span>Materials</span><span class="perf-val up">+3.7%</span></div>
+          <div class="perf-row"><span class="perf-name">Consumer Staples</span><span class="perf-val dn">−0.8%</span></div>
+          <div class="perf-row"><span class="perf-name">Utilities</span><span class="perf-val dn">−3.1%</span></div>
+        </div>
+        <div>
+          <div class="perf-col-header">📆 Last Quarter (Q1 2026)</div>
+          <div class="perf-row"><span class="perf-name"><span class="rank-num">1</span>Energy</span><span class="perf-val up">+38.0%</span></div>
+          <div class="perf-row"><span class="perf-name"><span class="rank-num">2</span>Healthcare</span><span class="perf-val up">+8.2%</span></div>
+          <div class="perf-row"><span class="perf-name"><span class="rank-num">3</span>Consumer Staples</span><span class="perf-val up">+4.1%</span></div>
+          <div class="perf-row"><span class="perf-name"><span class="rank-num">4</span>Utilities</span><span class="perf-val up">+2.8%</span></div>
+          <div class="perf-row"><span class="perf-name">Materials</span><span class="perf-val dn">−1.4%</span></div>
+          <div class="perf-row"><span class="perf-name">Industrials</span><span class="perf-val dn">−2.7%</span></div>
+          <div class="perf-row"><span class="perf-name">Comm. Services</span><span class="perf-val dn">−8.4%</span></div>
+          <div class="perf-row"><span class="perf-name">Financials</span><span class="perf-val dn">−9.0%</span></div>
+          <div class="perf-row"><span class="perf-name">Information Technology</span><span class="perf-val dn">−12.1%</span></div>
+          <div class="perf-row"><span class="perf-name">S&amp;P 500 Overall</span><span class="perf-val dn">−4.8%</span></div>
+          <div class="note-box" style="margin-top:8px;"><span class="note-label">Q1 NOTE</span><span class="note-text">Q1 was broadly negative except Energy + Defensives. April rally led by Tech/Comms recovery.</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- INDUSTRY PERFORMANCE -->
+  <div class="section full">
+    <div class="sec-header">
+      <span class="sec-title">🏭 Industry Performance — Positive Movers (Sorted)</span>
+      <span class="sec-sub">Sub-Industry Groups · Data through Apr 29, 2026</span>
+    </div>
+    <div class="sec-body">
+      <div class="perf-grid">
+        <div>
+          <div class="perf-col-header">⚡ Last 2 Weeks</div>
+          <div class="perf-row"><span class="perf-name"><span class="rank-num">1</span>Internet &amp; Comm. Services</span><span class="perf-val up">+15.2%</span></div>
+          <div class="perf-row"><span class="perf-name"><span class="rank-num">2</span>Semiconductors &amp; Equipment</span><span class="perf-val up">+14.3%</span></div>
+          <div class="perf-row"><span class="perf-name"><span class="rank-num">3</span>Cloud Software (SaaS)</span><span class="perf-val up">+12.8%</span></div>
+          <div class="perf-row"><span class="perf-name"><span class="rank-num">4</span>AI Infrastructure</span><span class="perf-val up">+11.4%</span></div>
+          <div class="perf-row"><span class="perf-name"><span class="rank-num">5</span>Aerospace &amp; Defense</span><span class="perf-val up">+9.7%</span></div>
+          <div class="perf-row"><span class="perf-name"><span class="rank-num">6</span>Pharmaceuticals (GLP-1)</span><span class="perf-val up">+6.9%</span></div>
+          <div class="perf-row"><span class="perf-name"><span class="rank-num">7</span>Construction Machinery</span><span class="perf-val up">+6.3%</span></div>
+          <div class="perf-row"><span class="perf-name"><span class="rank-num">8</span>Payment Networks</span><span class="perf-val up">+5.8%</span></div>
+          <div class="perf-row"><span class="perf-name"><span class="rank-num">9</span>Oil &amp; Gas E&amp;P</span><span class="perf-val up">+4.1%</span></div>
+          <div class="perf-row"><span class="perf-name"><span class="rank-num">10</span>Specialty Chemicals</span><span class="perf-val up">+3.6%</span></div>
+        </div>
+        <div>
+          <div class="perf-col-header">📅 Last Month</div>
+          <div class="perf-row"><span class="perf-name"><span class="rank-num">1</span>Oil &amp; Gas Integrated</span><span class="perf-val up">+22.1%</span></div>
+          <div class="perf-row"><span class="perf-name"><span class="rank-num">2</span>Oil &amp; Gas E&amp;P</span><span class="perf-val up">+19.8%</span></div>
+          <div class="perf-row"><span class="perf-name"><span class="rank-num">3</span>Pharmaceuticals (GLP-1)</span><span class="perf-val up">+14.6%</span></div>
+          <div class="perf-row"><span class="perf-name"><span class="rank-num">4</span>Internet &amp; Comm. Services</span><span class="perf-val up">+13.2%</span></div>
+          <div class="perf-row"><span class="perf-name"><span class="rank-num">5</span>Memory Semiconductors</span><span class="perf-val up">+12.9%</span></div>
+          <div class="perf-row"><span class="perf-name"><span class="rank-num">6</span>Construction Machinery</span><span class="perf-val up">+11.4%</span></div>
+          <div class="perf-row"><span class="perf-name"><span class="rank-num">7</span>Optical &amp; Fiber Networking</span><span class="perf-val up">+10.7%</span></div>
+          <div class="perf-row"><span class="perf-name"><span class="rank-num">8</span>Aerospace &amp; Defense</span><span class="perf-val up">+9.3%</span></div>
+          <div class="perf-row"><span class="perf-name"><span class="rank-num">9</span>Payment Networks</span><span class="perf-val up">+7.8%</span></div>
+          <div class="perf-row"><span class="perf-name"><span class="rank-num">10</span>AI Data Center REITs</span><span class="perf-val up">+6.4%</span></div>
+        </div>
+        <div>
+          <div class="perf-col-header">📆 Last Quarter</div>
+          <div class="perf-row"><span class="perf-name"><span class="rank-num">1</span>Oil &amp; Gas E&amp;P</span><span class="perf-val up">+41.2%</span></div>
+          <div class="perf-row"><span class="perf-name"><span class="rank-num">2</span>Oil &amp; Gas Integrated</span><span class="perf-val up">+36.7%</span></div>
+          <div class="perf-row"><span class="perf-name"><span class="rank-num">3</span>Pharmaceuticals (GLP-1)</span><span class="perf-val up">+22.4%</span></div>
+          <div class="perf-row"><span class="perf-name"><span class="rank-num">4</span>Gold &amp; Precious Metals</span><span class="perf-val up">+18.9%</span></div>
+          <div class="perf-row"><span class="perf-name"><span class="rank-num">5</span>Defense &amp; Govt. Services</span><span class="perf-val up">+14.6%</span></div>
+          <div class="perf-row"><span class="perf-name"><span class="rank-num">6</span>Managed Health Care</span><span class="perf-val up">+11.3%</span></div>
+          <div class="perf-row"><span class="perf-name"><span class="rank-num">7</span>Regulated Electric Utilities</span><span class="perf-val up">+9.8%</span></div>
+          <div class="perf-row"><span class="perf-name"><span class="rank-num">8</span>Agricultural Chemicals</span><span class="perf-val up">+7.1%</span></div>
+          <div class="perf-row"><span class="perf-name">Memory Semiconductors</span><span class="perf-val dn">−3.2%</span></div>
+          <div class="perf-row"><span class="perf-name">Cloud Software (SaaS)</span><span class="perf-val dn">−18.4%</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TRENDING -->
+  <div class="section full">
+    <div class="sec-header">
+      <span class="sec-title">🔥 Trending Industries &amp; Sectors — Momentum Tracker</span>
+      <span class="sec-sub">Strongly Moving Groups · Updated Apr 30, 2026</span>
+    </div>
+    <div class="sec-body">
+      <div class="trend-grid">
+        <div>
+          <div class="trend-col-header">⚡ This Week (Hot)</div>
+          <div class="trend-item">
+            <div class="trend-dot hot-dot"></div>
+            <div><div class="trend-name">AI Infrastructure / Cloud</div><div class="trend-desc">GOOGL Cloud +63%; AWS record growth; Azure near-miss. CapEx investment accelerating across Big Tech.</div></div>
+          </div>
+          <div class="trend-item">
+            <div class="trend-dot hot-dot"></div>
+            <div><div class="trend-name">GLP-1 / Obesity Pharma</div><div class="trend-desc">LLY +7% on Mounjaro +125% revenue. NVO sympathy play. GLP-1 pipeline remains the hottest pharma theme.</div></div>
+          </div>
+          <div class="trend-item">
+            <div class="trend-dot hot-dot"></div>
+            <div><div class="trend-name">Oil &amp; Gas (Iran Risk Play)</div><div class="trend-desc">Iran blockade narrative pushing WTI higher. XOM + CVX report today. Energy sector outperforming on geo premium.</div></div>
+          </div>
+          <div class="trend-item">
+            <div class="trend-dot hot-dot"></div>
+            <div><div class="trend-name">Construction Machinery</div><div class="trend-desc">CAT +6% on Q1 beat. AI data center construction wave driving heavy equipment demand well above forecasts.</div></div>
+          </div>
+          <div class="trend-item">
+            <div class="trend-dot warm-dot"></div>
+            <div><div class="trend-name">Payment Networks</div><div class="trend-desc">Visa +6% on 17% rev growth (best since 2022). Mastercard reports BMO today. Consumer spending resilient.</div></div>
+          </div>
+        </div>
+        <div>
+          <div class="trend-col-header">📅 Last 2 Weeks (Strong)</div>
+          <div class="trend-item">
+            <div class="trend-dot hot-dot"></div>
+            <div><div class="trend-name">Memory Semiconductors</div><div class="trend-desc">WDC, SNDK — NAND/DRAM cycle inflection. AI storage demand surge driving ASP expansion and volume.</div></div>
+          </div>
+          <div class="trend-item">
+            <div class="trend-dot hot-dot"></div>
+            <div><div class="trend-name">Optical &amp; Fiber Networking</div><div class="trend-desc">GLW +100%+ YTD on AI data center fiber buildout. Networking spend expected to triple by 2028.</div></div>
+          </div>
+          <div class="trend-item">
+            <div class="trend-dot hot-dot"></div>
+            <div><div class="trend-name">Internet / Ad Tech</div><div class="trend-desc">GOOGL ad revenue strength + AI search monetization. Digital ad market recovering strongly in 2026.</div></div>
+          </div>
+          <div class="trend-item">
+            <div class="trend-dot warm-dot"></div>
+            <div><div class="trend-name">Aerospace &amp; Defense</div><div class="trend-desc">Geopolitical risk premium (Iran, Middle East). Defense budgets expanding globally. NATO spending commitments.</div></div>
+          </div>
+          <div class="trend-item">
+            <div class="trend-dot warm-dot"></div>
+            <div><div class="trend-name">Premium Consumer Brands</div><div class="trend-desc">SBUX +5% turnaround progress. Bifurcation: premium brands strong, value/fast food (DPZ) struggling.</div></div>
+          </div>
+        </div>
+        <div>
+          <div class="trend-col-header">📆 Last Month (Persistent)</div>
+          <div class="trend-item">
+            <div class="trend-dot hot-dot"></div>
+            <div><div class="trend-name">Energy (Oil &amp; Gas)</div><div class="trend-desc">YTD leader (+25–38%). Iran blockade, OPEC+ discipline, and global supply tightness = durable premium.</div></div>
+          </div>
+          <div class="trend-item">
+            <div class="trend-dot hot-dot"></div>
+            <div><div class="trend-name">Healthcare / GLP-1 Pharma</div><div class="trend-desc">LLY, NVO GLP-1 dominance. OMCL health-tech. Broad pharma strength from pipeline + obesity drug wave.</div></div>
+          </div>
+          <div class="trend-item">
+            <div class="trend-dot hot-dot"></div>
+            <div><div class="trend-name">AI Data Center Supply Chain</div><div class="trend-desc">GLW (fiber), WDC/SNDK (storage), AMD (GPU), TXN (edge chips) — full supply chain benefiting from AI build.</div></div>
+          </div>
+          <div class="trend-item">
+            <div class="trend-dot warm-dot"></div>
+            <div><div class="trend-name">Gold &amp; Precious Metals</div><div class="trend-desc">$3,220 gold. Geopolitical safe-haven demand + inflation hedge narrative keeping metals bid.</div></div>
+          </div>
+          <div class="trend-item">
+            <div class="trend-dot warm-dot"></div>
+            <div><div class="trend-name">Industrials / Machinery</div><div class="trend-desc">CAT, HON — data center construction &amp; US reshoring driving capex spend in heavy industrials.</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q1 EARNINGS MOVERS -->
+  <div class="section full">
+    <div class="sec-header">
+      <span class="sec-title">🚀 Q1 2026 Earnings Movers — 10%+ On Substantial Volume</span>
+      <span class="sec-sub">Current Quarter (Jan–Apr 2026) · After-Earnings Reactions on Heavy Volume Only · Not Investment Advice</span>
+    </div>
+    <div class="sec-body">
+      <div style="display:grid;grid-template-columns:60px 1fr 70px 1fr 85px 65px;gap:8px;padding:6px 0;border-bottom:1px solid var(--border);font-family:var(--mono);font-size:9px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:4px;">
+        <span>TICKER</span><span>COMPANY</span><span>MOVE</span><span>CATALYST / REASON</span><span>VOL vs AVG</span><span>DATE</span>
+      </div>
+
+      <div class="mover-row">
+        <div><span class="ticker-badge">GLW</span></div>
+        <div style="font-size:12px">Corning Inc.</div>
+        <div class="perf-val up" style="font-size:14px;font-weight:700">+100.9%*</div>
+        <div style="font-size:11px;color:var(--muted)">AI fiber &amp; optical demand explosion; data center buildout driving multi-year demand surge</div>
+        <div><span class="vol-badge">+410% avg</span></div>
+        <div style="font-family:var(--mono);font-size:10px;color:var(--muted)">YTD</div>
+      </div>
+      <div class="mover-row">
+        <div><span class="ticker-badge">SNDK</span></div>
+        <div style="font-size:12px">SanDisk Corp.</div>
+        <div class="perf-val up" style="font-size:14px;font-weight:700">+80.0%</div>
+        <div style="font-size:11px;color:var(--muted)">Q4 EPS $6.20 vs est $3.31 (+87%); Revenue +61.2% YoY; NAND cycle inflection confirmed</div>
+        <div><span class="vol-badge">+560% avg</span></div>
+        <div style="font-family:var(--mono);font-size:10px;color:var(--muted)">Jan 29</div>
+      </div>
+      <div class="mover-row">
+        <div><span class="ticker-badge">WDC</span></div>
+        <div style="font-size:12px">Western Digital</div>
+        <div class="perf-val up" style="font-size:14px;font-weight:700">+49.4%*</div>
+        <div style="font-size:11px;color:var(--muted)">NAND memory cycle recovery; AI storage demand surge; Q1 beat confirmed</div>
+        <div><span class="vol-badge">+280% avg</span></div>
+        <div style="font-family:var(--mono);font-size:10px;color:var(--muted)">Apr MTD</div>
+      </div>
+      <div class="mover-row">
+        <div><span class="ticker-badge">OMCL</span></div>
+        <div style="font-size:12px">Omnicell Inc.</div>
+        <div class="perf-val up" style="font-size:14px;font-weight:700">+21.0%</div>
+        <div style="font-size:11px;color:var(--muted)">Q1 beat on EPS &amp; revenue; health-tech demand robust; hospital capex spending acceleration</div>
+        <div><span class="vol-badge">+340% avg</span></div>
+        <div style="font-family:var(--mono);font-size:10px;color:var(--muted)">Apr</div>
+      </div>
+      <div class="mover-row">
+        <div><span class="ticker-badge">TXN</span></div>
+        <div style="font-size:12px">Texas Instruments</div>
+        <div class="perf-val up" style="font-size:14px;font-weight:700">+18.0%</div>
+        <div style="font-size:11px;color:var(--muted)">Q1 beat; industrial &amp; auto chip demand recovery signal; analog semiconductor cycle turning</div>
+        <div><span class="vol-badge">+210% avg</span></div>
+        <div style="font-family:var(--mono);font-size:10px;color:var(--muted)">Apr 24</div>
+      </div>
+      <div class="mover-row">
+        <div><span class="ticker-badge">PENN</span></div>
+        <div style="font-size:12px">Penn Entertainment</div>
+        <div class="perf-val up" style="font-size:14px;font-weight:700">+15.2%</div>
+        <div style="font-size:11px;color:var(--muted)">EBITDAR $471M vs est $413M (+14%); strong revenue &amp; margin expansion beat</div>
+        <div><span class="vol-badge">+320% avg</span></div>
+        <div style="font-family:var(--mono);font-size:10px;color:var(--muted)">Apr 23</div>
+      </div>
+      <div class="mover-row">
+        <div><span class="ticker-badge">AMD</span></div>
+        <div style="font-size:12px">Advanced Micro Devices</div>
+        <div class="perf-val up" style="font-size:14px;font-weight:700">+13.9%</div>
+        <div style="font-size:11px;color:var(--muted)">AI GPU demand narrative; analyst upgrade; data center GPU demand signal ahead of earnings</div>
+        <div><span class="vol-badge">+190% avg</span></div>
+        <div style="font-family:var(--mono);font-size:10px;color:var(--muted)">Apr 24</div>
+      </div>
+      <div class="mover-row">
+        <div><span class="ticker-badge">GOOGL</span></div>
+        <div style="font-size:12px">Alphabet Inc.</div>
+        <div class="perf-val up" style="font-size:14px;font-weight:700">+7.2%</div>
+        <div style="font-size:11px;color:var(--muted)">Q1 Rev $109.9B vs $107.2B est; Cloud +63% YoY; Net income +81% to $62.57B; EPS $5.11</div>
+        <div><span class="vol-badge">+380% avg</span></div>
+        <div style="font-family:var(--mono);font-size:10px;color:var(--muted)">Apr 30 PM</div>
+      </div>
+      <div class="mover-row">
+        <div><span class="ticker-badge">LLY</span></div>
+        <div style="font-size:12px">Eli Lilly</div>
+        <div class="perf-val up" style="font-size:14px;font-weight:700">+7.1%</div>
+        <div style="font-size:11px;color:var(--muted)">Q1 Rev +56% YoY; Mounjaro +125% to $8.66B vs $7.26B est; FY guide raised +$2B</div>
+        <div><span class="vol-badge">+290% avg</span></div>
+        <div style="font-family:var(--mono);font-size:10px;color:var(--muted)">Apr 30 AM</div>
+      </div>
+
+      <div style="padding:6px 0;font-family:var(--mono);font-size:9px;color:var(--red);letter-spacing:1px;border-top:1px solid rgba(255,61,90,0.15);margin-top:6px;border-bottom:1px solid rgba(255,61,90,0.15);padding-bottom:6px;">
+        ▼ EARNINGS LOSERS — NOTABLE DROPS THIS QUARTER
+      </div>
+
+      <div class="mover-row">
+        <div><span class="ticker-badge" style="color:var(--red);border-color:rgba(255,61,90,0.3)">POET</span></div>
+        <div style="font-size:12px">POET Technologies</div>
+        <div class="perf-val dn" style="font-size:14px;font-weight:700">−50.0%</div>
+        <div style="font-size:11px;color:var(--muted)">Celestial AI orders canceled after Marvell acquired Celestial AI; lost primary revenue contract</div>
+        <div><span class="vol-badge">+2,400% avg</span></div>
+        <div style="font-family:var(--mono);font-size:10px;color:var(--muted)">Apr 27</div>
+      </div>
+      <div class="mover-row">
+        <div><span class="ticker-badge" style="color:var(--red);border-color:rgba(255,61,90,0.3)">META</span></div>
+        <div style="font-size:12px">Meta Platforms</div>
+        <div class="perf-val dn" style="font-size:14px;font-weight:700">−9.0%</div>
+        <div style="font-size:11px;color:var(--muted)">Full-year CapEx raised to $125–145B (from ~$65B guide); Q2 revenue growth guide disappoints</div>
+        <div><span class="vol-badge">+420% avg</span></div>
+        <div style="font-family:var(--mono);font-size:10px;color:var(--muted)">Apr 30 PM</div>
+      </div>
+      <div class="mover-row">
+        <div><span class="ticker-badge" style="color:var(--red);border-color:rgba(255,61,90,0.3)">DPZ</span></div>
+        <div style="font-size:12px">Domino's Pizza</div>
+        <div class="perf-val dn" style="font-size:14px;font-weight:700">−10.5%</div>
+        <div style="font-size:11px;color:var(--muted)">Q1 EPS &amp; same-store sales miss; consumer trade-down from premium; delivery demand softening</div>
+        <div><span class="vol-badge">+180% avg</span></div>
+        <div style="font-family:var(--mono);font-size:10px;color:var(--muted)">Apr 27</div>
+      </div>
+      <div class="mover-row">
+        <div><span class="ticker-badge" style="color:var(--red);border-color:rgba(255,61,90,0.3)">PNR</span></div>
+        <div style="font-size:12px">Pentair PLC</div>
+        <div class="perf-val dn" style="font-size:14px;font-weight:700">−10.0%</div>
+        <div style="font-size:11px;color:var(--muted)">Q1 earnings beat but lowered full-year sales guidance; US residential recovery weaker than expected</div>
+        <div><span class="vol-badge">+230% avg</span></div>
+        <div style="font-family:var(--mono);font-size:10px;color:var(--muted)">Apr</div>
+      </div>
+
+      <div class="note-box">
+        <span class="note-label">⚠ DISCLAIMER</span>
+        <span class="note-text">* YTD/MTD movers include pre-earnings accumulation. Volume vs 3-month average. Data as of Apr 30, 2026 pre-market. Past performance does not guarantee future results. For informational purposes only. Not investment advice.</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  MORNING WARMUP &middot; GENERATED THU APR 30, 2026 &middot; 07:00 ET PRE-MARKET &middot; SOURCES: CNBC, BLOOMBERG, THESTREET, FACTSET, MOTLEY FOOL, BENZINGA, YAHOO FINANCE, SEEKING ALPHA, EARNINGSWHISPERS, BLS.GOV &middot; FOR INFORMATIONAL PURPOSES ONLY &middot; NOT INVESTMENT ADVICE
+</div>
+
+</body>
+</html>

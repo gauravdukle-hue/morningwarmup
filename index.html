@@ -118,7 +118,7 @@ body{background:#0d0d0d;color:#fff;font-family:'IBM Plex Sans',sans-serif;font-s
 <script>
 /*DATA_START*/
 const DATA = {
-  "generated": "May 17, 2026  05:20 PM CT",
+  "generated": "May 17, 2026  05:24 PM CT",
   "net_worth": 2449796.97,
   "total_pl": 450629.19,
   "accounts": [
@@ -597,13 +597,13 @@ $('nwpl').innerHTML = '<span class="'+pc(DATA.total_pl)+'">'+fd(DATA.total_pl)+'
   // Center label
   ctx.textAlign='center'; ctx.textBaseline='middle';
   ctx.fillStyle='#fff';
-  ctx.font='300 6px "IBM Plex Mono",monospace';
+  ctx.font='300 12px "IBM Plex Mono",monospace';
   ctx.fillText(fm(tot),cx,cy-10);
   ctx.fillStyle=tpl>=0?'#4ade80':'#f87171';
-  ctx.font='400 4px "IBM Plex Mono",monospace';
+  ctx.font='400 8px "IBM Plex Mono",monospace';
   ctx.fillText(fd(tpl),cx,cy+4);
   ctx.fillStyle='#444';
-  ctx.font='400 4px "IBM Plex Sans",sans-serif';
+  ctx.font='400 8px "IBM Plex Sans",sans-serif';
   ctx.fillText('NET WORTH',cx,cy+15);
 
   var TWO_PI=2*Math.PI;

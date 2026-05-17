@@ -2,197 +2,210 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <title>Trading Dashboard</title>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@300;400;500&family=Geist:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg:       #0a0a0f;
-    --surface:  #111118;
-    --border:   #1e1e2e;
-    --text:     #c9cdd6;
-    --dim:      #555668;
-    --accent:   #5af;
-    --green:    #3d9970;
-    --red:      #e74c3c;
-    --yellow:   #f1c40f;
-    --mono:     'IBM Plex Mono', monospace;
-    --sans:     'IBM Plex Sans', sans-serif;
+    --bg:      #f5f5f0;
+    --card:    #ffffff;
+    --border:  #e2e2dc;
+    --text:    #1a1a18;
+    --muted:   #6b6b66;
+    --faint:   #9b9b96;
+    --green:   #1a7a4a;
+    --green-bg:#e8f5ee;
+    --red:     #c0392b;
+    --red-bg:  #fdf0ee;
+    --blue:    #1a5fa8;
+    --blue-bg: #e8f0fa;
+    --gold:    #8a6914;
+    --gold-bg: #fdf5e0;
+    --mono:    'Geist Mono', monospace;
+    --sans:    'Geist', sans-serif;
+    --radius:  10px;
   }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { background: var(--bg); color: var(--text); font-family: var(--sans); font-size: 13px; min-height: 100vh; }
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+  body { background: var(--bg); color: var(--text); font-family: var(--sans); font-size: 14px; line-height: 1.5; }
 
-  /* HEADER */
-  .header { padding: 16px 20px 0; border-bottom: 1px solid var(--border); }
-  .header-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; }
-  .logo { font-family: var(--mono); font-size: 11px; color: var(--dim); letter-spacing: 0.15em; text-transform: uppercase; }
-  .last-updated { font-family: var(--mono); font-size: 10px; color: var(--dim); }
-  .net-worth { font-family: var(--mono); font-size: 28px; font-weight: 300; color: #fff; letter-spacing: -0.02em; }
-  .net-worth-label { font-size: 10px; color: var(--dim); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 4px; }
-  .net-worth-change { font-family: var(--mono); font-size: 12px; margin-top: 2px; }
-  .pos { color: var(--green); } .neg { color: var(--red); }
+  /* TOP BAR */
+  .topbar { background: var(--text); color: #fff; padding: 14px 16px; position: sticky; top: 0; z-index: 100; }
+  .topbar-inner { display: flex; justify-content: space-between; align-items: flex-start; }
+  .brand { font-size: 11px; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; opacity: 0.5; margin-bottom: 6px; }
+  .net-worth { font-family: var(--mono); font-size: 30px; font-weight: 300; letter-spacing: -0.02em; line-height: 1; }
+  .net-pl { font-family: var(--mono); font-size: 12px; margin-top: 4px; }
+  .net-pl.pos { color: #4ade80; }
+  .net-pl.neg { color: #f87171; }
+  .updated { font-size: 10px; opacity: 0.4; text-align: right; margin-top: 4px; }
 
   /* TABS */
-  .tabs { display: flex; gap: 0; overflow-x: auto; padding: 0 20px; background: var(--surface); border-bottom: 1px solid var(--border); }
-  .tab { padding: 10px 16px; font-size: 11px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--dim); cursor: pointer; border-bottom: 2px solid transparent; white-space: nowrap; transition: all 0.15s; }
-  .tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+  .tabs { display: flex; background: var(--card); border-bottom: 1px solid var(--border); overflow-x: auto; scrollbar-width: none; position: sticky; top: 80px; z-index: 99; }
+  .tabs::-webkit-scrollbar { display: none; }
+  .tab { padding: 12px 18px; font-size: 12px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); cursor: pointer; white-space: nowrap; border-bottom: 2px solid transparent; flex-shrink: 0; }
+  .tab.active { color: var(--text); border-bottom-color: var(--text); }
 
-  /* CONTENT */
-  .content { padding: 16px 20px; }
+  /* LAYOUT */
+  .content { padding: 14px 14px 40px; }
   .section { display: none; }
   .section.active { display: block; }
 
   /* CARDS */
-  .card { background: var(--surface); border: 1px solid var(--border); border-radius: 4px; margin-bottom: 10px; overflow: hidden; }
-  .card-header { padding: 10px 14px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
-  .card-title { font-size: 10px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--dim); }
-  .card-value { font-family: var(--mono); font-size: 13px; }
-  .card-body { padding: 10px 14px; }
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 12px; overflow: hidden; }
+  .card-hd { padding: 12px 14px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+  .card-label { font-size: 10px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
+  .card-body { padding: 12px 14px; }
 
-  /* ACCOUNT ROW */
-  .account-row { padding: 8px 0; border-bottom: 1px solid var(--border); display: grid; grid-template-columns: 1fr auto; gap: 4px; }
-  .account-row:last-child { border-bottom: none; }
-  .account-name { font-size: 12px; font-weight: 500; color: var(--text); }
-  .account-sub { font-family: var(--mono); font-size: 10px; color: var(--dim); margin-top: 2px; }
-  .account-total { font-family: var(--mono); font-size: 13px; text-align: right; }
-  .account-pl { font-family: var(--mono); font-size: 10px; text-align: right; margin-top: 2px; }
+  /* SUMMARY STRIPS */
+  .summary-strip { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px; }
+  .stat { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 12px 14px; }
+  .stat-label { font-size: 10px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
+  .stat-val { font-family: var(--mono); font-size: 20px; font-weight: 400; }
+  .stat-sub { font-family: var(--mono); font-size: 11px; color: var(--muted); margin-top: 2px; }
 
-  /* STOCK ROW */
-  .stock-row { padding: 7px 0; border-bottom: 1px solid var(--border); display: grid; grid-template-columns: 60px 1fr auto; gap: 4px; align-items: center; }
-  .stock-row:last-child { border-bottom: none; }
-  .stock-ticker { font-family: var(--mono); font-size: 12px; font-weight: 500; color: #fff; }
-  .stock-detail { font-size: 10px; color: var(--dim); }
-  .stock-right { text-align: right; }
-  .stock-price { font-family: var(--mono); font-size: 12px; }
-  .stock-pl { font-family: var(--mono); font-size: 10px; margin-top: 2px; }
+  /* ROW */
+  .row { padding: 10px 14px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+  .row:last-child { border-bottom: none; }
+  .row-left { flex: 1; min-width: 0; }
+  .row-right { text-align: right; flex-shrink: 0; margin-left: 10px; }
+  .row-title { font-weight: 500; font-size: 13px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .row-sub { font-size: 11px; color: var(--muted); margin-top: 2px; }
+  .row-val { font-family: var(--mono); font-size: 14px; }
+  .row-val2 { font-family: var(--mono); font-size: 11px; margin-top: 2px; }
 
-  /* SIGNAL ROW */
-  .signal { padding: 10px 14px; border-bottom: 1px solid var(--border); }
-  .signal:last-child { border-bottom: none; }
-  .signal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; }
-  .signal-ticker { font-family: var(--mono); font-size: 13px; font-weight: 500; color: #fff; }
-  .signal-score { font-family: var(--mono); font-size: 10px; padding: 2px 6px; border-radius: 2px; }
-  .signal-score.strong { background: rgba(90,170,255,0.15); color: var(--accent); }
-  .signal-score.good   { background: rgba(241,196,15,0.12); color: var(--yellow); }
-  .signal-type { font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; }
-  .signal-type.entry   { color: var(--green); }
-  .signal-type.exit    { color: var(--red); }
-  .signal-type.shakeout{ color: var(--dim); }
-  .signal-detail { font-size: 11px; color: var(--dim); margin-top: 3px; }
-  .signal-stops { font-family: var(--mono); font-size: 10px; color: var(--accent); margin-top: 4px; }
+  /* BADGES */
+  .badge { display: inline-block; font-size: 10px; font-weight: 600; letter-spacing: 0.05em; padding: 2px 7px; border-radius: 4px; text-transform: uppercase; }
+  .badge-green { background: var(--green-bg); color: var(--green); }
+  .badge-red   { background: var(--red-bg);   color: var(--red); }
+  .badge-blue  { background: var(--blue-bg);  color: var(--blue); }
+  .badge-gold  { background: var(--gold-bg);  color: var(--gold); }
+  .badge-gray  { background: #f0f0ea; color: var(--muted); }
+
+  /* P&L COLORS */
+  .pos { color: var(--green); }
+  .neg { color: var(--red); }
+
+  /* SIGNAL CARDS */
+  .signal-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 8px; overflow: hidden; }
+  .signal-hd { padding: 10px 14px; display: flex; justify-content: space-between; align-items: center; }
+  .signal-ticker { font-family: var(--mono); font-size: 16px; font-weight: 500; }
+  .signal-score { font-family: var(--mono); font-size: 12px; }
+  .signal-detail { padding: 0 14px 10px; font-size: 12px; color: var(--muted); line-height: 1.5; }
+  .signal-stops { font-family: var(--mono); font-size: 11px; padding: 7px 14px; border-top: 1px solid var(--border); display: flex; gap: 14px; }
+  .signal-stops span { color: var(--muted); }
+  .signal-stops b { color: var(--text); font-weight: 500; }
+  .signal-entry { border-left: 3px solid var(--green); }
+  .signal-exit  { border-left: 3px solid var(--red); }
+  .signal-hold  { border-left: 3px solid var(--faint); }
+
+  /* SCORE BAR */
+  .score-bar { height: 3px; background: var(--border); border-radius: 2px; margin: 6px 14px 10px; overflow: hidden; }
+  .score-fill { height: 100%; border-radius: 2px; transition: width 0.4s ease; }
+  .fill-strong { background: var(--green); }
+  .fill-good   { background: var(--gold); }
+  .fill-weak   { background: var(--red); }
+
+  /* SECTION HEADER */
+  .section-hd { font-size: 10px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); margin: 16px 0 8px; }
+  .section-hd:first-child { margin-top: 0; }
 
   /* JOURNAL */
   .journal-entry { padding: 10px 14px; border-bottom: 1px solid var(--border); }
   .journal-entry:last-child { border-bottom: none; }
-  .journal-meta { font-family: var(--mono); font-size: 10px; color: var(--dim); margin-bottom: 4px; display: flex; gap: 10px; }
-  .journal-text { font-size: 12px; line-height: 1.5; color: var(--text); }
-  .journal-tags { margin-top: 5px; display: flex; gap: 4px; flex-wrap: wrap; }
-  .tag { font-family: var(--mono); font-size: 9px; padding: 2px 6px; border: 1px solid var(--border); border-radius: 2px; color: var(--dim); text-transform: uppercase; }
+  .journal-meta { display: flex; gap: 8px; align-items: center; margin-bottom: 5px; }
+  .journal-time { font-family: var(--mono); font-size: 10px; color: var(--muted); }
+  .journal-text { font-size: 13px; line-height: 1.55; }
 
-  /* DAILY STATS */
-  .stat-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 10px; }
-  .stat-box { background: var(--surface); border: 1px solid var(--border); border-radius: 4px; padding: 10px 12px; }
-  .stat-label { font-size: 9px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--dim); margin-bottom: 4px; }
-  .stat-value { font-family: var(--mono); font-size: 20px; font-weight: 300; color: #fff; }
-  .stat-bar { height: 2px; background: var(--border); border-radius: 1px; margin-top: 6px; overflow: hidden; }
-  .stat-fill { height: 100%; background: var(--accent); border-radius: 1px; transition: width 0.5s; }
+  /* SCORE METER */
+  .meter-row { display: flex; align-items: center; gap: 10px; padding: 6px 14px; border-bottom: 1px solid var(--border); }
+  .meter-row:last-child { border-bottom: none; }
+  .meter-ticker { font-family: var(--mono); font-size: 12px; font-weight: 500; width: 50px; flex-shrink: 0; }
+  .meter-bar-wrap { flex: 1; height: 6px; background: var(--border); border-radius: 3px; overflow: hidden; }
+  .meter-bar { height: 100%; border-radius: 3px; }
+  .meter-score { font-family: var(--mono); font-size: 11px; color: var(--muted); width: 28px; text-align: right; flex-shrink: 0; }
+  .meter-price { font-family: var(--mono); font-size: 11px; color: var(--muted); width: 60px; text-align: right; flex-shrink: 0; }
 
-  /* TRADES */
-  .trade-row { padding: 8px 14px; border-bottom: 1px solid var(--border); display: grid; grid-template-columns: 50px 70px 1fr auto; gap: 6px; align-items: center; }
-  .trade-row:last-child { border-bottom: none; }
-  .trade-dir { font-family: var(--mono); font-size: 10px; font-weight: 600; letter-spacing: 0.05em; }
-  .trade-dir.buy  { color: var(--green); }
-  .trade-dir.sell { color: var(--red); }
-  .trade-ticker { font-family: var(--mono); font-size: 12px; font-weight: 500; color: #fff; }
-  .trade-detail { font-size: 10px; color: var(--dim); }
-  .trade-total { font-family: var(--mono); font-size: 11px; text-align: right; }
-  .trade-status { font-family: var(--mono); font-size: 9px; text-align: right; color: var(--dim); margin-top: 2px; }
+  /* EMPTY */
+  .empty { padding: 20px; text-align: center; font-size: 12px; color: var(--faint); }
 
-  /* STAT ROW */
-  .stat-row { display: flex; justify-content: space-between; padding: 5px 0; border-bottom: 1px solid var(--border); }
-  .stat-row:last-child { border-bottom: none; }
-  .stat-key { font-size: 11px; color: var(--dim); }
-  .stat-val { font-family: var(--mono); font-size: 11px; }
-
-  .empty { font-size: 11px; color: var(--dim); padding: 16px 0; text-align: center; }
-  .tf-badge { font-family: var(--mono); font-size: 9px; padding: 2px 5px; background: var(--border); border-radius: 2px; color: var(--dim); }
+  /* CHART WRAP */
+  .chart-wrap { padding: 12px 14px; }
 </style>
 </head>
 <body>
 
-<div class="header">
-  <div class="header-top">
-    <div class="logo">Trading Dashboard</div>
-    <div class="last-updated" id="last-updated">—</div>
+<div class="topbar">
+  <div class="brand">Trading Dashboard</div>
+  <div class="topbar-inner">
+    <div>
+      <div class="net-worth" id="net-worth">—</div>
+      <div class="net-pl" id="net-pl"></div>
+    </div>
+    <div class="updated" id="updated">—</div>
   </div>
-  <div class="net-worth-label">Net Worth</div>
-  <div class="net-worth" id="net-worth">$0</div>
-  <div class="net-worth-change" id="net-worth-change"></div>
-  <br>
 </div>
 
 <div class="tabs">
-  <div class="tab active" onclick="showTab('holdings')">Holdings</div>
-  <div class="tab" onclick="showTab('signals')">Signals</div>
-  <div class="tab" onclick="showTab('journal')">Journal</div>
-  <div class="tab" onclick="showTab('trades')">Trades</div>
+  <div class="tab active" data-tab="holdings">Holdings</div>
+  <div class="tab" data-tab="signals">Signals</div>
+  <div class="tab" data-tab="scored">Watchlist</div>
+  <div class="tab" data-tab="journal">Journal</div>
+  <div class="tab" data-tab="trades">Trades</div>
 </div>
 
 <div class="content">
 
   <!-- HOLDINGS -->
   <div id="tab-holdings" class="section active">
-    <div id="accounts-container"></div>
-    <div class="card">
-      <div class="card-header"><span class="card-title">Open Positions</span></div>
-      <div class="card-body" id="positions-container"></div>
-    </div>
+    <div id="holdings-summary" class="summary-strip"></div>
+    <div class="section-hd">By Account</div>
+    <div class="card" id="accounts-list"></div>
+    <div class="section-hd">Open Positions</div>
+    <div class="card" id="positions-list"></div>
   </div>
 
   <!-- SIGNALS -->
   <div id="tab-signals" class="section">
-    <div class="card">
-      <div class="card-header">
-        <span class="card-title">Entries</span>
-        <span class="card-value" id="signal-tf"></span>
+    <div id="signal-tf-label" class="section-hd"></div>
+    <div class="section-hd">Entries</div>
+    <div id="entries-list"></div>
+    <div class="section-hd" style="margin-top:20px">Exits &amp; Caution</div>
+    <div id="exits-list"></div>
+  </div>
+
+  <!-- WATCHLIST SCORES -->
+  <div id="tab-scored" class="section">
+    <div class="section-hd">Scored Tickers</div>
+    <div class="card" id="scored-list"></div>
+    <div style="margin-top:14px">
+      <div class="section-hd">Score Distribution</div>
+      <div class="card chart-wrap">
+        <div style="position:relative;height:180px">
+          <canvas id="scoreChart" role="img" aria-label="Bar chart of EMA scores by ticker"></canvas>
+        </div>
       </div>
-      <div id="entries-container"></div>
-    </div>
-    <div class="card">
-      <div class="card-header"><span class="card-title">Exits / Caution</span></div>
-      <div id="exits-container"></div>
-    </div>
-    <div class="card">
-      <div class="card-header"><span class="card-title">All Scored Tickers</span></div>
-      <div class="card-body" id="scored-container"></div>
     </div>
   </div>
 
   <!-- JOURNAL -->
   <div id="tab-journal" class="section">
-    <div class="stat-grid" id="daily-stats"></div>
-    <div class="card">
-      <div class="card-header"><span class="card-title">Today's Entries</span></div>
-      <div id="journal-container"></div>
-    </div>
+    <div class="summary-strip" id="checkin-stats"></div>
+    <div id="goal-card"></div>
+    <div class="section-hd">Today's thoughts</div>
+    <div class="card" id="journal-list"></div>
   </div>
 
   <!-- TRADES -->
   <div id="tab-trades" class="section">
-    <div class="card">
-      <div class="card-header"><span class="card-title">Recent Trades</span></div>
-      <div id="trades-container"></div>
-    </div>
+    <div class="section-hd">Recent Trades</div>
+    <div class="card" id="trades-list"></div>
   </div>
 
 </div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <script>
-// ─────────────────────────────────────────
-// DATA — injected by generate_dashboard.py
-// ─────────────────────────────────────────
 const DATA = {
-  "generated": "May 17, 2026  11:10 AM CT",
+  "generated": "May 17, 2026  11:18 AM CT",
   "net_worth": 2449796.97,
   "total_pl": 450629.19,
   "accounts": [
@@ -569,171 +582,186 @@ const DATA = {
   ]
 };
 
-// ─────────────────────────────────────────
+const $ = id => document.getElementById(id);
+const fmt  = n => '$' + Math.abs(n).toLocaleString('en-US', {minimumFractionDigits: 0, maximumFractionDigits: 0});
+const fmtd = n => (n >= 0 ? '+' : '') + fmt(n);
+const pct  = n => (n >= 0 ? '+' : '') + n.toFixed(1) + '%';
+const pc   = n => n >= 0 ? 'pos' : 'neg';
+
 // TABS
-// ─────────────────────────────────────────
-function showTab(name) {
-  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-  event.target.classList.add('active');
-  document.getElementById('tab-' + name).classList.add('active');
+document.querySelectorAll('.tab').forEach(t => {
+  t.onclick = () => {
+    document.querySelectorAll('.tab').forEach(x => x.classList.remove('active'));
+    document.querySelectorAll('.section').forEach(x => x.classList.remove('active'));
+    t.classList.add('active');
+    $('tab-' + t.dataset.tab).classList.add('active');
+  };
+});
+
+// TOPBAR
+function renderTopbar() {
+  $('net-worth').textContent = fmt(DATA.net_worth);
+  $('updated').textContent = DATA.generated;
+  if (DATA.total_pl) {
+    const el = $('net-pl');
+    el.textContent = fmtd(DATA.total_pl) + ' unrealised';
+    el.className = 'net-pl ' + pc(DATA.total_pl);
+  }
 }
 
-// ─────────────────────────────────────────
-// FORMAT HELPERS
-// ─────────────────────────────────────────
-const fmt  = n => '$' + Math.abs(n).toLocaleString('en-US', {minimumFractionDigits:0, maximumFractionDigits:0});
-const fmtp = n => (n >= 0 ? '+' : '') + n.toFixed(1) + '%';
-const plClass = n => n >= 0 ? 'pos' : 'neg';
-
-// ─────────────────────────────────────────
-// RENDER HOLDINGS
-// ─────────────────────────────────────────
+// HOLDINGS
 function renderHoldings() {
-  document.getElementById('net-worth').textContent = fmt(DATA.net_worth);
-  document.getElementById('last-updated').textContent = DATA.generated;
+  const invested = DATA.accounts.reduce((s, a) => s + a.stock_total, 0);
+  const cash     = DATA.accounts.reduce((s, a) => s + a.cash, 0);
+  $('holdings-summary').innerHTML = `
+    <div class="stat"><div class="stat-label">Invested</div><div class="stat-val">${fmt(invested)}</div><div class="stat-sub ${pc(DATA.total_pl)}">${fmtd(DATA.total_pl)} P&L</div></div>
+    <div class="stat"><div class="stat-label">Cash</div><div class="stat-val">${fmt(cash)}</div><div class="stat-sub">${DATA.accounts.length} accounts</div></div>`;
 
-  const plEl = document.getElementById('net-worth-change');
-  if (DATA.total_pl !== 0) {
-    plEl.innerHTML = `<span class="${plClass(DATA.total_pl)}">${DATA.total_pl >= 0 ? '+' : ''}${fmt(DATA.total_pl)} unrealised</span>`;
-  }
-
-  const acEl = document.getElementById('accounts-container');
-  acEl.innerHTML = '';
-  if (!DATA.accounts.length) { acEl.innerHTML = '<div class="empty">No account data</div>'; return; }
-
-  DATA.accounts.forEach(a => {
-    const card = document.createElement('div');
-    card.className = 'card';
+  const acList = $('accounts-list');
+  if (!DATA.accounts.length) { acList.innerHTML = '<div class="empty">No account data</div>'; return; }
+  acList.innerHTML = DATA.accounts.filter(a => a.total > 0).map(a => {
     const pl = a.stock_total - a.stock_cost;
-    const plPct = a.stock_cost > 0 ? (pl / a.stock_cost * 100) : 0;
-    card.innerHTML = `
-      <div class="card-header">
-        <span class="card-title">${a.name}</span>
-        <span class="card-value">${fmt(a.total)}</span>
-      </div>
-      <div class="card-body">
-        <div class="stat-row"><span class="stat-key">Cash</span><span class="stat-val">${fmt(a.cash)}</span></div>
-        <div class="stat-row"><span class="stat-key">Invested</span><span class="stat-val">${fmt(a.stock_total)}</span></div>
-        ${pl !== 0 ? `<div class="stat-row"><span class="stat-key">Unrealised P&L</span><span class="stat-val ${plClass(pl)}">${pl >= 0 ? '+' : ''}${fmt(pl)} (${fmtp(plPct)})</span></div>` : ''}
-      </div>`;
-    acEl.appendChild(card);
-  });
+    const plPct = a.stock_cost > 0 ? pl / a.stock_cost * 100 : 0;
+    const plStr = pl !== 0 ? ` <span class="${pc(pl)}">${fmtd(pl)} (${pct(plPct)})</span>` : '';
+    return `<div class="row">
+      <div class="row-left"><div class="row-title">${a.name}</div><div class="row-sub">Cash ${fmt(a.cash)} · Invested ${fmt(a.stock_total)}${plStr}</div></div>
+      <div class="row-right"><div class="row-val">${fmt(a.total)}</div></div>
+    </div>`;
+  }).join('');
 
-  const posEl = document.getElementById('positions-container');
-  if (!DATA.positions.length) { posEl.innerHTML = '<div class="empty">No open positions</div>'; return; }
-  posEl.innerHTML = DATA.positions.map(p => {
-    const pl = (p.price - p.avg) * p.shares;
-    const plPct = (p.price - p.avg) / p.avg * 100;
-    return `<div class="stock-row">
-      <div class="stock-ticker">${p.symbol}</div>
-      <div><div class="stock-detail">${p.shares} sh @ $${p.avg.toFixed(2)}</div><div class="stock-detail">${p.account}</div></div>
-      <div class="stock-right">
-        <div class="stock-price">$${p.price.toFixed(2)}</div>
-        <div class="stock-pl ${plClass(pl)}">${pl >= 0 ? '+' : ''}${fmt(pl)} (${fmtp(plPct)})</div>
+  const posList = $('positions-list');
+  if (!DATA.positions.length) { posList.innerHTML = '<div class="empty">No open positions</div>'; return; }
+  posList.innerHTML = DATA.positions.map(p => {
+    const pl    = (p.price - p.avg) * p.shares;
+    const plP   = (p.price - p.avg) / p.avg * 100;
+    return `<div class="row">
+      <div class="row-left">
+        <div class="row-title">${p.symbol} <span style="font-size:11px;color:var(--muted);font-weight:400">${p.account}</span></div>
+        <div class="row-sub">${p.shares.toLocaleString()} sh · avg $${p.avg.toFixed(2)} · now $${p.price.toFixed(2)}</div>
+      </div>
+      <div class="row-right">
+        <div class="row-val ${pc(pl)}">${fmtd(pl)}</div>
+        <div class="row-val2 ${pc(pl)}">${pct(plP)}</div>
       </div>
     </div>`;
   }).join('');
 }
 
-// ─────────────────────────────────────────
-// RENDER SIGNALS
-// ─────────────────────────────────────────
+// SIGNALS
 function renderSignals() {
-  document.getElementById('signal-tf').textContent = DATA.signals.tf;
+  $('signal-tf-label').textContent = `Timeframe: ${DATA.signals.tf}`;
 
-  const renderSignalList = (items, containerId) => {
-    const el = document.getElementById(containerId);
-    if (!items.length) { el.innerHTML = '<div class="empty">No signals</div>'; return; }
-    el.innerHTML = items.map(s => {
+  const renderSig = (items, container) => {
+    if (!items.length) { $(container).innerHTML = '<div class="card"><div class="empty">No signals this scan</div></div>'; return; }
+    $(container).innerHTML = items.map(s => {
       const isEntry   = ['ENTRY','REENTRY'].includes(s.type);
       const isExit    = ['TIER2_EXIT','TIER1_EXIT'].includes(s.type);
-      const typeClass = isEntry ? 'entry' : isExit ? 'exit' : 'shakeout';
-      const typeLabel = s.type.replace('_', ' ');
-      const scoreClass = s.score >= 70 ? 'strong' : 'good';
-      const stops = (s.stop && s.target) ? `<div class="signal-stops">stop $${s.stop} → target $${s.target}</div>` : '';
-      return `<div class="signal">
-        <div class="signal-header">
-          <span class="signal-ticker">${s.ticker} <span class="tf-badge">${s.tf}</span></span>
-          <span class="signal-score ${scoreClass}">${s.score}</span>
+      const cls       = isEntry ? 'signal-entry' : isExit ? 'signal-exit' : 'signal-hold';
+      const typeLabel = isEntry ? (s.type === 'REENTRY' ? 'Re-entry' : 'Entry') : isExit ? 'Exit' : s.type.replace(/_/g,' ').toLowerCase();
+      const badgeCls  = isEntry ? 'badge-green' : isExit ? 'badge-red' : 'badge-gray';
+      const quality   = s.score >= 70 ? 'strong' : 'good';
+      const fillCls   = s.score >= 70 ? 'fill-strong' : 'fill-good';
+      const stops = (s.stop && s.target) ? `<div class="signal-stops"><span>Stop</span> <b>$${s.stop}</b> <span>Target</span> <b>$${s.target}</b></div>` : '';
+      return `<div class="signal-card ${cls}">
+        <div class="signal-hd">
+          <div><span class="signal-ticker">${s.ticker}</span> <span class="badge ${badgeCls}">${typeLabel}</span></div>
+          <div class="signal-score">${s.score} · ${quality}</div>
         </div>
-        <div class="signal-type ${typeClass}">${typeLabel}</div>
+        <div class="score-bar"><div class="score-fill ${fillCls}" style="width:${s.score}%"></div></div>
         <div class="signal-detail">${s.detail}</div>
         ${stops}
       </div>`;
     }).join('');
   };
-
-  renderSignalList(DATA.signals.entries, 'entries-container');
-  renderSignalList(DATA.signals.exits,   'exits-container');
-
-  const sc = document.getElementById('scored-container');
-  if (!DATA.signals.scored.length) { sc.innerHTML = '<div class="empty">No data</div>'; return; }
-  sc.innerHTML = DATA.signals.scored.map(r =>
-    `<div class="stat-row">
-      <span class="stat-key">${r.ticker} <span style="color:var(--dim);font-size:10px">${r.structure}</span></span>
-      <span class="stat-val">${r.score} <span style="color:var(--dim);font-size:10px">$${r.price}</span></span>
-    </div>`
-  ).join('');
+  renderSig(DATA.signals.entries, 'entries-list');
+  renderSig(DATA.signals.exits,   'exits-list');
 }
 
-// ─────────────────────────────────────────
-// RENDER JOURNAL
-// ─────────────────────────────────────────
+// WATCHLIST SCORES
+function renderScored() {
+  const items = DATA.signals.scored;
+  if (!items.length) { $('scored-list').innerHTML = '<div class="empty">Run /ema to populate</div>'; return; }
+  $('scored-list').innerHTML = items.map(r => {
+    const fillCls = r.score >= 70 ? 'fill-strong' : r.score >= 60 ? 'fill-good' : 'fill-weak';
+    return `<div class="meter-row">
+      <div class="meter-ticker">${r.ticker}</div>
+      <div class="meter-bar-wrap"><div class="meter-bar ${fillCls}" style="width:${r.score}%"></div></div>
+      <div class="meter-score">${r.score}</div>
+      <div class="meter-price">$${Number(r.price).toFixed(0)}</div>
+    </div>`;
+  }).join('');
+
+  // Chart
+  const labels = items.map(r => r.ticker);
+  const scores = items.map(r => r.score);
+  const colors = scores.map(s => s >= 70 ? '#1a7a4a' : s >= 60 ? '#8a6914' : '#c0392b');
+  new Chart($('scoreChart'), {
+    type: 'bar',
+    data: { labels, datasets: [{ data: scores, backgroundColor: colors, borderRadius: 3, borderSkipped: false }] },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: {
+        x: { ticks: { font: { size: 10 }, color: '#6b6b66', maxRotation: 45 }, grid: { display: false } },
+        y: { min: 0, max: 100, ticks: { font: { size: 10 }, color: '#6b6b66' }, grid: { color: '#e2e2dc' } }
+      }
+    }
+  });
+}
+
+// JOURNAL
 function renderJournal() {
   const s = DATA.journal.stats;
-  const statsEl = document.getElementById('daily-stats');
   const metrics = [
-    { label: 'Sleep', value: s.sleep || '—', max: 10 },
-    { label: 'Mind',  value: s.mind  || '—', max: 10 },
-    { label: 'Body',  value: s.physical || '—', max: 10 },
+    { label: 'Sleep',  val: s.sleep    || '—', sub: '/10' },
+    { label: 'Mind',   val: s.mind     || '—', sub: '/10' },
+    { label: 'Body',   val: s.physical || '—', sub: '/10' },
+    { label: 'P&L',    val: s.pnl      || '—', sub: '' },
   ];
-  statsEl.innerHTML = metrics.map(m => `
-    <div class="stat-box">
-      <div class="stat-label">${m.label}</div>
-      <div class="stat-value">${m.value}</div>
-      <div class="stat-bar"><div class="stat-fill" style="width:${m.value !== '—' ? (m.value/m.max*100) : 0}%"></div></div>
-    </div>`).join('');
+  $('checkin-stats').innerHTML = metrics.map(m =>
+    `<div class="stat"><div class="stat-label">${m.label}</div><div class="stat-val">${m.val}<span style="font-size:13px;color:var(--muted)">${m.sub}</span></div></div>`
+  ).join('');
 
   if (s.goal) {
-    statsEl.innerHTML += `<div class="card" style="grid-column:1/-1;padding:10px 12px;font-size:11px;color:var(--dim)">
-      Goal: <span style="color:var(--text)">${s.goal}</span>
-    </div>`;
+    $('goal-card').innerHTML = `<div class="card" style="margin-bottom:12px"><div class="card-body" style="font-size:13px"><span style="color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.08em;font-weight:600">Today's goal &nbsp;</span>${s.goal}</div></div>`;
   }
 
-  const jEl = document.getElementById('journal-container');
-  if (!DATA.journal.today.length) { jEl.innerHTML = '<div class="empty">No entries today</div>'; return; }
-  jEl.innerHTML = DATA.journal.today.map(e => `
-    <div class="journal-entry">
-      <div class="journal-meta">
-        <span>${e.time}</span>
-        <span>${e.sentiment || ''}</span>
-      </div>
+  const jList = $('journal-list');
+  if (!DATA.journal.today.length) { jList.innerHTML = '<div class="empty">No entries today</div>'; return; }
+  jList.innerHTML = DATA.journal.today.map(e => {
+    const sent = e.sentiment ? `<span class="badge badge-${e.sentiment === 'positive' ? 'green' : e.sentiment === 'negative' ? 'red' : 'gray'}">${e.sentiment}</span>` : '';
+    return `<div class="journal-entry">
+      <div class="journal-meta"><span class="journal-time">${e.time}</span>${sent}</div>
       <div class="journal-text">${e.entry}</div>
-      ${e.tags ? `<div class="journal-tags">${e.tags.split(',').map(t => `<span class="tag">${t.trim()}</span>`).join('')}</div>` : ''}
-    </div>`).join('');
+    </div>`;
+  }).join('');
 }
 
-// ─────────────────────────────────────────
-// RENDER TRADES
-// ─────────────────────────────────────────
+// TRADES
 function renderTrades() {
-  const el = document.getElementById('trades-container');
-  if (!DATA.trades.length) { el.innerHTML = '<div class="empty">No trades yet</div>'; return; }
-  el.innerHTML = DATA.trades.map(t => `
-    <div class="trade-row">
-      <div class="trade-dir ${t.direction.toLowerCase()}">${t.direction}</div>
-      <div class="trade-ticker">${t.symbol}</div>
-      <div><div class="trade-detail">${t.shares} @ $${t.price} · ${t.account}</div><div class="trade-detail">${t.date}</div></div>
-      <div><div class="trade-total">${fmt(t.total)}</div><div class="trade-status">${t.status}</div></div>
-    </div>`).join('');
+  const tList = $('trades-list');
+  if (!DATA.trades.length) { tList.innerHTML = '<div class="empty">No trades yet</div>'; return; }
+  tList.innerHTML = DATA.trades.map(t => {
+    const isBuy   = t.direction.toUpperCase() === 'BUY';
+    const badgeCls = isBuy ? 'badge-green' : 'badge-red';
+    const total    = Number(t.total || 0);
+    return `<div class="row">
+      <div class="row-left">
+        <div class="row-title"><span class="badge ${badgeCls}">${t.direction}</span> ${t.symbol}</div>
+        <div class="row-sub">${t.shares} sh @ $${t.price} · ${t.account} · ${t.date}</div>
+      </div>
+      <div class="row-right">
+        <div class="row-val">${fmt(total)}</div>
+        <div class="row-val2" style="color:var(--muted)">${t.status}</div>
+      </div>
+    </div>`;
+  }).join('');
 }
 
-// ─────────────────────────────────────────
-// INIT
-// ─────────────────────────────────────────
+renderTopbar();
 renderHoldings();
 renderSignals();
+renderScored();
 renderJournal();
 renderTrades();
 </script>

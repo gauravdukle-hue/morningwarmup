@@ -7,59 +7,43 @@
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500&family=IBM+Plex+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{background:#0d0d0d;color:#fff;font-family:'IBM Plex Sans',sans-serif;font-size:14px;min-height:100vh}
+body{background:#0d0d0d;color:#fff;font-family:'IBM Plex Sans',sans-serif;font-size:14px}
 .mono{font-family:'IBM Plex Mono',monospace}
 .g{color:#4ade80}.r{color:#f87171}.m{color:#888}
-
-.top{background:#111;border-bottom:1px solid #1e1e1e;padding:14px 16px;position:sticky;top:0;z-index:10}
+.top{background:#111;border-bottom:1px solid #222;padding:14px 16px;position:sticky;top:0;z-index:10}
 .brand{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:#444;margin-bottom:6px}
 .nw-row{display:flex;justify-content:space-between;align-items:flex-end}
-.nw{font-family:'IBM Plex Mono',monospace;font-size:30px;font-weight:300}
+.nw{font-family:'IBM Plex Mono',monospace;font-size:28px;font-weight:300}
 .nw-pl{font-family:'IBM Plex Mono',monospace;font-size:12px;margin-top:3px}
 .ts{font-size:10px;color:#444;text-align:right}
-
-.tabs{display:flex;background:#111;border-bottom:1px solid #1e1e1e;overflow-x:auto}
+.tabs{display:flex;background:#111;border-bottom:1px solid #222;overflow-x:auto}
 .tabs::-webkit-scrollbar{display:none}
 .tab{padding:11px 16px;font-size:11px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:#555;cursor:pointer;white-space:nowrap;border-bottom:2px solid transparent;flex-shrink:0}
 .tab.on{color:#fff;border-bottom-color:#4ade80}
-
 .pg{padding:14px 14px 60px}
 .sec{display:none}.sec.on{display:block}
-
-.card{background:#161616;border:1px solid #1e1e1e;border-radius:10px;margin-bottom:12px;overflow:hidden}
-.ch{padding:11px 14px;border-bottom:1px solid #1e1e1e;display:flex;justify-content:space-between;align-items:center}
+.card{background:#161616;border:1px solid #222;border-radius:10px;margin-bottom:12px;overflow:hidden}
+.ch{padding:11px 14px;border-bottom:1px solid #222;display:flex;justify-content:space-between;align-items:center}
 .cl{font-size:10px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:#444}
 .cb{padding:12px 14px}
-
 .sl{font-size:10px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:#333;margin:16px 0 8px}
 .sl:first-child{margin-top:0}
-
 .sg{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
-.st{background:#161616;border:1px solid #1e1e1e;border-radius:10px;padding:12px 14px}
+.st{background:#161616;border:1px solid #222;border-radius:10px;padding:12px 14px}
 .stl{font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#444;margin-bottom:4px}
-.stv{font-family:'IBM Plex Mono',monospace;font-size:22px;font-weight:300}
+.stv{font-family:'IBM Plex Mono',monospace;font-size:20px;font-weight:300}
 .sts{font-family:'IBM Plex Mono',monospace;font-size:11px;color:#555;margin-top:2px}
-
 .row{padding:10px 14px;border-bottom:1px solid #1a1a1a;display:flex;justify-content:space-between;align-items:center}
 .row:last-child{border-bottom:none}
-.rl{flex:1;min-width:0}
-.rr{text-align:right;flex-shrink:0;margin-left:10px}
+.rl{flex:1;min-width:0}.rr{text-align:right;flex-shrink:0;margin-left:10px}
 .rt{font-size:13px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .rs{font-size:11px;color:#555;margin-top:2px}
 .rv{font-family:'IBM Plex Mono',monospace;font-size:14px}
 .rv2{font-family:'IBM Plex Mono',monospace;font-size:11px;margin-top:2px;color:#555}
-
 .bdg{display:inline-block;font-size:10px;font-weight:600;padding:2px 6px;border-radius:3px;text-transform:uppercase}
-.bg{background:#0d2b1a;color:#4ade80}
-.br{background:#2b0d0d;color:#f87171}
-.bp{background:#1a1a2b;color:#818cf8}
-.by{background:#2b1e0d;color:#fbbf24}
-.bx{background:#1e1e1e;color:#666}
-
-.sig{background:#161616;border:1px solid #1e1e1e;border-radius:10px;margin-bottom:8px;overflow:hidden}
-.se{border-left:3px solid #4ade80}
-.sx{border-left:3px solid #f87171}
-.sh{border-left:3px solid #333}
+.bg{background:#0d2b1a;color:#4ade80}.br{background:#2b0d0d;color:#f87171}.bx{background:#1e1e1e;color:#666}
+.sig{background:#161616;border:1px solid #222;border-radius:10px;margin-bottom:8px;overflow:hidden}
+.se{border-left:3px solid #4ade80}.sx{border-left:3px solid #f87171}.sh{border-left:3px solid #333}
 .shd{padding:10px 14px;display:flex;justify-content:space-between;align-items:center}
 .stk{font-family:'IBM Plex Mono',monospace;font-size:16px;font-weight:500}
 .ssc{font-family:'IBM Plex Mono',monospace;font-size:11px;color:#555}
@@ -68,7 +52,6 @@ body{background:#0d0d0d;color:#fff;font-family:'IBM Plex Sans',sans-serif;font-s
 .sdt{padding:0 14px 10px;font-size:12px;color:#666;line-height:1.55}
 .sst{font-family:'IBM Plex Mono',monospace;font-size:11px;padding:7px 14px;border-top:1px solid #1a1a1a;display:flex;gap:14px}
 .sst span{color:#444}.sst b{color:#ddd;font-weight:500}
-
 .mt{display:flex;align-items:center;gap:8px;padding:7px 14px;border-bottom:1px solid #111}
 .mt:last-child{border-bottom:none}
 .mtk{font-family:'IBM Plex Mono',monospace;font-size:11px;width:48px;flex-shrink:0}
@@ -76,75 +59,58 @@ body{background:#0d0d0d;color:#fff;font-family:'IBM Plex Sans',sans-serif;font-s
 .mf{height:100%;border-radius:3px}
 .ms{font-family:'IBM Plex Mono',monospace;font-size:10px;color:#444;width:24px;text-align:right;flex-shrink:0}
 .mp{font-family:'IBM Plex Mono',monospace;font-size:10px;color:#333;width:56px;text-align:right;flex-shrink:0}
-
 .je{padding:10px 14px;border-bottom:1px solid #1a1a1a}
 .je:last-child{border-bottom:none}
 .jm{display:flex;gap:8px;align-items:center;margin-bottom:4px}
 .jt{font-size:13px;color:#ccc;line-height:1.5}
 .jtm{font-family:'IBM Plex Mono',monospace;font-size:10px;color:#444}
-
 .empty{padding:20px;text-align:center;font-size:12px;color:#333}
-
-.chart-box{padding:14px;position:relative}
-.lgnd{padding:10px 14px;display:flex;flex-wrap:wrap;gap:6px;border-top:1px solid #1a1a1a}
-
-.ring-lbl{font-size:9px;padding:2px 7px;border-radius:3px;font-weight:600}
 </style>
 </head>
 <body>
-
 <div class="top">
   <div class="brand">Trading Dashboard</div>
   <div class="nw-row">
-    <div>
-      <div class="nw" id="nw">—</div>
-      <div class="nw-pl" id="nwpl"></div>
-    </div>
+    <div><div class="nw" id="nw">—</div><div class="nw-pl" id="nwpl"></div></div>
     <div class="ts" id="ts">—</div>
   </div>
 </div>
-
 <div class="tabs">
-  <div class="tab on"  data-t="holdings">Holdings</div>
-  <div class="tab"     data-t="signals">Signals</div>
-  <div class="tab"     data-t="watchlist">Watchlist</div>
-  <div class="tab"     data-t="journal">Journal</div>
-  <div class="tab"     data-t="trades">Trades</div>
+  <div class="tab on" data-t="holdings">Holdings</div>
+  <div class="tab" data-t="signals">Signals</div>
+  <div class="tab" data-t="watchlist">Watchlist</div>
+  <div class="tab" data-t="journal">Journal</div>
+  <div class="tab" data-t="trades">Trades</div>
 </div>
-
 <div class="pg">
 
   <div id="t-holdings" class="sec on">
     <div class="sg" id="h-sg"></div>
-
     <div class="sl">Portfolio breakdown</div>
     <div class="card">
-      <div class="ch"><span class="cl">Sunburst — Group · Account · Value · Holdings</span><span id="sb-tot" class="mono" style="font-size:11px;color:#444"></span></div>
-      <div class="chart-box" style="height:420px">
-        <canvas id="sb-canvas" role="img" aria-label="Portfolio sunburst chart">Portfolio allocation sunburst.</canvas>
+      <div class="ch"><span class="cl">Account · Value · Holdings · P&L</span><span id="sb-tot" class="mono" style="font-size:11px;color:#555"></span></div>
+      <div style="padding:8px;position:relative;height:440px">
+        <canvas id="sb-canvas"></canvas>
       </div>
-      <div class="lgnd" id="sb-lgnd"></div>
+      <div id="sb-lgnd" style="padding:8px 14px;display:flex;flex-wrap:wrap;gap:5px;border-top:1px solid #1a1a1a"></div>
     </div>
-
     <div class="sl">Accounts — largest first</div>
     <div class="card" id="ac-list"></div>
-    <div class="sl">Positions — best P&amp;L first</div>
+    <div class="sl">Positions — best P&L first</div>
     <div class="card" id="pos-list"></div>
   </div>
 
   <div id="t-signals" class="sec">
     <div class="sl" id="sig-tf"></div>
-    <div class="sl">Entries</div>
-    <div id="entries"></div>
-    <div class="sl" style="margin-top:18px">Exits &amp; caution</div>
-    <div id="exits"></div>
+    <div class="sl">Entries</div><div id="entries"></div>
+    <div class="sl" style="margin-top:18px">Exits &amp; caution</div><div id="exits"></div>
   </div>
 
   <div id="t-watchlist" class="sec">
     <div class="sl">EMA scores</div>
     <div class="card" id="wl-list"></div>
     <div class="sl">Score chart</div>
-    <div class="card"><div class="chart-box" style="height:200px"><canvas id="sc-canvas" role="img" aria-label="EMA score chart">EMA scores.</canvas></div></div>
+    <div class="card"><div style="padding:14px;position:relative;height:200px"><canvas id="sc-canvas"></canvas></div></div>
   </div>
 
   <div id="t-journal" class="sec">
@@ -160,140 +126,468 @@ body{background:#0d0d0d;color:#fff;font-family:'IBM Plex Sans',sans-serif;font-s
   </div>
 
 </div>
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-datalabels/2.2.0/chartjs-plugin-datalabels.min.js"></script>
 <script>
 /*DATA_START*/
 const DATA = {
-  generated:"May 17 2026 09:00 AM CT",
-  net_worth:2450000,
-  total_pl:635814,
-  accounts:[
-    {name:"R Intel Etrade",   cash:0,      stock_total:649635, stock_cost:232930, total:649635},
-    {name:"G Intel Etrade",   cash:168856, stock_total:452379, stock_cost:159565, total:621235},
-    {name:"R Fidelity 401K",  cash:414797, stock_total:0,      stock_cost:0,      total:414797},
-    {name:"G Fidelity 401K",  cash:78424,  stock_total:82400,  stock_cost:76720,  total:160824},
-    {name:"G Fidelity Indiv", cash:129689, stock_total:25000,  stock_cost:22000,  total:154689},
-    {name:"R Robinhood",      cash:284,    stock_total:149941, stock_cost:149941, total:150225},
-    {name:"G Crypto",         cash:10000,  stock_total:88571,  stock_cost:162248, total:98571},
-    {name:"G Fidelity Roth",  cash:34855,  stock_total:0,      stock_cost:0,      total:34855},
-    {name:"R Fidelity Roth",  cash:28580,  stock_total:0,      stock_cost:0,      total:28580}
+  "generated": "May 17, 2026  12:06 PM CT",
+  "net_worth": 2449796.97,
+  "total_pl": 450629.19,
+  "accounts": [
+    {
+      "name": "R Intel Etrade",
+      "cash": 0.0,
+      "stock_total": 552072.64,
+      "stock_cost": 233231.28,
+      "total": 552072.64
+    },
+    {
+      "name": "R Fidelity 401K",
+      "cash": 41118.76,
+      "stock_total": 357843.2,
+      "stock_cost": 373678.24,
+      "total": 398961.96
+    },
+    {
+      "name": "G Intel Etrade",
+      "cash": 0.0,
+      "stock_total": 384440.56,
+      "stock_cost": 160065.0,
+      "total": 384440.56
+    },
+    {
+      "name": "G Fidelity Individual",
+      "cash": 127241.0,
+      "stock_total": 216160.0,
+      "stock_cost": 249260.0,
+      "total": 343401.0
+    },
+    {
+      "name": "G Fidelity 401K",
+      "cash": 1758.0,
+      "stock_total": 288179.22,
+      "stock_cost": 294139.22,
+      "total": 289937.22
+    },
+    {
+      "name": "R Robinhood",
+      "cash": 3568.0,
+      "stock_total": 245125.44,
+      "stock_cost": 279701.1,
+      "total": 248693.44
+    },
+    {
+      "name": "G Fidelity Managed",
+      "cash": 112000.0,
+      "stock_total": 0.0,
+      "stock_cost": 0.0,
+      "total": 112000.0
+    },
+    {
+      "name": "G Fidelity Roth",
+      "cash": 27.0,
+      "stock_total": 33660.0,
+      "stock_cost": 34731.0,
+      "total": 33687.0
+    },
+    {
+      "name": "R Fidelity Roth",
+      "cash": 46.39,
+      "stock_total": 27750.8,
+      "stock_cost": 28533.61,
+      "total": 27797.19
+    },
+    {
+      "name": "G Crypto",
+      "cash": 10000.0,
+      "stock_total": 0.0,
+      "stock_cost": 0.0,
+      "total": 10000.0
+    },
+    {
+      "name": "A1 Fidelity Roth",
+      "cash": 94.72,
+      "stock_total": 9649.2,
+      "stock_cost": 9974.28,
+      "total": 9743.92
+    },
+    {
+      "name": "A2 Fidelity Roth",
+      "cash": 94.72,
+      "stock_total": 9649.2,
+      "stock_cost": 9974.28,
+      "total": 9743.92
+    },
+    {
+      "name": "A3 Fidelity Roth",
+      "cash": 94.72,
+      "stock_total": 9649.2,
+      "stock_cost": 9974.28,
+      "total": 9743.92
+    },
+    {
+      "name": "G Etrade",
+      "cash": 9673.0,
+      "stock_total": 0.0,
+      "stock_cost": 0.0,
+      "total": 9673.0
+    },
+    {
+      "name": "G Fidelity Health",
+      "cash": 0.0,
+      "stock_total": 8901.2,
+      "stock_cost": 9189.18,
+      "total": 8901.2
+    },
+    {
+      "name": "R Robinhood Managed",
+      "cash": 1000.0,
+      "stock_total": 0.0,
+      "stock_cost": 0.0,
+      "total": 1000.0
+    }
   ],
-  positions:[
-    {symbol:"INTC",shares:5108,avg:45.66,price:115.20,account:"R Intel Etrade"},
-    {symbol:"INTC",shares:3557,avg:45.00,price:115.20,account:"G Intel Etrade"},
-    {symbol:"TQQQ",shares:1000,avg:76.72,price:82.40, account:"G Fidelity 401K"},
-    {symbol:"INTC",shares:1268,avg:118.25,price:115.20,account:"R Robinhood"},
-    {symbol:"FETH",shares:3861,avg:42.02,price:22.94, account:"G Crypto"},
-    {symbol:"NVDA",shares:50,  avg:180.00,price:231.61,account:"G Fidelity Indiv"}
+  "positions": [
+    {
+      "symbol": "INTC",
+      "shares": 5108.0,
+      "avg": 45.66,
+      "price": 108.08,
+      "account": "R Intel Etrade"
+    },
+    {
+      "symbol": "INTC",
+      "shares": 3557.0,
+      "avg": 45.0,
+      "price": 108.08,
+      "account": "G Intel Etrade"
+    },
+    {
+      "symbol": "FETH",
+      "shares": 3861.0,
+      "avg": 42.02,
+      "price": 42.02,
+      "account": "G Fidelity 401K"
+    },
+    {
+      "symbol": "TQQQ",
+      "shares": 119.0,
+      "avg": 77.22,
+      "price": 74.8,
+      "account": "G Fidelity Health"
+    },
+    {
+      "symbol": "TQQQ",
+      "shares": 129.0,
+      "avg": 77.32,
+      "price": 74.8,
+      "account": "A1 Fidelity Roth"
+    },
+    {
+      "symbol": "TQQQ",
+      "shares": 129.0,
+      "avg": 77.32,
+      "price": 74.8,
+      "account": "A2 Fidelity Roth"
+    },
+    {
+      "symbol": "TQQQ",
+      "shares": 129.0,
+      "avg": 77.32,
+      "price": 74.8,
+      "account": "A3 Fidelity Roth"
+    },
+    {
+      "symbol": "TQQQ",
+      "shares": 371.0,
+      "avg": 76.91,
+      "price": 74.8,
+      "account": "R Fidelity Roth"
+    },
+    {
+      "symbol": "TQQQ",
+      "shares": 450.0,
+      "avg": 77.18,
+      "price": 74.8,
+      "account": "G Fidelity Roth"
+    },
+    {
+      "symbol": "TQQQ",
+      "shares": 1000.0,
+      "avg": 76.72,
+      "price": 74.8,
+      "account": "G Fidelity 401K"
+    },
+    {
+      "symbol": "DRAM",
+      "shares": 1000.0,
+      "avg": 55.18,
+      "price": 51.14,
+      "account": "G Fidelity 401K"
+    },
+    {
+      "symbol": "TQQQ",
+      "shares": 4784.0,
+      "avg": 78.11,
+      "price": 74.8,
+      "account": "R Fidelity 401K"
+    },
+    {
+      "symbol": "INTC",
+      "shares": 2000.0,
+      "avg": 124.63,
+      "price": 108.08,
+      "account": "G Fidelity Individual"
+    },
+    {
+      "symbol": "INTC",
+      "shares": 2268.0,
+      "avg": 123.33,
+      "price": 108.08,
+      "account": "R Robinhood"
+    }
   ],
-  signals:{tf:"4hr",entries:[
-    {type:"ENTRY",  ticker:"NVDA",score:78,price:231.61,ema:218.40,detail:"Pullback to 9 EMA on low vol, closed above (1st touch)",stop:218.40,target:262.21},
-    {type:"REENTRY",ticker:"AMD", score:71,price:440.03,ema:425.10,detail:"Was below EMA 2 bars, reclaimed — strong close",stop:425.10,target:485.00}
-  ],exits:[
-    {type:"CAUTION",   ticker:"GEV", score:61,price:842.08,ema:870.00,detail:"Hold — first dip below EMA on low vol, move stop to bar low"},
-    {type:"TIER1_EXIT",ticker:"RIOT",score:60,price:15.68, ema:17.20, detail:"Weakness building — watch next close"}
-  ],scored:[
-    {ticker:"NVDA",score:78,price:231.61,structure:"HH:2 HL:2"},
-    {ticker:"AMD", score:73,price:440.03,structure:"HH:2 HL:1"},
-    {ticker:"TSLA",score:71,price:442.53,structure:"HH:1 HL:2"},
-    {ticker:"MU",  score:68,price:102.40,structure:"HH:2 HL:1"},
-    {ticker:"INTC",score:65,price:115.20,structure:"HH:1 HL:1"},
-    {ticker:"GEV", score:61,price:842.08,structure:"LH:2 LL:1"},
-    {ticker:"RIOT",score:60,price:15.68, structure:"LH:1 LL:1"}
-  ]},
-  journal:{today:[
-    {time:"08:45 AM",entry:"Watching NVDA for a clean EMA touch. Volume dried up nicely overnight.",sentiment:"positive"},
-    {time:"09:15 AM",entry:"Chased RIOT after open — stopped out. Need to wait for confirmation.",sentiment:"negative"}
-  ],stats:{sleep:7,mind:8,physical:7,goal:"Only take A+ setups. No FOMO.",pnl:"+$1,240"}},
-  trades:[
-    {date:"2026-05-17",symbol:"TQQQ",direction:"BUY", shares:1000,price:76.72, total:76720, account:"G Fidelity 401K",status:"OPEN"},
-    {date:"2026-05-16",symbol:"INTC",direction:"BUY", shares:1268,price:118.25,total:149941,account:"R Robinhood",    status:"OPEN"},
-    {date:"2026-05-15",symbol:"NVDA",direction:"SELL",shares:50,  price:228.40,total:11420, account:"G Fidelity Indiv",status:"CLOSED"}
+  "signals": {
+    "tf": "4hr",
+    "entries": [],
+    "exits": [],
+    "scored": []
+  },
+  "journal": {
+    "today": [],
+    "stats": {
+      "sleep": "",
+      "mind": "",
+      "physical": "",
+      "goal": "",
+      "pnl": ""
+    }
+  },
+  "trades": [
+    {
+      "date": "2026-05-14",
+      "symbol": "INTC",
+      "direction": "BUY",
+      "shares": 1268,
+      "price": 118.25,
+      "total": 149941,
+      "account": "R Robinhood",
+      "status": "OPEN"
+    },
+    {
+      "date": "2026-05-14",
+      "symbol": "TQQQ",
+      "direction": "BUY",
+      "shares": 4784,
+      "price": 78.11,
+      "total": 373678.24,
+      "account": "R Fidelity 401K",
+      "status": "OPEN"
+    },
+    {
+      "date": "2026-05-13",
+      "symbol": "INTC",
+      "direction": "BUY",
+      "shares": 1000,
+      "price": 122.14,
+      "total": 122140,
+      "account": "G Fidelity Individual",
+      "status": "OPEN"
+    },
+    {
+      "date": "2026-05-12",
+      "symbol": "TQQQ",
+      "direction": "BUY",
+      "shares": 119,
+      "price": 77.22,
+      "total": 9189.18,
+      "account": "G Fidelity Health",
+      "status": "OPEN"
+    },
+    {
+      "date": "2026-05-12",
+      "symbol": "TQQQ",
+      "direction": "BUY",
+      "shares": 129,
+      "price": 77.32,
+      "total": 9974.28,
+      "account": "A3 Fidelity Roth",
+      "status": "OPEN"
+    },
+    {
+      "date": "2026-05-12",
+      "symbol": "TQQQ",
+      "direction": "BUY",
+      "shares": 129,
+      "price": 77.32,
+      "total": 9974.28,
+      "account": "A2 Fidelity Roth",
+      "status": "OPEN"
+    },
+    {
+      "date": "2026-05-12",
+      "symbol": "TQQQ",
+      "direction": "BUY",
+      "shares": 129,
+      "price": 77.32,
+      "total": 9974.28,
+      "account": "A1 Fidelity Roth",
+      "status": "OPEN"
+    },
+    {
+      "date": "2026-05-12",
+      "symbol": "TQQQ",
+      "direction": "BUY",
+      "shares": 450,
+      "price": 77.18,
+      "total": 34731,
+      "account": "G Fidelity Roth",
+      "status": "OPEN"
+    },
+    {
+      "date": "2026-05-12",
+      "symbol": "TQQQ",
+      "direction": "BUY",
+      "shares": 371,
+      "price": 76.91,
+      "total": 28533.61,
+      "account": "R Fidelity Roth",
+      "status": "OPEN"
+    },
+    {
+      "date": "2026-05-12",
+      "symbol": "INTC",
+      "direction": "BUY",
+      "shares": 1000,
+      "price": 127.12,
+      "total": 127120,
+      "account": "G Fidelity Individual",
+      "status": "OPEN"
+    },
+    {
+      "date": "2026-05-12",
+      "symbol": "INTC",
+      "direction": "BUY",
+      "shares": 1000,
+      "price": 129.76,
+      "total": 129760,
+      "account": "R Robinhood",
+      "status": "OPEN"
+    },
+    {
+      "date": "2026-05-12",
+      "symbol": "DRAM",
+      "direction": "BUY",
+      "shares": 1000,
+      "price": 55.18,
+      "total": 55180,
+      "account": "G Fidelity 401K",
+      "status": "OPEN"
+    },
+    {
+      "date": "2026-05-12",
+      "symbol": "TQQQ",
+      "direction": "BUY",
+      "shares": 1000,
+      "price": 76.72,
+      "total": 76720,
+      "account": "G Fidelity 401K",
+      "status": "OPEN"
+    }
   ]
 };
 /*DATA_END*/
 
 const $ = id => document.getElementById(id);
-const fm = n => '$'+Math.abs(n).toLocaleString('en-US',{maximumFractionDigits:0});
-const fd = n => (n>=0?'+':'-')+'$'+Math.abs(Math.round(n)).toLocaleString();
-const fp = n => (n>=0?'+':'')+n.toFixed(1)+'%';
-const pc = n => n>=0?'g':'r';
+const fm = n => '$' + Math.abs(Math.round(n)).toLocaleString();
+const fd = n => (n >= 0 ? '+' : '-') + fm(n);
+const fp = n => (n >= 0 ? '+' : '') + n.toFixed(1) + '%';
+const pc = n => n >= 0 ? 'g' : 'r';
 
 // TABS
-document.querySelectorAll('.tab').forEach(t=>{
-  t.onclick=()=>{
-    document.querySelectorAll('.tab').forEach(x=>x.classList.remove('on'));
-    document.querySelectorAll('.sec').forEach(x=>x.classList.remove('on'));
+document.querySelectorAll('.tab').forEach(function(t) {
+  t.onclick = function() {
+    document.querySelectorAll('.tab').forEach(function(x) { x.classList.remove('on'); });
+    document.querySelectorAll('.sec').forEach(function(x) { x.classList.remove('on'); });
     t.classList.add('on');
-    $('t-'+t.dataset.t).classList.add('on');
+    document.getElementById('t-' + t.dataset.t).classList.add('on');
   };
 });
 
-// TOP
+// TOP BAR
 $('nw').textContent = fm(DATA.net_worth);
 $('ts').textContent = DATA.generated;
-const pl = DATA.total_pl;
-$('nwpl').innerHTML = `<span class="${pc(pl)}">${fd(pl)} unrealised</span>`;
+var pl = DATA.total_pl;
+$('nwpl').innerHTML = '<span class="' + pc(pl) + '">' + fd(pl) + ' unrealised</span>';
 
-// HOLDINGS
-(function(){
-  const accts = DATA.accounts.filter(a=>a.total>0).sort((a,b)=>b.total-a.total);
-  const tot   = accts.reduce((s,a)=>s+a.total,0);
-  const cash  = accts.reduce((s,a)=>s+a.cash,0);
-  const inv   = accts.reduce((s,a)=>s+a.stock_total,0);
-  const tpl   = accts.reduce((s,a)=>s+(a.stock_total-a.stock_cost),0);
+// ── HOLDINGS ──────────────────────────────────────
+(function() {
+  var accts = DATA.accounts.filter(function(a) { return a.total > 0; })
+                            .sort(function(a, b) { return b.total - a.total; });
+  var tot   = accts.reduce(function(s, a) { return s + a.total; }, 0);
+  var cash  = accts.reduce(function(s, a) { return s + a.cash; }, 0);
+  var inv   = accts.reduce(function(s, a) { return s + a.stock_total; }, 0);
+  var tpl   = accts.reduce(function(s, a) { return s + (a.stock_total - a.stock_cost); }, 0);
 
   $('h-sg').innerHTML =
-    `<div class="st"><div class="stl">Invested</div><div class="stv">${fm(inv)}</div><div class="sts ${pc(tpl)}">${fd(tpl)} P&L</div></div>`+
-    `<div class="st"><div class="stl">Cash</div><div class="stv">${fm(cash)}</div><div class="sts m">${accts.length} accounts</div></div>`;
+    '<div class="st"><div class="stl">Invested</div><div class="stv">' + fm(inv) + '</div>' +
+    '<div class="sts ' + pc(tpl) + '">' + fd(tpl) + ' P&L</div></div>' +
+    '<div class="st"><div class="stl">Cash</div><div class="stv">' + fm(cash) + '</div>' +
+    '<div class="sts m">' + accts.length + ' accounts</div></div>';
 
-  // SUNBURST — 4 rings matching user spec:
-  // Ring 1: Account names (sized by total)
-  // Ring 2: Account value split (cash vs invested)
-  // Ring 3: Holdings (sized by market value)
-  // Ring 4: P&L per holding (green/red)
+  // Build sunburst data
+  var COLS = ['#60a5fa','#4ade80','#fbbf24','#f87171','#a78bfa','#fb923c','#34d399','#e879f9','#38bdf8'];
 
-  const ACOL = ['#60a5fa','#4ade80','#fbbf24','#f87171','#a78bfa','#fb923c',
-                '#34d399','#e879f9','#38bdf8','#818cf8','#fde68a','#6ee7b7'];
+  // Positions by account
+  var pba = {};
+  DATA.positions.forEach(function(p) {
+    if (!pba[p.account]) pba[p.account] = [];
+    pba[p.account].push(p);
+  });
 
-  const pba={};
-  DATA.positions.forEach(p=>{ if(!pba[p.account])pba[p.account]=[]; pba[p.account].push(p); });
+  var r1d=[], r1c=[], r1l=[];   // Ring 1: accounts
+  var r2d=[], r2c=[], r2l=[];   // Ring 2: cash vs invested
+  var r3d=[], r3c=[], r3l=[];   // Ring 3: holdings
+  var r4d=[], r4c=[], r4l=[];   // Ring 4: P&L
 
-  const r1d=[], r1c=[], r1l=[];  // accounts
-  const r2d=[], r2c=[], r2l=[];  // cash vs invested
-  const r3d=[], r3c=[], r3l=[];  // holdings
-  const r4d=[], r4c=[], r4l=[];  // p&l
+  accts.forEach(function(a, i) {
+    var col = COLS[i % COLS.length];
+    var sn  = a.name.replace('G Fidelity ','G Fid ')
+                    .replace('R Fidelity ','R Fid ')
+                    .replace('Robinhood','RH')
+                    .replace('Etrade','ET')
+                    .replace('Intel ','').trim();
 
-  accts.forEach((a,i)=>{
-    const ac  = ACOL[i % ACOL.length];
-    const sn  = a.name.replace('G Fidelity','G Fid').replace('R Fidelity','R Fid')
-                      .replace('Robinhood','RH').replace('Etrade','ET').replace('Intel ','').trim();
-    // Ring 1: account (sorted largest first — already sorted)
-    r1d.push(a.total); r1c.push(ac+'cc'); r1l.push(sn);
+    // Ring 1: account
+    r1d.push(a.total);
+    r1c.push(col + 'cc');
+    r1l.push(sn + '\n' + fm(a.total));
 
-    // Ring 2: cash vs invested, sorted by size
-    const parts = [];
-    if(a.cash>0)        parts.push({v:a.cash,       c:'#1f1f1f', l:'Cash'});
-    if(a.stock_total>0) parts.push({v:a.stock_total, c:ac+'77',  l:'Invested'});
-    parts.sort((x,y)=>y.v-x.v);
+    // Ring 2: cash/invested sorted by size
+    var parts = [];
+    if (a.cash > 0)        parts.push({v: a.cash,        c: '#2a2a2a', l: 'Cash\n'        + fm(a.cash)});
+    if (a.stock_total > 0) parts.push({v: a.stock_total, c: col + '88', l: 'Stocks\n'     + fm(a.stock_total)});
+    parts.sort(function(x, y) { return y.v - x.v; });
 
-    const pos = (pba[a.name]||[]).sort((x,y)=>y.shares*y.price-x.shares*x.price);
+    var pos = (pba[a.name] || []).sort(function(x, y) { return y.shares * y.price - x.shares * x.price; });
 
-    parts.forEach(pt=>{
-      r2d.push(pt.v); r2c.push(pt.c); r2l.push(pt.l+' '+fm(pt.v));
+    parts.forEach(function(pt) {
+      r2d.push(pt.v);
+      r2c.push(pt.c);
+      r2l.push(pt.l);
 
-      if(pt.l==='Invested' && pos.length){
-        // Ring 3: individual holdings sized by market value
-        pos.forEach(p=>{
-          const mv  = Math.round(p.shares * p.price);
-          const apl = Math.round((p.price-p.avg)*p.shares);
-          r3d.push(mv); r3c.push(ac+'55'); r3l.push(`${p.symbol} ${fm(mv)}`);
-          // Ring 4: p&l — sized by absolute p&l, colored green/red
-          r4d.push(Math.abs(apl)||1);
-          r4c.push(apl>=0?'rgba(74,222,128,0.8)':'rgba(248,113,113,0.8)');
-          r4l.push((apl>=0?'+':'')+fm(apl));
+      if (pt.l.indexOf('Stocks') === 0 && pos.length) {
+        // Ring 3+4: holdings
+        pos.forEach(function(p) {
+          var mv  = Math.round(p.shares * p.price);
+          var apl = Math.round((p.price - p.avg) * p.shares);
+          r3d.push(mv);
+          r3c.push(col + '55');
+          r3l.push(p.symbol + '\n' + fm(mv));
+          r4d.push(Math.max(Math.abs(apl), 1));
+          r4c.push(apl >= 0 ? 'rgba(74,222,128,0.75)' : 'rgba(248,113,113,0.75)');
+          r4l.push(fd(apl));
         });
       } else {
         // Pad rings 3 & 4 to keep alignment
@@ -303,151 +597,210 @@ $('nwpl').innerHTML = `<span class="${pc(pl)}">${fd(pl)} unrealised</span>`;
     });
   });
 
-  $('sb-tot').textContent = fm(tot)+' · '+(totalPL>=0?'+':'-')+fm(totalPL)+' P&L';
+  $('sb-tot').textContent = fm(tot);
 
-  // Register datalabels plugin
-  Chart.register(ChartDataLabels);
-
-  const canvas=$('sb-canvas');
-  const cw = canvas.parentElement.offsetWidth||340;
-  canvas.width  = cw;
-  canvas.height = 420;
-
-  // Threshold: only show label if sector is > X% of ring total
-  function showLbl(ctx, minPct){
-    const data = ctx.dataset.data.filter(v=>v>0);
-    const tot  = data.reduce((s,v)=>s+v,0);
-    return tot>0 && ctx.dataset.data[ctx.dataIndex]/tot > minPct;
+  // Guard: don't render chart if no data
+  if (r1d.length === 0) {
+    $('sb-canvas').style.display = 'none';
+    $('sb-lgnd').innerHTML = '<span style="color:#444;font-size:12px">No holdings data yet — run generate_dashboard.py</span>';
+    return;
   }
 
-  new Chart(canvas,{
-    type:'doughnut',
-    data:{
-      labels:r1l,
-      datasets:[
-        {label:'Account',  data:r1d, backgroundColor:r1c, borderColor:'#0d0d0d', borderWidth:2,   hoverOffset:4},
-        {label:'Value',    data:r2d, backgroundColor:r2c, borderColor:'#0d0d0d', borderWidth:1.5, hoverOffset:3},
-        {label:'Holdings', data:r3d, backgroundColor:r3c, borderColor:'#0d0d0d', borderWidth:1,   hoverOffset:2},
-        {label:'P&L',      data:r4d, backgroundColor:r4c, borderColor:'#0d0d0d', borderWidth:0.5, hoverOffset:1}
+  Chart.register(ChartDataLabels);
+
+  var canvas = $('sb-canvas');
+  var pw = canvas.parentElement.offsetWidth || 340;
+  canvas.width  = pw;
+  canvas.height = 420;
+
+  var allLabels = [r1l, r2l, r3l, r4l];
+  var allData   = [r1d, r2d, r3d, r4d];
+
+  new Chart(canvas, {
+    type: 'doughnut',
+    data: {
+      datasets: [
+        {data: r1d, backgroundColor: r1c, borderColor: '#0d0d0d', borderWidth: 2,   hoverOffset: 4},
+        {data: r2d, backgroundColor: r2c, borderColor: '#0d0d0d', borderWidth: 1.5, hoverOffset: 3},
+        {data: r3d, backgroundColor: r3c, borderColor: '#0d0d0d', borderWidth: 1,   hoverOffset: 2},
+        {data: r4d, backgroundColor: r4c, borderColor: '#0d0d0d', borderWidth: 0.5, hoverOffset: 1}
       ]
     },
-    options:{
-      responsive:false,
-      cutout:'20%',
-      plugins:{
-        legend:{display:false},
-        tooltip:{callbacks:{
-          label:ctx=>{
-            const ds=ctx.datasetIndex,i=ctx.dataIndex;
-            const lbl=[r1l,r2l,r3l,r4l][ds][i];
-            return lbl?' '+lbl:'';
+    options: {
+      responsive: false,
+      cutout: '18%',
+      plugins: {
+        legend: {display: false},
+        tooltip: {
+          callbacks: {
+            title: function(ctx) {
+              return ['Account','Value','Holding','P&L'][ctx[0].datasetIndex];
+            },
+            label: function(ctx) {
+              var lbl = allLabels[ctx.datasetIndex][ctx.dataIndex];
+              return lbl ? ' ' + lbl.replace('\n', ': ') : '';
+            }
+          }
+        },
+        datalabels: {
+          color: '#ffffff',
+          anchor: 'center',
+          align: 'center',
+          textAlign: 'center',
+          font: function(ctx) {
+            var sizes = [9, 8, 8, 7];
+            var weights = ['600', '500', '400', '400'];
+            return {
+              size: sizes[ctx.datasetIndex],
+              weight: weights[ctx.datasetIndex],
+              family: "'IBM Plex Sans', sans-serif"
+            };
           },
-          title:ctx=>(['Account','Value','Holding','P&L'][ctx[0].datasetIndex])
-        }},
-        datalabels:{
-          color:'#fff',
-          anchor:'center',
-          align:'center',
-          textAlign:'center',
-          font:(ctx)=>{
-            const sizes=[10,9,8,8];
-            return {size:sizes[ctx.datasetIndex],weight:ctx.datasetIndex<2?'600':'400',
-                    family:"'IBM Plex Sans',sans-serif"};
+          formatter: function(val, ctx) {
+            var ds  = ctx.datasetIndex;
+            var idx = ctx.dataIndex;
+            var lbl = allLabels[ds][idx];
+            if (!lbl || lbl === '') return null;
+            return lbl;
           },
-          formatter:(val,ctx)=>{
-            const ds=ctx.datasetIndex, i=ctx.dataIndex;
-            const lbls=[r1l,r2l,r3l,r4l][ds];
-            const vals=[r1d,r2d,r3d,r4d][ds];
-            const lbl=lbls[i]||'';
-            const v=vals[i]||0;
-            if(!lbl||lbl===''||lbl==='—') return null;
-            if(ds===0) return lbl+'\n'+fm(v);
-            if(ds===1) return lbl.split(' ')[0]+'\n'+fm(v);
-            if(ds===2) return lbl.split(' ')[0];        // Just ticker
-            if(ds===3) return lbl;                      // P&L amount
-            return null;
+          display: function(ctx) {
+            var ds   = ctx.datasetIndex;
+            var idx  = ctx.dataIndex;
+            var data = ctx.dataset.data;
+            var ringTotal = data.reduce(function(s, v) { return s + (v || 0); }, 0);
+            if (ringTotal === 0) return false;
+            var pct = (data[idx] || 0) / ringTotal;
+            var mins = [0.07, 0.09, 0.12, 0.12];
+            return pct > mins[ds];
           },
-          display:(ctx)=>{
-            const ds=ctx.datasetIndex;
-            const minPct=[0.06,0.08,0.10,0.12][ds];
-            return showLbl(ctx,minPct);
-          },
-          overflow:'hidden',
-          clip:true,
+          clip: true
         }
       }
     }
   });
 
-  $('sb-lgnd').innerHTML=
-    '<span class="ring-lbl" style="background:#60a5fa22;color:#60a5fa">Ring 1: Accounts</span>'+
-    '<span class="ring-lbl" style="background:#33333366;color:#888">Ring 2: Cash/Invested</span>'+
-    '<span class="ring-lbl" style="background:#60a5fa33;color:#aaa">Ring 3: Holdings</span>'+
-    '<span class="ring-lbl" style="background:#4ade8033;color:#4ade80">Ring 4: Profit</span>'+
-    '<span class="ring-lbl" style="background:#f8717133;color:#f87171">Ring 4: Loss</span>';
+  // Legend
+  var lgnd = COLS.slice(0, accts.length).map(function(c, i) {
+    var sn = accts[i].name.replace('G Fidelity ','G ').replace('R Fidelity ','R ').replace('Intel ','').replace('Etrade','ET').replace('Robinhood','RH').trim();
+    return '<span style="font-size:9px;padding:2px 7px;border-radius:3px;background:' + c + '22;color:' + c + ';font-weight:600">' + sn + '</span>';
+  }).join('');
+  lgnd += '<span style="font-size:9px;padding:2px 7px;border-radius:3px;background:#4ade8022;color:#4ade80;font-weight:600">Profit</span>';
+  lgnd += '<span style="font-size:9px;padding:2px 7px;border-radius:3px;background:#f8717122;color:#f87171;font-weight:600">Loss</span>';
+  lgnd += '<span style="font-size:9px;padding:2px 7px;border-radius:3px;background:#33333366;color:#666;font-weight:600">Cash</span>';
+  $('sb-lgnd').innerHTML = lgnd;
 
-  // ACCOUNT LIST
-  $('ac-list').innerHTML = accts.map(a=>{
-    const apl=a.stock_total-a.stock_cost, aplP=a.stock_cost>0?apl/a.stock_cost*100:0;
-    const plStr=a.stock_cost>0?` <span class="${pc(apl)}">${fd(apl)} (${fp(aplP)})</span>`:'';
-    return `<div class="row"><div class="rl"><div class="rt">${a.name}</div><div class="rs">Cash ${fm(a.cash)} · Stocks ${fm(a.stock_total)}${plStr}</div></div><div class="rr"><div class="rv">${fm(a.total)}</div></div></div>`;
+  // Account list
+  $('ac-list').innerHTML = accts.map(function(a) {
+    var apl = a.stock_total - a.stock_cost;
+    var aplP = a.stock_cost > 0 ? apl / a.stock_cost * 100 : 0;
+    var plStr = a.stock_cost > 0 ? ' <span class="' + pc(apl) + '">' + fd(apl) + ' (' + fp(aplP) + ')</span>' : '';
+    return '<div class="row"><div class="rl"><div class="rt">' + a.name + '</div>' +
+           '<div class="rs">Cash ' + fm(a.cash) + ' · Stocks ' + fm(a.stock_total) + plStr + '</div></div>' +
+           '<div class="rr"><div class="rv">' + fm(a.total) + '</div></div></div>';
   }).join('');
 
-  // POSITIONS
-  const spos = DATA.positions.slice().sort((a,b)=>((b.price-b.avg)*b.shares)-((a.price-a.avg)*a.shares));
-  $('pos-list').innerHTML = spos.length ? spos.map(p=>{
-    const pl=(p.price-p.avg)*p.shares, plP=(p.price-p.avg)/p.avg*100;
-    return `<div class="row"><div class="rl"><div class="rt">${p.symbol} <span class="m" style="font-size:11px;font-weight:400">${p.account}</span></div><div class="rs">${p.shares.toLocaleString()} sh · avg $${p.avg.toFixed(2)} → $${p.price.toFixed(2)}</div></div><div class="rr"><div class="rv ${pc(pl)}">${fd(pl)}</div><div class="rv2 ${pc(pl)}">${fp(plP)}</div></div></div>`;
+  // Positions sorted by P&L
+  var spos = DATA.positions.slice().sort(function(a, b) {
+    return (b.price - b.avg) * b.shares - (a.price - a.avg) * a.shares;
+  });
+  $('pos-list').innerHTML = spos.length ? spos.map(function(p) {
+    var pl  = (p.price - p.avg) * p.shares;
+    var plP = (p.price - p.avg) / p.avg * 100;
+    return '<div class="row"><div class="rl">' +
+           '<div class="rt">' + p.symbol + ' <span class="m" style="font-size:11px;font-weight:400">' + p.account + '</span></div>' +
+           '<div class="rs">' + p.shares.toLocaleString() + ' sh · avg $' + p.avg.toFixed(2) + ' → $' + p.price.toFixed(2) + '</div></div>' +
+           '<div class="rr"><div class="rv ' + pc(pl) + '">' + fd(pl) + '</div>' +
+           '<div class="rv2 ' + pc(pl) + '">' + fp(plP) + '</div></div></div>';
   }).join('') : '<div class="empty">No positions</div>';
 })();
 
-// SIGNALS
-(function(){
-  $('sig-tf').textContent='Timeframe: '+DATA.signals.tf;
-  const rend=(items,el)=>{
-    if(!items.length){$(el).innerHTML='<div class="card"><div class="empty">No signals</div></div>';return;}
-    $(el).innerHTML=items.map(s=>{
-      const isE=['ENTRY','REENTRY'].includes(s.type);
-      const isX=['TIER2_EXIT','TIER1_EXIT'].includes(s.type);
-      const cls=isE?'se':isX?'sx':'sh';
-      const lbl=isE?(s.type==='REENTRY'?'Re-entry':'Entry'):isX?'Exit':s.type.replace(/_/g,' ').toLowerCase();
-      const bc=isE?'bg':isX?'br':'bx';
-      const fc=s.score>=70?'#4ade80':s.score>=60?'#fbbf24':'#f87171';
-      const st=(s.stop&&s.target)?`<div class="sst"><span>Stop</span> <b>$${s.stop}</b> <span>Target</span> <b>$${s.target}</b></div>`:'';
-      return `<div class="sig ${cls}"><div class="shd"><span><span class="stk">${s.ticker}</span> &nbsp;<span class="bdg ${bc}">${lbl}</span></span><span class="ssc">${s.score}</span></div><div class="sbar"><div class="sfl" style="width:${s.score}%;background:${fc}"></div></div><div class="sdt">${s.detail}</div>${st}</div>`;
+// ── SIGNALS ────────────────────────────────────────
+(function() {
+  $('sig-tf').textContent = 'Timeframe: ' + DATA.signals.tf;
+  function rend(items, el) {
+    if (!items.length) { $(el).innerHTML = '<div class="card"><div class="empty">No signals</div></div>'; return; }
+    $(el).innerHTML = items.map(function(s) {
+      var isE = s.type === 'ENTRY' || s.type === 'REENTRY';
+      var isX = s.type === 'TIER2_EXIT' || s.type === 'TIER1_EXIT';
+      var cls = isE ? 'se' : isX ? 'sx' : 'sh';
+      var lbl = isE ? (s.type === 'REENTRY' ? 'Re-entry' : 'Entry') : isX ? 'Exit' : 'Caution';
+      var bc  = isE ? 'bg' : isX ? 'br' : 'bx';
+      var fc  = s.score >= 70 ? '#4ade80' : s.score >= 60 ? '#fbbf24' : '#f87171';
+      var st  = (s.stop && s.target) ?
+        '<div class="sst"><span>Stop</span> <b>$' + s.stop + '</b> <span>Target</span> <b>$' + s.target + '</b></div>' : '';
+      return '<div class="sig ' + cls + '">' +
+             '<div class="shd"><span><span class="stk">' + s.ticker + '</span> &nbsp;' +
+             '<span class="bdg ' + bc + '">' + lbl + '</span></span>' +
+             '<span class="ssc">' + s.score + '</span></div>' +
+             '<div class="sbar"><div class="sfl" style="width:' + s.score + '%;background:' + fc + '"></div></div>' +
+             '<div class="sdt">' + s.detail + '</div>' + st + '</div>';
     }).join('');
-  };
-  rend(DATA.signals.entries,'entries');
-  rend(DATA.signals.exits,'exits');
+  }
+  rend(DATA.signals.entries, 'entries');
+  rend(DATA.signals.exits,   'exits');
 })();
 
-// WATCHLIST
-(function(){
-  const items=DATA.signals.scored;
-  if(!items.length){$('wl-list').innerHTML='<div class="empty">Run /ema to populate</div>';return;}
-  $('wl-list').innerHTML=items.map(r=>{
-    const c=r.score>=70?'#4ade80':r.score>=60?'#fbbf24':'#f87171';
-    return `<div class="mt"><div class="mtk">${r.ticker}</div><div class="mb"><div class="mf" style="width:${r.score}%;background:${c}"></div></div><div class="ms">${r.score}</div><div class="mp">$${Number(r.price).toFixed(0)}</div></div>`;
+// ── WATCHLIST ──────────────────────────────────────
+(function() {
+  var items = DATA.signals.scored;
+  if (!items.length) { $('wl-list').innerHTML = '<div class="empty">Run /ema to populate</div>'; return; }
+  $('wl-list').innerHTML = items.map(function(r) {
+    var c = r.score >= 70 ? '#4ade80' : r.score >= 60 ? '#fbbf24' : '#f87171';
+    return '<div class="mt"><div class="mtk">' + r.ticker + '</div>' +
+           '<div class="mb"><div class="mf" style="width:' + r.score + '%;background:' + c + '"></div></div>' +
+           '<div class="ms">' + r.score + '</div>' +
+           '<div class="mp">$' + Number(r.price).toFixed(0) + '</div></div>';
   }).join('');
-  new Chart($('sc-canvas'),{
-    type:'bar',
-    data:{labels:items.map(r=>r.ticker),datasets:[{data:items.map(r=>r.score),backgroundColor:items.map(r=>r.score>=70?'#4ade80':r.score>=60?'#fbbf24':'#f87171'),borderRadius:3,borderSkipped:false}]},
-    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{ticks:{color:'#555',font:{size:10}},grid:{display:false}},y:{min:0,max:100,ticks:{color:'#555',font:{size:10}},grid:{color:'#1a1a1a'}}}}
+  new Chart($('sc-canvas'), {
+    type: 'bar',
+    data: {
+      labels: items.map(function(r) { return r.ticker; }),
+      datasets: [{
+        data: items.map(function(r) { return r.score; }),
+        backgroundColor: items.map(function(r) { return r.score>=70?'#4ade80':r.score>=60?'#fbbf24':'#f87171'; }),
+        borderRadius: 3
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: {legend: {display: false}, datalabels: {display: false}},
+      scales: {
+        x: {ticks: {color: '#555', font: {size: 10}}, grid: {display: false}},
+        y: {min: 0, max: 100, ticks: {color: '#555', font: {size: 10}}, grid: {color: '#1a1a1a'}}
+      }
+    }
   });
 })();
 
-// JOURNAL
-(function(){
-  const s=DATA.journal.stats;
-  $('j-sg').innerHTML=
-    `<div class="st"><div class="stl">Sleep · Mind · Body</div><div class="stv">${s.sleep||'—'} · ${s.mind||'—'} · ${s.physical||'—'}</div><div class="sts m">out of 10</div></div>`+
-    `<div class="st"><div class="stl">P&L Today</div><div class="stv ${s.pnl&&s.pnl[0]==='-'?'r':'g'}">${s.pnl||'—'}</div></div>`;
-  if(s.goal) $('goal-box').innerHTML=`<div class="card" style="margin-bottom:12px"><div class="cb"><span style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#444;font-weight:600">Goal &nbsp;</span><span style="font-size:13px;color:#ccc">${s.goal}</span></div></div>`;
-  $('j-list').innerHTML=DATA.journal.today.length?DATA.journal.today.map(e=>`<div class="je"><div class="jm"><span class="jtm">${e.time}</span>${e.sentiment?`<span class="bdg ${e.sentiment==='positive'?'bg':e.sentiment==='negative'?'br':'bx'}">${e.sentiment}</span>`:''}</div><div class="jt">${e.entry}</div></div>`).join(''):'<div class="empty">No entries today</div>';
+// ── JOURNAL ────────────────────────────────────────
+(function() {
+  var s = DATA.journal.stats;
+  $('j-sg').innerHTML =
+    '<div class="st"><div class="stl">Sleep · Mind · Body</div>' +
+    '<div class="stv">' + (s.sleep||'—') + ' · ' + (s.mind||'—') + ' · ' + (s.physical||'—') + '</div>' +
+    '<div class="sts m">out of 10</div></div>' +
+    '<div class="st"><div class="stl">P&L Today</div>' +
+    '<div class="stv ' + (s.pnl && s.pnl[0]==='-' ? 'r' : 'g') + '">' + (s.pnl||'—') + '</div></div>';
+  if (s.goal) {
+    $('goal-box').innerHTML =
+      '<div class="card" style="margin-bottom:12px"><div class="cb">' +
+      '<span style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#444;font-weight:600">Goal &nbsp;</span>' +
+      '<span style="font-size:13px;color:#ccc">' + s.goal + '</span></div></div>';
+  }
+  $('j-list').innerHTML = DATA.journal.today.length ? DATA.journal.today.map(function(e) {
+    return '<div class="je"><div class="jm"><span class="jtm">' + e.time + '</span>' +
+           (e.sentiment ? '<span class="bdg ' + (e.sentiment==='positive'?'bg':e.sentiment==='negative'?'br':'bx') + '">' + e.sentiment + '</span>' : '') +
+           '</div><div class="jt">' + e.entry + '</div></div>';
+  }).join('') : '<div class="empty">No entries today</div>';
 })();
 
-// TRADES
-$('t-list').innerHTML=DATA.trades.length?DATA.trades.map(t=>`<div class="row"><div class="rl"><div class="rt"><span class="bdg ${t.direction==='BUY'?'bg':'br'}">${t.direction}</span> &nbsp;${t.symbol}</div><div class="rs">${t.shares} sh @ $${t.price} · ${t.account} · ${t.date}</div></div><div class="rr"><div class="rv">${fm(t.total)}</div><div class="rv2 m">${t.status}</div></div></div>`).join(''):'<div class="empty">No trades</div>';
+// ── TRADES ────────────────────────────────────────
+$('t-list').innerHTML = DATA.trades.length ? DATA.trades.map(function(t) {
+  return '<div class="row"><div class="rl">' +
+         '<div class="rt"><span class="bdg ' + (t.direction==='BUY'?'bg':'br') + '">' + t.direction + '</span> &nbsp;' + t.symbol + '</div>' +
+         '<div class="rs">' + t.shares + ' sh @ $' + t.price + ' · ' + t.account + ' · ' + t.date + '</div></div>' +
+         '<div class="rr"><div class="rv">' + fm(t.total) + '</div><div class="rv2 m">' + t.status + '</div></div></div>';
+}).join('') : '<div class="empty">No trades</div>';
 </script>
 </body>
 </html>

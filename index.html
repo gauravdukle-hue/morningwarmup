@@ -7,20 +7,20 @@
 <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@300;400;500&family=Geist:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg:      #f5f5f0;
-    --card:    #ffffff;
-    --border:  #e2e2dc;
-    --text:    #1a1a18;
-    --muted:   #6b6b66;
-    --faint:   #9b9b96;
-    --green:   #1a7a4a;
-    --green-bg:#e8f5ee;
-    --red:     #c0392b;
-    --red-bg:  #fdf0ee;
-    --blue:    #1a5fa8;
-    --blue-bg: #e8f0fa;
-    --gold:    #8a6914;
-    --gold-bg: #fdf5e0;
+    --bg:      #0d0d0d;
+    --card:    #161616;
+    --border:  #2a2a2a;
+    --text:    #ffffff;
+    --muted:   #aaaaaa;
+    --faint:   #555555;
+    --green:   #4ade80;
+    --green-bg:#0d2b1a;
+    --red:     #f87171;
+    --red-bg:  #2b0d0d;
+    --blue:    #60a5fa;
+    --blue-bg: #0d1a2b;
+    --gold:    #fbbf24;
+    --gold-bg: #2b200d;
     --mono:    'Geist Mono', monospace;
     --sans:    'Geist', sans-serif;
     --radius:  10px;
@@ -29,7 +29,7 @@
   body { background: var(--bg); color: var(--text); font-family: var(--sans); font-size: 14px; line-height: 1.5; }
 
   /* TOP BAR */
-  .topbar { background: var(--text); color: #fff; padding: 14px 16px; position: sticky; top: 0; z-index: 100; }
+  .topbar { background: #111111; color: #ffffff; border-bottom: 1px solid #2a2a2a; padding: 14px 16px; position: sticky; top: 0; z-index: 100; }
   .topbar-inner { display: flex; justify-content: space-between; align-items: flex-start; }
   .brand { font-size: 11px; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; opacity: 0.5; margin-bottom: 6px; }
   .net-worth { font-family: var(--mono); font-size: 30px; font-weight: 300; letter-spacing: -0.02em; line-height: 1; }
@@ -39,10 +39,10 @@
   .updated { font-size: 10px; opacity: 0.4; text-align: right; margin-top: 4px; }
 
   /* TABS */
-  .tabs { display: flex; background: var(--card); border-bottom: 1px solid var(--border); overflow-x: auto; scrollbar-width: none; position: sticky; top: 80px; z-index: 99; }
+  .tabs { display: flex; background: #111111; border-bottom: 1px solid var(--border); overflow-x: auto; scrollbar-width: none; position: sticky; top: 80px; z-index: 99; }
   .tabs::-webkit-scrollbar { display: none; }
   .tab { padding: 12px 18px; font-size: 12px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); cursor: pointer; white-space: nowrap; border-bottom: 2px solid transparent; flex-shrink: 0; }
-  .tab.active { color: var(--text); border-bottom-color: var(--text); }
+  .tab.active { color: #ffffff; border-bottom-color: #ffffff; }
 
   /* LAYOUT */
   .content { padding: 14px 14px 40px; }
@@ -57,7 +57,7 @@
 
   /* SUMMARY STRIPS */
   .summary-strip { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px; }
-  .stat { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 12px 14px; }
+  .stat { background: #1a1a1a; border: 1px solid var(--border); border-radius: var(--radius); padding: 12px 14px; }
   .stat-label { font-size: 10px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
   .stat-val { font-family: var(--mono); font-size: 20px; font-weight: 400; }
   .stat-sub { font-family: var(--mono); font-size: 11px; color: var(--muted); margin-top: 2px; }
@@ -74,11 +74,11 @@
 
   /* BADGES */
   .badge { display: inline-block; font-size: 10px; font-weight: 600; letter-spacing: 0.05em; padding: 2px 7px; border-radius: 4px; text-transform: uppercase; }
-  .badge-green { background: var(--green-bg); color: var(--green); }
-  .badge-red   { background: var(--red-bg);   color: var(--red); }
-  .badge-blue  { background: var(--blue-bg);  color: var(--blue); }
-  .badge-gold  { background: var(--gold-bg);  color: var(--gold); }
-  .badge-gray  { background: #f0f0ea; color: var(--muted); }
+  .badge-green { background: #0d2b1a; color: #4ade80; }
+  .badge-red   { background: #2b0d0d; color: #f87171; }
+  .badge-blue  { background: #0d1a2b; color: #60a5fa; }
+  .badge-gold  { background: #2b200d; color: #fbbf24; }
+  .badge-gray  { background: #222222; color: #aaaaaa; }
 
   /* P&L COLORS */
   .pos { color: var(--green); }
@@ -205,7 +205,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <script>
 const DATA = {
-  "generated": "May 17, 2026  11:18 AM CT",
+  "generated": "May 17, 2026  11:20 AM CT",
   "net_worth": 2449796.97,
   "total_pl": 450629.19,
   "accounts": [
@@ -702,8 +702,8 @@ function renderScored() {
       responsive: true, maintainAspectRatio: false,
       plugins: { legend: { display: false } },
       scales: {
-        x: { ticks: { font: { size: 10 }, color: '#6b6b66', maxRotation: 45 }, grid: { display: false } },
-        y: { min: 0, max: 100, ticks: { font: { size: 10 }, color: '#6b6b66' }, grid: { color: '#e2e2dc' } }
+        x: { ticks: { font: { size: 10 }, color: '#aaaaaa', maxRotation: 45 }, grid: { display: false } },
+        y: { min: 0, max: 100, ticks: { font: { size: 10 }, color: '#aaaaaa' }, grid: { color: '#2a2a2a' } }
       }
     }
   });

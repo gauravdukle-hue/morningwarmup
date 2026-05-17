@@ -157,7 +157,20 @@
   <!-- HOLDINGS -->
   <div id="tab-holdings" class="section active">
     <div id="holdings-summary" class="summary-strip"></div>
-    <div class="section-hd">By Account</div>
+    <div class="section-hd">Portfolio Breakdown</div>
+    <div class="card">
+      <div class="card-hd">
+        <span class="card-label">By Account</span>
+        <span id="pie-total" style="font-family:var(--mono);font-size:12px;color:var(--muted)"></span>
+      </div>
+      <div style="padding:16px 14px;display:flex;align-items:center;gap:16px">
+        <div style="position:relative;width:140px;height:140px;flex-shrink:0">
+          <canvas id="pieChart" role="img" aria-label="Pie chart showing portfolio allocation by account"></canvas>
+        </div>
+        <div id="pie-legend" style="flex:1;min-width:0"></div>
+      </div>
+    </div>
+    <div class="section-hd">Account Detail</div>
     <div class="card" id="accounts-list"></div>
     <div class="section-hd">Open Positions</div>
     <div class="card" id="positions-list"></div>
@@ -261,6 +274,40 @@ function renderHoldings() {
       <div class="row-right"><div class="row-val">${fmt(a.total)}</div></div>
     </div>`;
   }).join('');
+
+  // PIE CHART
+  const pieAccounts = DATA.accounts.filter(a => a.total > 0);
+  if (pieAccounts.length) {
+    const COLORS = ['#60a5fa','#4ade80','#fbbf24','#f87171','#a78bfa','#34d399','#fb923c','#e879f9','#38bdf8','#86efac','#fde68a','#fca5a5'];
+    const total  = pieAccounts.reduce((s, a) => s + a.total, 0);
+    $('pie-total').textContent = fmt(total);
+
+    // Legend
+    $('pie-legend').innerHTML = pieAccounts.map((a, i) => {
+      const p = (a.total / total * 100).toFixed(1);
+      const name = a.name.length > 18 ? a.name.slice(0,16) + '…' : a.name;
+      return `<div style="display:flex;align-items:center;gap:6px;margin-bottom:6px">
+        <span style="width:8px;height:8px;border-radius:2px;background:${COLORS[i % COLORS.length]};flex-shrink:0"></span>
+        <span style="font-size:11px;color:var(--muted);flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${name}</span>
+        <span style="font-family:var(--mono);font-size:11px;color:var(--text)">${p}%</span>
+      </div>`;
+    }).join('');
+
+    if (window._pieChart) window._pieChart.destroy();
+    window._pieChart = new Chart($('pieChart'), {
+      type: 'doughnut',
+      data: {
+        labels:   pieAccounts.map(a => a.name),
+        datasets: [{ data: pieAccounts.map(a => Math.round(a.total)), backgroundColor: COLORS.slice(0, pieAccounts.length), borderWidth: 1, borderColor: '#0d0d0d', hoverOffset: 4 }]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false, cutout: '65%',
+        plugins: { legend: { display: false }, tooltip: {
+          callbacks: { label: ctx => ` ${fmt(ctx.raw)} (${(ctx.raw / total * 100).toFixed(1)}%)` }
+        }}
+      }
+    });
+  }
 
   const posList = $('positions-list');
   if (!DATA.positions.length) { posList.innerHTML = '<div class="empty">No open positions</div>'; return; }

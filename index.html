@@ -91,8 +91,6 @@ body{background:#0d0d0d;color:#fff;font-family:'IBM Plex Sans',sans-serif;font-s
       <canvas id="sb" style="display:block;width:100%"></canvas>
       <div id="sb-key" style="padding:8px 14px;display:flex;flex-wrap:wrap;gap:5px;border-top:1px solid #1a1a1a"></div>
     </div>
-    <div class="sl">Accounts</div><div class="card" id="ac-list"></div>
-    <div class="sl">Positions - best P&L first</div><div class="card" id="pos-list"></div>
   </div>
   <div id="t-signals" class="sec">
     <div class="sl" id="sig-tf"></div>
@@ -118,7 +116,7 @@ body{background:#0d0d0d;color:#fff;font-family:'IBM Plex Sans',sans-serif;font-s
 <script>
 /*DATA_START*/
 const DATA = {
-  "generated": "May 17, 2026  05:31 PM CT",
+  "generated": "May 17, 2026  05:49 PM CT",
   "net_worth": 2449796.97,
   "total_pl": 450629.19,
   "accounts": [
@@ -600,10 +598,10 @@ $('nwpl').innerHTML = '<span class="'+pc(DATA.total_pl)+'">'+fd(DATA.total_pl)+'
   ctx.font='300 60px "IBM Plex Mono",monospace';
   ctx.fillText(fm(tot),cx,cy-10);
   ctx.fillStyle=tpl>=0?'#4ade80':'#f87171';
-  ctx.font='400 42px "IBM Plex Mono",monospace';
+  ctx.font='400 48px "IBM Plex Mono",monospace';
   ctx.fillText(fd(tpl),cx,cy+4);
   ctx.fillStyle='#444';
-  ctx.font='400 42px "IBM Plex Sans",sans-serif';
+  ctx.font='400 48px "IBM Plex Sans",sans-serif';
   ctx.fillText('NET WORTH',cx,cy+15);
 
   var TWO_PI=2*Math.PI;
@@ -686,22 +684,7 @@ $('nwpl').innerHTML = '<span class="'+pc(DATA.total_pl)+'">'+fd(DATA.total_pl)+'
     '<span style="font-size:9px;padding:2px 7px;border-radius:3px;background:#4ade8022;color:#4ade80;font-weight:600">Profit</span>'+
     '<span style="font-size:9px;padding:2px 7px;border-radius:3px;background:#f8717122;color:#f87171;font-weight:600">Loss</span>';
 
-  $('ac-list').innerHTML=accts.map(function(a){
-    var apl=a.stock_total-a.stock_cost, aplP=a.stock_cost>0?apl/a.stock_cost*100:0;
-    var ps=a.stock_cost>0?' <span class="'+pc(apl)+'">'+fd(apl)+' ('+fp(aplP)+')</span>':'';
-    return '<div class="row"><div class="rl"><div class="rt">'+a.name+'</div>'+
-           '<div class="rs">Cash '+fm(a.cash)+' &middot; Stocks '+fm(a.stock_total)+ps+'</div></div>'+
-           '<div class="rr"><div class="rv">'+fm(a.total)+'</div></div></div>';
-  }).join('');
 
-  var sp=DATA.positions.slice().sort(function(a,b){return(b.price-b.avg)*b.shares-(a.price-a.avg)*a.shares;});
-  $('pos-list').innerHTML=sp.map(function(p){
-    var pl=(p.price-p.avg)*p.shares,plP=(p.price-p.avg)/p.avg*100;
-    return '<div class="row"><div class="rl"><div class="rt">'+p.symbol+' <span class="m" style="font-size:11px;font-weight:400">'+p.account+'</span></div>'+
-           '<div class="rs">'+p.shares.toLocaleString()+' sh &middot; avg $'+p.avg.toFixed(2)+' to $'+p.price.toFixed(2)+'</div></div>'+
-           '<div class="rr"><div class="rv '+pc(pl)+'">'+fd(pl)+'</div>'+
-           '<div class="rv2 '+pc(pl)+'">'+fp(plP)+'</div></div></div>';
-  }).join('')||'<div class="empty">No positions</div>';
 })();
 
 // ── SIGNALS ───────────────────────────────────────────────────────

@@ -190,23 +190,25 @@ body{background:#0d0d0d;color:#fff;font-family:'Geist',sans-serif;font-size:14px
 const DATA = {
   generated: "May 17, 2026  09:00 AM CT",
   net_worth: 2450000,
-  total_pl:  125000,
+  total_pl:  635814,
   accounts: [
-    {name:"G Fidelity 401K",   cash:155144, stock_total:0,      stock_cost:0,      total:155144},
-    {name:"R Fidelity 401K",   cash:414797, stock_total:0,      stock_cost:0,      total:414797},
-    {name:"G Fidelity Indiv",  cash:129689, stock_total:25000,  stock_cost:22000,  total:154689},
-    {name:"G Intel Etrade",    cash:168856, stock_total:452379, stock_cost:159565, total:621235},
     {name:"R Intel Etrade",    cash:0,      stock_total:649635, stock_cost:232930, total:649635},
+    {name:"G Intel Etrade",    cash:168856, stock_total:452379, stock_cost:159565, total:621235},
+    {name:"R Fidelity 401K",   cash:414797, stock_total:0,      stock_cost:0,      total:414797},
+    {name:"G Fidelity 401K",   cash:78424,  stock_total:82400,  stock_cost:76720,  total:160824},
+    {name:"G Fidelity Indiv",  cash:129689, stock_total:25000,  stock_cost:22000,  total:154689},
+    {name:"G Crypto",          cash:10000,  stock_total:88571,  stock_cost:162248, total:98571},
     {name:"G Fidelity Roth",   cash:34855,  stock_total:0,      stock_cost:0,      total:34855},
     {name:"R Fidelity Roth",   cash:28580,  stock_total:0,      stock_cost:0,      total:28580},
-    {name:"R Robinhood",       cash:284,    stock_total:0,      stock_cost:0,      total:284},
-    {name:"G Crypto",          cash:10000,  stock_total:88571,  stock_cost:162248, total:98571},
+    {name:"R Robinhood",       cash:284,    stock_total:149941, stock_cost:149941, total:150225},
   ],
   positions: [
-    {symbol:"INTC",shares:3557, avg:45.00, price:115.20, account:"G Intel Etrade"},
     {symbol:"INTC",shares:5108, avg:45.66, price:115.20, account:"R Intel Etrade"},
-    {symbol:"FETH",shares:3861, avg:42.02, price:22.94,  account:"G Crypto"},
+    {symbol:"INTC",shares:3557, avg:45.00, price:115.20, account:"G Intel Etrade"},
     {symbol:"TQQQ",shares:1000, avg:76.72, price:82.40,  account:"G Fidelity 401K"},
+    {symbol:"INTC",shares:1268, avg:118.25,price:115.20, account:"R Robinhood"},
+    {symbol:"FETH",shares:3861, avg:42.02, price:22.94,  account:"G Crypto"},
+    {symbol:"NVDA",shares:50,   avg:180.00,price:231.61, account:"G Fidelity Indiv"},
   ],
   signals: {
     tf: "4hr",
@@ -311,8 +313,8 @@ if (DATA.total_pl) {
   const cx = W/2, cy = H/2;
   const R1=65, R2=125, R3=W/2-12;
 
-  const d3s = window.d3;
-  const svg = d3s.select(svgEl).append('g').attr('transform',`translate(${cx},${cy})`);
+  
+  const svg = d3.select(svgEl).append('g').attr('transform',`translate(${cx},${cy})`);
 
   // Build hierarchy data
   const hdata = {name:'root', children: Object.entries(groups).map(([g,accs])=>({
@@ -324,10 +326,10 @@ if (DATA.total_pl) {
     }))
   }))};
 
-  const root = d3s.hierarchy(hdata).sum(d=>d.value||0);
-  d3s.partition().size([2*Math.PI,1])(root);
+  const root = d3.hierarchy(hdata).sum(d=>d.value||0);
+  d3.partition().size([2*Math.PI,1])(root);
 
-  const arcFn = (ir,or) => d3s.arc()
+  const arcFn = (ir,or) => d3.arc()
     .startAngle(d=>d.x0).endAngle(d=>d.x1)
     .innerRadius(ir).outerRadius(or)
     .padAngle(0.018).padRadius((ir+or)/2);

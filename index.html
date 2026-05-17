@@ -2,448 +2,802 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Trading Dashboard</title>
-<link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@300;400;500&family=Geist:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@300;400;500&family=Geist:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --bg:      #0d0d0d;
-    --card:    #161616;
-    --border:  #2a2a2a;
-    --text:    #ffffff;
-    --muted:   #aaaaaa;
-    --faint:   #555555;
-    --green:   #4ade80;
-    --green-bg:#0d2b1a;
-    --red:     #f87171;
-    --red-bg:  #2b0d0d;
-    --blue:    #60a5fa;
-    --blue-bg: #0d1a2b;
-    --gold:    #fbbf24;
-    --gold-bg: #2b200d;
-    --mono:    'Geist Mono', monospace;
-    --sans:    'Geist', sans-serif;
-    --radius:  10px;
-  }
-  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-  body { background: var(--bg); color: var(--text); font-family: var(--sans); font-size: 14px; line-height: 1.5; }
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#0d0d0d;color:#fff;font-family:'Geist',sans-serif;font-size:14px}
+.mono{font-family:'Geist Mono',monospace}
+.muted{color:#888}
+.pos{color:#4ade80}.neg{color:#f87171}
 
-  /* TOP BAR */
-  .topbar { background: #111111; color: #ffffff; border-bottom: 1px solid #2a2a2a; padding: 14px 16px; position: sticky; top: 0; z-index: 100; }
-  .topbar-inner { display: flex; justify-content: space-between; align-items: flex-start; }
-  .brand { font-size: 11px; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; opacity: 0.5; margin-bottom: 6px; }
-  .net-worth { font-family: var(--mono); font-size: 30px; font-weight: 300; letter-spacing: -0.02em; line-height: 1; }
-  .net-pl { font-family: var(--mono); font-size: 12px; margin-top: 4px; }
-  .net-pl.pos { color: #4ade80; }
-  .net-pl.neg { color: #f87171; }
-  .updated { font-size: 10px; opacity: 0.4; text-align: right; margin-top: 4px; }
+/* TOPBAR */
+.topbar{background:#111;border-bottom:1px solid #222;padding:14px 16px;position:sticky;top:0;z-index:10}
+.topbar-row{display:flex;justify-content:space-between;align-items:flex-end}
+.brand{font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:#555;margin-bottom:6px}
+.nw{font-family:'Geist Mono',monospace;font-size:28px;font-weight:300;letter-spacing:-.02em;line-height:1}
+.nw-pl{font-family:'Geist Mono',monospace;font-size:12px;margin-top:4px}
+.updated{font-size:10px;color:#444;text-align:right}
 
-  /* TABS */
-  .tabs { display: flex; background: #111111; border-bottom: 1px solid var(--border); overflow-x: auto; scrollbar-width: none; position: sticky; top: 80px; z-index: 99; }
-  .tabs::-webkit-scrollbar { display: none; }
-  .tab { padding: 12px 18px; font-size: 12px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); cursor: pointer; white-space: nowrap; border-bottom: 2px solid transparent; flex-shrink: 0; }
-  .tab.active { color: #ffffff; border-bottom-color: #ffffff; }
+/* TABS */
+.tabs{display:flex;background:#111;border-bottom:1px solid #222;overflow-x:auto;scrollbar-width:none;position:sticky;top:73px;z-index:9}
+.tabs::-webkit-scrollbar{display:none}
+.tab{padding:11px 16px;font-size:11px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:#555;cursor:pointer;white-space:nowrap;border-bottom:2px solid transparent;flex-shrink:0;transition:color .15s}
+.tab.on{color:#fff;border-bottom-color:#fff}
 
-  /* LAYOUT */
-  .content { padding: 14px 14px 40px; }
-  .section { display: none; }
-  .section.active { display: block; }
+/* CONTENT */
+.content{padding:14px 14px 60px}
+.section{display:none}.section.on{display:block}
 
-  /* CARDS */
-  .card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 12px; overflow: hidden; }
-  .card-hd { padding: 12px 14px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
-  .card-label { font-size: 10px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
-  .card-body { padding: 12px 14px; }
+/* CARDS */
+.card{background:#161616;border:1px solid #222;border-radius:10px;margin-bottom:12px;overflow:hidden}
+.card-hd{padding:11px 14px;border-bottom:1px solid #222;display:flex;justify-content:space-between;align-items:center}
+.card-lbl{font-size:10px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:#555}
+.card-body{padding:12px 14px}
 
-  /* SUMMARY STRIPS */
-  .summary-strip { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px; }
-  .stat { background: #1a1a1a; border: 1px solid var(--border); border-radius: var(--radius); padding: 12px 14px; }
-  .stat-label { font-size: 10px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
-  .stat-val { font-family: var(--mono); font-size: 20px; font-weight: 400; }
-  .stat-sub { font-family: var(--mono); font-size: 11px; color: var(--muted); margin-top: 2px; }
+/* SECTION LABEL */
+.slbl{font-size:10px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:#444;margin:16px 0 8px}
+.slbl:first-child{margin-top:0}
 
-  /* ROW */
-  .row { padding: 10px 14px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
-  .row:last-child { border-bottom: none; }
-  .row-left { flex: 1; min-width: 0; }
-  .row-right { text-align: right; flex-shrink: 0; margin-left: 10px; }
-  .row-title { font-weight: 500; font-size: 13px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .row-sub { font-size: 11px; color: var(--muted); margin-top: 2px; }
-  .row-val { font-family: var(--mono); font-size: 14px; }
-  .row-val2 { font-family: var(--mono); font-size: 11px; margin-top: 2px; }
+/* STAT GRID */
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
+.stat{background:#161616;border:1px solid #222;border-radius:10px;padding:12px 14px}
+.stat-lbl{font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#555;margin-bottom:4px}
+.stat-val{font-family:'Geist Mono',monospace;font-size:22px;font-weight:300}
+.stat-sub{font-family:'Geist Mono',monospace;font-size:11px;color:#666;margin-top:2px}
 
-  /* BADGES */
-  .badge { display: inline-block; font-size: 10px; font-weight: 600; letter-spacing: 0.05em; padding: 2px 7px; border-radius: 4px; text-transform: uppercase; }
-  .badge-green { background: #0d2b1a; color: #4ade80; }
-  .badge-red   { background: #2b0d0d; color: #f87171; }
-  .badge-blue  { background: #0d1a2b; color: #60a5fa; }
-  .badge-gold  { background: #2b200d; color: #fbbf24; }
-  .badge-gray  { background: #222222; color: #aaaaaa; }
+/* ROWS */
+.row{padding:10px 14px;border-bottom:1px solid #1e1e1e;display:flex;justify-content:space-between;align-items:center}
+.row:last-child{border-bottom:none}
+.rl{flex:1;min-width:0}
+.rr{text-align:right;flex-shrink:0;margin-left:12px}
+.rt{font-size:13px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rs{font-size:11px;color:#666;margin-top:2px}
+.rv{font-family:'Geist Mono',monospace;font-size:14px}
+.rv2{font-family:'Geist Mono',monospace;font-size:11px;margin-top:2px;color:#666}
 
-  /* P&L COLORS */
-  .pos { color: var(--green); }
-  .neg { color: var(--red); }
+/* BADGES */
+.badge{display:inline-block;font-size:10px;font-weight:600;padding:2px 7px;border-radius:4px;text-transform:uppercase;letter-spacing:.04em}
+.bg{background:#0d2b1a;color:#4ade80}
+.br{background:#2b0d0d;color:#f87171}
+.bb{background:#1a1a2b;color:#a78bfa}
+.by{background:#2b1f0d;color:#fbbf24}
+.bx{background:#1e1e1e;color:#888}
 
-  /* SIGNAL CARDS */
-  .signal-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 8px; overflow: hidden; }
-  .signal-hd { padding: 10px 14px; display: flex; justify-content: space-between; align-items: center; }
-  .signal-ticker { font-family: var(--mono); font-size: 16px; font-weight: 500; }
-  .signal-score { font-family: var(--mono); font-size: 12px; }
-  .signal-detail { padding: 0 14px 10px; font-size: 12px; color: var(--muted); line-height: 1.5; }
-  .signal-stops { font-family: var(--mono); font-size: 11px; padding: 7px 14px; border-top: 1px solid var(--border); display: flex; gap: 14px; }
-  .signal-stops span { color: var(--muted); }
-  .signal-stops b { color: var(--text); font-weight: 500; }
-  .signal-entry { border-left: 3px solid var(--green); }
-  .signal-exit  { border-left: 3px solid var(--red); }
-  .signal-hold  { border-left: 3px solid var(--faint); }
+/* SIGNALS */
+.sig{background:#161616;border:1px solid #222;border-radius:10px;margin-bottom:8px;overflow:hidden}
+.sig.entry{border-left:3px solid #4ade80}
+.sig.exit{border-left:3px solid #f87171}
+.sig.hold{border-left:3px solid #444}
+.sig-hd{padding:10px 14px;display:flex;justify-content:space-between;align-items:center}
+.sig-tk{font-family:'Geist Mono',monospace;font-size:16px;font-weight:500}
+.sig-sc{font-family:'Geist Mono',monospace;font-size:11px;color:#666}
+.sig-bar{height:3px;background:#222;margin:0 14px 8px}
+.sig-fill{height:100%;border-radius:2px}
+.sig-dt{padding:0 14px 10px;font-size:12px;color:#888;line-height:1.55}
+.sig-st{font-family:'Geist Mono',monospace;font-size:11px;padding:8px 14px;border-top:1px solid #1e1e1e;display:flex;gap:16px}
+.sig-st span{color:#555}.sig-st b{color:#fff;font-weight:500}
 
-  /* SCORE BAR */
-  .score-bar { height: 3px; background: var(--border); border-radius: 2px; margin: 6px 14px 10px; overflow: hidden; }
-  .score-fill { height: 100%; border-radius: 2px; transition: width 0.4s ease; }
-  .fill-strong { background: var(--green); }
-  .fill-good   { background: var(--gold); }
-  .fill-weak   { background: var(--red); }
+/* METER */
+.meter{display:flex;align-items:center;gap:10px;padding:7px 14px;border-bottom:1px solid #1a1a1a}
+.meter:last-child{border-bottom:none}
+.mtk{font-family:'Geist Mono',monospace;font-size:12px;width:50px;flex-shrink:0}
+.mbar{flex:1;height:6px;background:#222;border-radius:3px;overflow:hidden}
+.mfill{height:100%;border-radius:3px}
+.msc{font-family:'Geist Mono',monospace;font-size:11px;color:#555;width:28px;text-align:right;flex-shrink:0}
+.mpx{font-family:'Geist Mono',monospace;font-size:11px;color:#444;width:58px;text-align:right;flex-shrink:0}
 
-  /* SECTION HEADER */
-  .section-hd { font-size: 10px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); margin: 16px 0 8px; }
-  .section-hd:first-child { margin-top: 0; }
+/* JOURNAL */
+.je{padding:10px 14px;border-bottom:1px solid #1e1e1e}
+.je:last-child{border-bottom:none}
+.jm{display:flex;gap:8px;align-items:center;margin-bottom:5px;font-family:'Geist Mono',monospace;font-size:10px;color:#555}
+.jt{font-size:13px;line-height:1.55}
 
-  /* JOURNAL */
-  .journal-entry { padding: 10px 14px; border-bottom: 1px solid var(--border); }
-  .journal-entry:last-child { border-bottom: none; }
-  .journal-meta { display: flex; gap: 8px; align-items: center; margin-bottom: 5px; }
-  .journal-time { font-family: var(--mono); font-size: 10px; color: var(--muted); }
-  .journal-text { font-size: 13px; line-height: 1.55; }
+/* PIE */
+.pie-wrap{padding:16px 14px;display:flex;align-items:center;gap:16px}
+.pie-canvas{position:relative;width:130px;height:130px;flex-shrink:0}
+.pie-legend{flex:1;min-width:0}
+.pie-leg-row{display:flex;align-items:center;gap:7px;margin-bottom:7px}
+.pie-dot{width:8px;height:8px;border-radius:2px;flex-shrink:0}
+.pie-name{font-size:11px;color:#888;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pie-pct{font-family:'Geist Mono',monospace;font-size:11px}
 
-  /* SCORE METER */
-  .meter-row { display: flex; align-items: center; gap: 10px; padding: 6px 14px; border-bottom: 1px solid var(--border); }
-  .meter-row:last-child { border-bottom: none; }
-  .meter-ticker { font-family: var(--mono); font-size: 12px; font-weight: 500; width: 50px; flex-shrink: 0; }
-  .meter-bar-wrap { flex: 1; height: 6px; background: var(--border); border-radius: 3px; overflow: hidden; }
-  .meter-bar { height: 100%; border-radius: 3px; }
-  .meter-score { font-family: var(--mono); font-size: 11px; color: var(--muted); width: 28px; text-align: right; flex-shrink: 0; }
-  .meter-price { font-family: var(--mono); font-size: 11px; color: var(--muted); width: 60px; text-align: right; flex-shrink: 0; }
+/* EMPTY */
+.empty{padding:24px;text-align:center;font-size:12px;color:#444}
 
-  /* EMPTY */
-  .empty { padding: 20px; text-align: center; font-size: 12px; color: var(--faint); }
-
-  /* CHART WRAP */
-  .chart-wrap { padding: 12px 14px; }
+/* CHART */
+.ch-wrap{position:relative;padding:14px;height:220px}
 </style>
 </head>
 <body>
 
 <div class="topbar">
   <div class="brand">Trading Dashboard</div>
-  <div class="topbar-inner">
+  <div class="topbar-row">
     <div>
-      <div class="net-worth" id="net-worth">—</div>
-      <div class="net-pl" id="net-pl"></div>
+      <div class="nw mono" id="nw">—</div>
+      <div class="nw-pl" id="nwpl"></div>
     </div>
-    <div class="updated" id="updated">—</div>
+    <div class="updated" id="upd">—</div>
   </div>
 </div>
 
 <div class="tabs">
-  <div class="tab active" data-tab="holdings">Holdings</div>
+  <div class="tab on" data-tab="holdings">Holdings</div>
   <div class="tab" data-tab="signals">Signals</div>
-  <div class="tab" data-tab="scored">Watchlist</div>
+  <div class="tab" data-tab="watchlist">Watchlist</div>
   <div class="tab" data-tab="journal">Journal</div>
   <div class="tab" data-tab="trades">Trades</div>
 </div>
 
 <div class="content">
 
-  <!-- HOLDINGS -->
-  <div id="tab-holdings" class="section active">
-    <div id="holdings-summary" class="summary-strip"></div>
-    <div class="section-hd">Portfolio Breakdown</div>
+  <div id="tab-holdings" class="section on">
+    <div class="stats" id="h-stats"></div>
+
+    <div class="slbl">Portfolio Sunburst</div>
     <div class="card">
-      <div class="card-hd">
-        <span class="card-label">By Account</span>
-        <span id="pie-total" style="font-family:var(--mono);font-size:12px;color:var(--muted)"></span>
+      <div style="padding:10px 14px;border-bottom:1px solid #1e1e1e;display:flex;justify-content:space-between;align-items:center">
+        <span class="card-lbl">Allocation &amp; P&amp;L by Account</span>
+        <span id="pie-total" class="mono" style="font-size:11px;color:#555"></span>
       </div>
-      <div style="padding:16px 14px;display:flex;align-items:center;gap:16px">
-        <div style="position:relative;width:140px;height:140px;flex-shrink:0">
-          <canvas id="pieChart" role="img" aria-label="Pie chart showing portfolio allocation by account"></canvas>
-        </div>
-        <div id="pie-legend" style="flex:1;min-width:0"></div>
+      <div style="padding:10px 4px 4px">
+        <svg id="sunburst-svg" style="width:100%;display:block" role="img" aria-label="Sunburst chart of portfolio by account group and individual account">Portfolio by account.</svg>
       </div>
+      <div id="sunburst-legend" style="padding:10px 14px;display:flex;flex-wrap:wrap;gap:6px;border-top:1px solid #1e1e1e"></div>
     </div>
-    <div class="section-hd">Account Detail</div>
-    <div class="card" id="accounts-list"></div>
-    <div class="section-hd">Open Positions</div>
-    <div class="card" id="positions-list"></div>
+
+    <div class="slbl">Accounts — sorted by size</div>
+    <div class="card" id="acct-list"></div>
+    <div class="slbl">Open Positions — sorted by P&amp;L</div>
+    <div class="card" id="pos-list"></div>
   </div>
 
-  <!-- SIGNALS -->
   <div id="tab-signals" class="section">
-    <div id="signal-tf-label" class="section-hd"></div>
-    <div class="section-hd">Entries</div>
-    <div id="entries-list"></div>
-    <div class="section-hd" style="margin-top:20px">Exits &amp; Caution</div>
-    <div id="exits-list"></div>
+    <div class="slbl" id="sig-tf"></div>
+    <div class="slbl">Entries</div>
+    <div id="entries"></div>
+    <div class="slbl" style="margin-top:20px">Exits &amp; Caution</div>
+    <div id="exits"></div>
   </div>
 
-  <!-- WATCHLIST SCORES -->
-  <div id="tab-scored" class="section">
-    <div class="section-hd">Scored Tickers</div>
-    <div class="card" id="scored-list"></div>
-    <div style="margin-top:14px">
-      <div class="section-hd">Score Distribution</div>
-      <div class="card chart-wrap">
-        <div style="position:relative;height:180px">
-          <canvas id="scoreChart" role="img" aria-label="Bar chart of EMA scores by ticker"></canvas>
-        </div>
-      </div>
-    </div>
+  <div id="tab-watchlist" class="section">
+    <div class="slbl">EMA Scores</div>
+    <div class="card" id="scored"></div>
+    <div class="slbl">Score Chart</div>
+    <div class="card"><div class="ch-wrap"><canvas id="scoreChart" role="img" aria-label="EMA scores by ticker">EMA scores by ticker.</canvas></div></div>
   </div>
 
-  <!-- JOURNAL -->
   <div id="tab-journal" class="section">
-    <div class="summary-strip" id="checkin-stats"></div>
-    <div id="goal-card"></div>
-    <div class="section-hd">Today's thoughts</div>
-    <div class="card" id="journal-list"></div>
+    <div class="stats" id="j-stats"></div>
+    <div id="goal-box"></div>
+    <div class="slbl">Today's thoughts</div>
+    <div class="card" id="j-list"></div>
   </div>
 
-  <!-- TRADES -->
   <div id="tab-trades" class="section">
-    <div class="section-hd">Recent Trades</div>
-    <div class="card" id="trades-list"></div>
+    <div class="slbl">Recent Trades</div>
+    <div class="card" id="t-list"></div>
   </div>
 
 </div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <script>
+// ── DATA injected by generate_dashboard.py ──
 const DATA = {
-  "generated": "—",
-  "net_worth": 0,
-  "total_pl": 0,
-  "accounts": [],
-  "positions": [],
-  "signals": {"tf":"4hr","entries":[],"exits":[],"scored":[]},
-  "journal": {"today":[],"stats":{}},
-  "trades": []
+  "generated": "May 17, 2026  11:38 AM CT",
+  "net_worth": 2449796.97,
+  "total_pl": 450629.19,
+  "accounts": [
+    {
+      "name": "R Intel Etrade",
+      "key": "rietrade",
+      "cash": 0.0,
+      "stock_total": 552072.64,
+      "stock_cost": 233231.27999999997,
+      "total": 552072.64
+    },
+    {
+      "name": "R Fidelity 401K",
+      "key": "r401k",
+      "cash": 41118.76,
+      "stock_total": 357843.2,
+      "stock_cost": 373678.24,
+      "total": 398961.96
+    },
+    {
+      "name": "G Intel Etrade",
+      "key": "gietrade",
+      "cash": 0.0,
+      "stock_total": 384440.56,
+      "stock_cost": 160065.0,
+      "total": 384440.56
+    },
+    {
+      "name": "G Fidelity Individual",
+      "key": "gfid",
+      "cash": 127241.0,
+      "stock_total": 216160.0,
+      "stock_cost": 249260.0,
+      "total": 343401.0
+    },
+    {
+      "name": "G Fidelity 401K",
+      "key": "g401k",
+      "cash": 1758.0,
+      "stock_total": 288179.22,
+      "stock_cost": 294139.22,
+      "total": 289937.22
+    },
+    {
+      "name": "R Robinhood",
+      "key": "robin",
+      "cash": 3568.0,
+      "stock_total": 245125.44,
+      "stock_cost": 279701.10000000003,
+      "total": 248693.44
+    },
+    {
+      "name": "G Fidelity Managed",
+      "key": "gfidmanaged",
+      "cash": 112000.0,
+      "stock_total": 0,
+      "stock_cost": 0,
+      "total": 112000.0
+    },
+    {
+      "name": "G Fidelity Roth",
+      "key": "groth",
+      "cash": 27.0,
+      "stock_total": 33660.0,
+      "stock_cost": 34731.0,
+      "total": 33687.0
+    },
+    {
+      "name": "R Fidelity Roth",
+      "key": "rroth",
+      "cash": 46.39,
+      "stock_total": 27750.8,
+      "stock_cost": 28533.609999999997,
+      "total": 27797.19
+    },
+    {
+      "name": "G Crypto",
+      "key": "gcrypto",
+      "cash": 10000.0,
+      "stock_total": 0,
+      "stock_cost": 0,
+      "total": 10000.0
+    },
+    {
+      "name": "A1 Fidelity Roth",
+      "key": "a1roth",
+      "cash": 94.72,
+      "stock_total": 9649.199999999999,
+      "stock_cost": 9974.279999999999,
+      "total": 9743.919999999998
+    },
+    {
+      "name": "A2 Fidelity Roth",
+      "key": "a2roth",
+      "cash": 94.72,
+      "stock_total": 9649.199999999999,
+      "stock_cost": 9974.279999999999,
+      "total": 9743.919999999998
+    },
+    {
+      "name": "A3 Fidelity Roth",
+      "key": "a3roth",
+      "cash": 94.72,
+      "stock_total": 9649.199999999999,
+      "stock_cost": 9974.279999999999,
+      "total": 9743.919999999998
+    },
+    {
+      "name": "G Etrade",
+      "key": "getrade",
+      "cash": 9673.0,
+      "stock_total": 0,
+      "stock_cost": 0,
+      "total": 9673.0
+    },
+    {
+      "name": "G Fidelity Health",
+      "key": "ghealth",
+      "cash": 0.0,
+      "stock_total": 8901.199999999999,
+      "stock_cost": 9189.18,
+      "total": 8901.199999999999
+    },
+    {
+      "name": "R Robinhood Managed",
+      "key": "robinmanaged",
+      "cash": 1000.0,
+      "stock_total": 0,
+      "stock_cost": 0,
+      "total": 1000.0
+    }
+  ],
+  "positions": [
+    {
+      "symbol": "INTC",
+      "shares": 5108.0,
+      "avg": 45.66,
+      "price": 108.08,
+      "account": "R Intel Etrade"
+    },
+    {
+      "symbol": "INTC",
+      "shares": 3557.0,
+      "avg": 45.0,
+      "price": 108.08,
+      "account": "G Intel Etrade"
+    },
+    {
+      "symbol": "FETH",
+      "shares": 3861.0,
+      "avg": 42.02,
+      "price": 42.02,
+      "account": "G Fidelity 401K"
+    },
+    {
+      "symbol": "TQQQ",
+      "shares": 119.0,
+      "avg": 77.22,
+      "price": 74.8,
+      "account": "G Fidelity Health"
+    },
+    {
+      "symbol": "TQQQ",
+      "shares": 129.0,
+      "avg": 77.32,
+      "price": 74.8,
+      "account": "A1 Fidelity Roth"
+    },
+    {
+      "symbol": "TQQQ",
+      "shares": 129.0,
+      "avg": 77.32,
+      "price": 74.8,
+      "account": "A2 Fidelity Roth"
+    },
+    {
+      "symbol": "TQQQ",
+      "shares": 129.0,
+      "avg": 77.32,
+      "price": 74.8,
+      "account": "A3 Fidelity Roth"
+    },
+    {
+      "symbol": "TQQQ",
+      "shares": 371.0,
+      "avg": 76.91,
+      "price": 74.8,
+      "account": "R Fidelity Roth"
+    },
+    {
+      "symbol": "TQQQ",
+      "shares": 450.0,
+      "avg": 77.18,
+      "price": 74.8,
+      "account": "G Fidelity Roth"
+    },
+    {
+      "symbol": "TQQQ",
+      "shares": 1000.0,
+      "avg": 76.72,
+      "price": 74.8,
+      "account": "G Fidelity 401K"
+    },
+    {
+      "symbol": "DRAM",
+      "shares": 1000.0,
+      "avg": 55.18,
+      "price": 51.14,
+      "account": "G Fidelity 401K"
+    },
+    {
+      "symbol": "TQQQ",
+      "shares": 4784.0,
+      "avg": 78.11,
+      "price": 74.8,
+      "account": "R Fidelity 401K"
+    },
+    {
+      "symbol": "INTC",
+      "shares": 2000.0,
+      "avg": 124.63,
+      "price": 108.08,
+      "account": "G Fidelity Individual"
+    },
+    {
+      "symbol": "INTC",
+      "shares": 2268.0,
+      "avg": 123.325,
+      "price": 108.08,
+      "account": "R Robinhood"
+    }
+  ],
+  "signals": {
+    "tf": "4hr",
+    "entries": [],
+    "exits": [],
+    "scored": []
+  },
+  "journal": {
+    "today": [],
+    "stats": {}
+  },
+  "trades": [
+    {
+      "date": "2026-05-14",
+      "symbol": "INTC",
+      "direction": "BUY",
+      "shares": 1268,
+      "price": 118.25,
+      "total": 149941,
+      "account": "R Robinhood",
+      "status": "OPEN"
+    },
+    {
+      "date": "2026-05-14",
+      "symbol": "TQQQ",
+      "direction": "BUY",
+      "shares": 4784,
+      "price": 78.11,
+      "total": 373678.24,
+      "account": "R Fidelity 401K",
+      "status": "OPEN"
+    },
+    {
+      "date": "2026-05-13",
+      "symbol": "INTC",
+      "direction": "BUY",
+      "shares": 1000,
+      "price": 122.14,
+      "total": 122140,
+      "account": "G Fidelity Individual",
+      "status": "OPEN"
+    },
+    {
+      "date": "2026-05-12",
+      "symbol": "TQQQ",
+      "direction": "BUY",
+      "shares": 119,
+      "price": 77.22,
+      "total": 9189.18,
+      "account": "G Fidelity Health",
+      "status": "OPEN"
+    },
+    {
+      "date": "2026-05-12",
+      "symbol": "TQQQ",
+      "direction": "BUY",
+      "shares": 129,
+      "price": 77.32,
+      "total": 9974.28,
+      "account": "A3 Fidelity Roth",
+      "status": "OPEN"
+    },
+    {
+      "date": "2026-05-12",
+      "symbol": "TQQQ",
+      "direction": "BUY",
+      "shares": 129,
+      "price": 77.32,
+      "total": 9974.28,
+      "account": "A2 Fidelity Roth",
+      "status": "OPEN"
+    },
+    {
+      "date": "2026-05-12",
+      "symbol": "TQQQ",
+      "direction": "BUY",
+      "shares": 129,
+      "price": 77.32,
+      "total": 9974.28,
+      "account": "A1 Fidelity Roth",
+      "status": "OPEN"
+    },
+    {
+      "date": "2026-05-12",
+      "symbol": "TQQQ",
+      "direction": "BUY",
+      "shares": 450,
+      "price": 77.18,
+      "total": 34731,
+      "account": "G Fidelity Roth",
+      "status": "OPEN"
+    },
+    {
+      "date": "2026-05-12",
+      "symbol": "TQQQ",
+      "direction": "BUY",
+      "shares": 371,
+      "price": 76.91,
+      "total": 28533.61,
+      "account": "R Fidelity Roth",
+      "status": "OPEN"
+    },
+    {
+      "date": "2026-05-12",
+      "symbol": "INTC",
+      "direction": "BUY",
+      "shares": 1000,
+      "price": 127.12,
+      "total": 127120,
+      "account": "G Fidelity Individual",
+      "status": "OPEN"
+    },
+    {
+      "date": "2026-05-12",
+      "symbol": "INTC",
+      "direction": "BUY",
+      "shares": 1000,
+      "price": 129.76,
+      "total": 129760,
+      "account": "R Robinhood",
+      "status": "OPEN"
+    },
+    {
+      "date": "2026-05-12",
+      "symbol": "DRAM",
+      "direction": "BUY",
+      "shares": 1000,
+      "price": 55.18,
+      "total": 55180,
+      "account": "G Fidelity 401K",
+      "status": "OPEN"
+    },
+    {
+      "date": "2026-05-12",
+      "symbol": "TQQQ",
+      "direction": "BUY",
+      "shares": 1000,
+      "price": 76.72,
+      "total": 76720,
+      "account": "G Fidelity 401K",
+      "status": "OPEN"
+    }
+  ]
 };
 
-const $ = id => document.getElementById(id);
-const fmt  = n => '$' + Math.abs(n).toLocaleString('en-US', {minimumFractionDigits: 0, maximumFractionDigits: 0});
-const fmtd = n => (n >= 0 ? '+' : '') + fmt(n);
-const pct  = n => (n >= 0 ? '+' : '') + n.toFixed(1) + '%';
-const pc   = n => n >= 0 ? 'pos' : 'neg';
+// ── HELPERS ──
+const $  = id => document.getElementById(id);
+const fm = n => '$' + Math.abs(n).toLocaleString('en-US',{maximumFractionDigits:0});
+const fd = n => (n>=0?'+':'')+fm(n);
+const fp = n => (n>=0?'+':'')+n.toFixed(1)+'%';
+const pc = n => n>=0?'pos':'neg';
 
-// TABS
+// ── TABS ──
 document.querySelectorAll('.tab').forEach(t => {
   t.onclick = () => {
-    document.querySelectorAll('.tab').forEach(x => x.classList.remove('active'));
-    document.querySelectorAll('.section').forEach(x => x.classList.remove('active'));
-    t.classList.add('active');
-    $('tab-' + t.dataset.tab).classList.add('active');
+    document.querySelectorAll('.tab').forEach(x=>x.classList.remove('on'));
+    document.querySelectorAll('.section').forEach(x=>x.classList.remove('on'));
+    t.classList.add('on');
+    $('tab-'+t.dataset.tab).classList.add('on');
   };
 });
 
-// TOPBAR
-function renderTopbar() {
-  $('net-worth').textContent = fmt(DATA.net_worth);
-  $('updated').textContent = DATA.generated;
-  if (DATA.total_pl) {
-    const el = $('net-pl');
-    el.textContent = fmtd(DATA.total_pl) + ' unrealised';
-    el.className = 'net-pl ' + pc(DATA.total_pl);
-  }
+// ── TOPBAR ──
+$('nw').textContent  = fm(DATA.net_worth);
+$('upd').textContent = DATA.generated;
+if (DATA.total_pl) {
+  const el = $('nwpl');
+  el.innerHTML = `<span class="${pc(DATA.total_pl)}">${fd(DATA.total_pl)} unrealised</span>`;
 }
 
-// HOLDINGS
-function renderHoldings() {
-  const invested = DATA.accounts.reduce((s, a) => s + a.stock_total, 0);
-  const cash     = DATA.accounts.reduce((s, a) => s + a.cash, 0);
-  $('holdings-summary').innerHTML = `
-    <div class="stat"><div class="stat-label">Invested</div><div class="stat-val">${fmt(invested)}</div><div class="stat-sub ${pc(DATA.total_pl)}">${fmtd(DATA.total_pl)} P&L</div></div>
-    <div class="stat"><div class="stat-label">Cash</div><div class="stat-val">${fmt(cash)}</div><div class="stat-sub">${DATA.accounts.length} accounts</div></div>`;
+// ── HOLDINGS ──
+(function(){
+  // Sort accounts by total descending
+  const accts   = DATA.accounts.filter(a=>a.total>0).sort((a,b)=>b.total-a.total);
+  const invested = accts.reduce((s,a)=>s+a.stock_total,0);
+  const cash     = accts.reduce((s,a)=>s+a.cash,0);
+  const tot      = accts.reduce((s,a)=>s+a.total,0);
+  const totalPL  = accts.reduce((s,a)=>s+(a.stock_total-a.stock_cost),0);
 
-  const acList = $('accounts-list');
-  if (!DATA.accounts.length) { acList.innerHTML = '<div class="empty">No account data</div>'; return; }
-  acList.innerHTML = DATA.accounts.filter(a => a.total > 0).map(a => {
-    const pl = a.stock_total - a.stock_cost;
-    const plPct = a.stock_cost > 0 ? pl / a.stock_cost * 100 : 0;
-    const plStr = pl !== 0 ? ` <span class="${pc(pl)}">${fmtd(pl)} (${pct(plPct)})</span>` : '';
-    return `<div class="row">
-      <div class="row-left"><div class="row-title">${a.name}</div><div class="row-sub">Cash ${fmt(a.cash)} · Invested ${fmt(a.stock_total)}${plStr}</div></div>
-      <div class="row-right"><div class="row-val">${fmt(a.total)}</div></div>
-    </div>`;
-  }).join('');
+  $('h-stats').innerHTML =
+    `<div class="stat"><div class="stat-lbl">Invested</div><div class="stat-val">${fm(invested)}</div><div class="stat-sub ${pc(totalPL)}">${fd(totalPL)} P&L</div></div>` +
+    `<div class="stat"><div class="stat-lbl">Cash</div><div class="stat-val">${fm(cash)}</div><div class="stat-sub">${accts.length} accounts</div></div>`;
 
-  // PIE CHART
-  const pieAccounts = DATA.accounts.filter(a => a.total > 0);
-  if (pieAccounts.length) {
-    const COLORS = ['#60a5fa','#4ade80','#fbbf24','#f87171','#a78bfa','#34d399','#fb923c','#e879f9','#38bdf8','#86efac','#fde68a','#fca5a5'];
-    const total  = pieAccounts.reduce((s, a) => s + a.total, 0);
-    $('pie-total').textContent = fmt(total);
+  const COLS = ['#60a5fa','#4ade80','#fbbf24','#a78bfa','#fb923c','#34d399','#e879f9','#38bdf8','#fbbf24','#fca5a5','#6ee7b7','#f87171','#86efac'];
 
-    // Legend
-    $('pie-legend').innerHTML = pieAccounts.map((a, i) => {
-      const p = (a.total / total * 100).toFixed(1);
-      const name = a.name.length > 18 ? a.name.slice(0,16) + '…' : a.name;
-      return `<div style="display:flex;align-items:center;gap:6px;margin-bottom:6px">
-        <span style="width:8px;height:8px;border-radius:2px;background:${COLORS[i % COLORS.length]};flex-shrink:0"></span>
-        <span style="font-size:11px;color:var(--muted);flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${name}</span>
-        <span style="font-family:var(--mono);font-size:11px;color:var(--text)">${p}%</span>
-      </div>`;
-    }).join('');
+  // ── SUNBURST CHART ──
+  $('pie-total').textContent = fm(tot) + ' · ' + (totalPL>=0?'+':'') + fm(totalPL) + ' P&L';
 
-    if (window._pieChart) window._pieChart.destroy();
-    window._pieChart = new Chart($('pieChart'), {
-      type: 'doughnut',
-      data: {
-        labels:   pieAccounts.map(a => a.name),
-        datasets: [{ data: pieAccounts.map(a => Math.round(a.total)), backgroundColor: COLORS.slice(0, pieAccounts.length), borderWidth: 1, borderColor: '#0d0d0d', hoverOffset: 4 }]
-      },
-      options: {
-        responsive: true, maintainAspectRatio: false, cutout: '65%',
-        plugins: { legend: { display: false }, tooltip: {
-          callbacks: { label: ctx => ` ${fmt(ctx.raw)} (${(ctx.raw / total * 100).toFixed(1)}%)` }
-        }}
-      }
-    });
+  // Group accounts by type
+  function grp(name){
+    if(name.includes('401K'))   return '401K';
+    if(name.includes('Roth'))   return 'Roth';
+    if(name.includes('Intel'))  return 'Intel ET';
+    if(name.includes('Robinhood')) return 'Robinhood';
+    if(name.includes('Crypto')) return 'Crypto';
+    if(name.includes('Health')) return 'Health';
+    return 'Individual';
   }
+  const GRP_COL = {'401K':'#60a5fa','Roth':'#818cf8','Intel ET':'#4ade80','Individual':'#a78bfa','Robinhood':'#fb923c','Crypto':'#fbbf24','Health':'#34d399'};
+  const groups  = {};
+  accts.forEach(a=>{ const g=grp(a.name); if(!groups[g])groups[g]=[]; groups[g].push(a); });
 
-  const posList = $('positions-list');
-  if (!DATA.positions.length) { posList.innerHTML = '<div class="empty">No open positions</div>'; return; }
-  posList.innerHTML = DATA.positions.map(p => {
-    const pl    = (p.price - p.avg) * p.shares;
-    const plP   = (p.price - p.avg) / p.avg * 100;
-    return `<div class="row">
-      <div class="row-left">
-        <div class="row-title">${p.symbol} <span style="font-size:11px;color:var(--muted);font-weight:400">${p.account}</span></div>
-        <div class="row-sub">${p.shares.toLocaleString()} sh · avg $${p.avg.toFixed(2)} · now $${p.price.toFixed(2)}</div>
-      </div>
-      <div class="row-right">
-        <div class="row-val ${pc(pl)}">${fmtd(pl)}</div>
-        <div class="row-val2 ${pc(pl)}">${pct(plP)}</div>
-      </div>
-    </div>`;
+  // Short name helper
+  const sn = n => n.replace('Fidelity ','').replace(' Fidelity','').replace('Robinhood','RH').replace('Etrade','ET').replace('Intel ','').replace(' Individual','').trim();
+
+  // D3 sunburst
+  const svgEl = $('sunburst-svg');
+  const W     = svgEl.parentElement.offsetWidth || 340;
+  const H     = Math.max(300, W * 0.85);
+  svgEl.setAttribute('viewBox', `0 0 ${W} ${H}`);
+  svgEl.setAttribute('height', H);
+  const cx = W/2, cy = H/2;
+  const R1=65, R2=125, R3=W/2-12;
+
+  const d3s = window.d3;
+  const svg = d3s.select(svgEl).append('g').attr('transform',`translate(${cx},${cy})`);
+
+  // Build hierarchy data
+  const hdata = {name:'root', children: Object.entries(groups).map(([g,accs])=>({
+    name:g, col:GRP_COL[g]||'#888',
+    children: accs.map(a=>({
+      name:sn(a.name), fullName:a.name,
+      value:a.total, pl:a.stock_total-a.stock_cost,
+      stock:a.stock_total, cash:a.cash
+    }))
+  }))};
+
+  const root = d3s.hierarchy(hdata).sum(d=>d.value||0);
+  d3s.partition().size([2*Math.PI,1])(root);
+
+  const arcFn = (ir,or) => d3s.arc()
+    .startAngle(d=>d.x0).endAngle(d=>d.x1)
+    .innerRadius(ir).outerRadius(or)
+    .padAngle(0.018).padRadius((ir+or)/2);
+
+  const arc1 = arcFn(R1,R2);
+  const arc2 = arcFn(R2+3,R3);
+
+  // Inner ring — groups
+  const grpNodes = root.children || [];
+  svg.selectAll('.garc').data(grpNodes).join('path').attr('class','garc')
+    .attr('d',arc1).attr('fill',d=>d.data.col+'cc')
+    .attr('stroke','#0d0d0d').attr('stroke-width',1.5);
+
+  // Inner labels
+  svg.selectAll('.glbl').data(grpNodes).join('text').attr('class','glbl')
+    .attr('transform',d=>{
+      const mid=(d.x0+d.x1)/2, r=(R1+R2)/2;
+      const x=Math.sin(mid)*r, y=-Math.cos(mid)*r;
+      const rot=(mid*180/Math.PI)-90 + (mid>Math.PI?180:0);
+      return `translate(${x},${y})rotate(${rot})`;
+    })
+    .attr('text-anchor','middle').attr('dominant-baseline','middle')
+    .attr('fill','#fff').attr('font-size',9).attr('font-weight',600)
+    .attr('font-family',"'Geist',sans-serif")
+    .text(d=>(d.x1-d.x0)>0.12?d.data.name:(d.x1-d.x0)>0.05?d.data.name.slice(0,4):'');
+
+  // Outer ring — accounts
+  const accNodes = grpNodes.flatMap(g=>g.children||[]);
+  svg.selectAll('.aarc').data(accNodes).join('path').attr('class','aarc')
+    .attr('d',arc2)
+    .attr('fill',d=>{
+      const pl=d.data.pl||0;
+      if(Math.abs(pl)<100) return d.parent.data.col+'66';
+      return pl>0?'#4ade8099':'#f8717188';
+    })
+    .attr('stroke','#0d0d0d').attr('stroke-width',1);
+
+  // Outer labels — account names
+  svg.selectAll('.albl').data(accNodes).join('text').attr('class','albl')
+    .attr('transform',d=>{
+      const mid=(d.x0+d.x1)/2, r=(R2+3+R3)/2;
+      const x=Math.sin(mid)*r, y=-Math.cos(mid)*r;
+      const rot=(mid*180/Math.PI)-90 + (mid>Math.PI?180:0);
+      return `translate(${x},${y})rotate(${rot})`;
+    })
+    .attr('text-anchor','middle').attr('dominant-baseline','middle')
+    .attr('fill','#fff').attr('font-size',8.5).attr('font-weight',500)
+    .attr('font-family',"'Geist',sans-serif")
+    .text(d=>(d.x1-d.x0)>0.1?d.data.name:(d.x1-d.x0)>0.04?d.data.name.slice(0,5):'');
+
+  // Center
+  svg.append('text').attr('text-anchor','middle').attr('fill','#fff')
+    .attr('font-family',"'Geist Mono',monospace").attr('font-size',16).attr('font-weight',300)
+    .attr('dy',-10).text(fm(tot));
+  svg.append('text').attr('text-anchor','middle')
+    .attr('fill',totalPL>=0?'#4ade80':'#f87171')
+    .attr('font-family',"'Geist Mono',monospace").attr('font-size',10)
+    .attr('dy',6).text((totalPL>=0?'+':'')+fm(totalPL));
+  svg.append('text').attr('text-anchor','middle').attr('fill','#444')
+    .attr('font-family',"'Geist',sans-serif").attr('font-size',8).attr('dy',18).text('NET WORTH');
+
+  // Legend
+  $('sunburst-legend').innerHTML = Object.entries(GRP_COL)
+    .filter(([g])=>groups[g])
+    .map(([g,col])=>`<span style="font-size:10px;padding:2px 8px;border-radius:4px;background:${col}22;color:${col};font-weight:600">${g}</span>`)
+    .join('');
+
+  // ACCOUNT LIST — sorted by total
+  $('acct-list').innerHTML = accts.map(a=>{
+    const pl    = a.stock_total - a.stock_cost;
+    const plPct = a.stock_cost>0 ? pl/a.stock_cost*100 : 0;
+    const plStr = a.stock_cost>0 ? ` <span class="${pc(pl)}">${fd(pl)} (${fp(plPct)})</span>` : '';
+    return `<div class="row"><div class="rl"><div class="rt">${a.name}</div><div class="rs">Cash ${fm(a.cash)} · Stocks ${fm(a.stock_total)}${plStr}</div></div><div class="rr"><div class="rv">${fm(a.total)}</div></div></div>`;
   }).join('');
-}
 
-// SIGNALS
-function renderSignals() {
-  $('signal-tf-label').textContent = `Timeframe: ${DATA.signals.tf}`;
+  // POSITIONS — sorted by P&L descending
+  const sortedPos = DATA.positions.slice().sort((a,b)=>((b.price-b.avg)*b.shares)-((a.price-a.avg)*a.shares));
+  $('pos-list').innerHTML = sortedPos.length
+    ? sortedPos.map(p=>{
+        const pl  = (p.price-p.avg)*p.shares;
+        const plP = (p.price-p.avg)/p.avg*100;
+        return `<div class="row"><div class="rl"><div class="rt">${p.symbol} <span style="font-size:11px;color:#555;font-weight:400">${p.account}</span></div><div class="rs">${p.shares.toLocaleString()} sh · avg $${p.avg.toFixed(2)} → $${p.price.toFixed(2)}</div></div><div class="rr"><div class="rv ${pc(pl)}">${fd(pl)}</div><div class="rv2 ${pc(pl)}">${fp(plP)}</div></div></div>`;
+      }).join('')
+    : '<div class="empty">No open positions</div>';
+})();
 
-  const renderSig = (items, container) => {
-    if (!items.length) { $(container).innerHTML = '<div class="card"><div class="empty">No signals this scan</div></div>'; return; }
-    $(container).innerHTML = items.map(s => {
-      const isEntry   = ['ENTRY','REENTRY'].includes(s.type);
-      const isExit    = ['TIER2_EXIT','TIER1_EXIT'].includes(s.type);
-      const cls       = isEntry ? 'signal-entry' : isExit ? 'signal-exit' : 'signal-hold';
-      const typeLabel = isEntry ? (s.type === 'REENTRY' ? 'Re-entry' : 'Entry') : isExit ? 'Exit' : s.type.replace(/_/g,' ').toLowerCase();
-      const badgeCls  = isEntry ? 'badge-green' : isExit ? 'badge-red' : 'badge-gray';
-      const quality   = s.score >= 70 ? 'strong' : 'good';
-      const fillCls   = s.score >= 70 ? 'fill-strong' : 'fill-good';
-      const stops = (s.stop && s.target) ? `<div class="signal-stops"><span>Stop</span> <b>$${s.stop}</b> <span>Target</span> <b>$${s.target}</b></div>` : '';
-      return `<div class="signal-card ${cls}">
-        <div class="signal-hd">
-          <div><span class="signal-ticker">${s.ticker}</span> <span class="badge ${badgeCls}">${typeLabel}</span></div>
-          <div class="signal-score">${s.score} · ${quality}</div>
-        </div>
-        <div class="score-bar"><div class="score-fill ${fillCls}" style="width:${s.score}%"></div></div>
-        <div class="signal-detail">${s.detail}</div>
-        ${stops}
-      </div>`;
+// ── SIGNALS ──
+(function(){
+  $('sig-tf').textContent = 'Timeframe: ' + DATA.signals.tf;
+
+  const renderList = (items, el) => {
+    if (!items.length) { $(el).innerHTML='<div class="card"><div class="empty">No signals</div></div>'; return; }
+    $(el).innerHTML = items.map(s=>{
+      const isE   = ['ENTRY','REENTRY'].includes(s.type);
+      const isX   = ['TIER2_EXIT','TIER1_EXIT'].includes(s.type);
+      const cls   = isE?'entry':isX?'exit':'hold';
+      const lbl   = isE?(s.type==='REENTRY'?'Re-entry':'Entry'):isX?'Exit':s.type.replace(/_/g,' ').toLowerCase();
+      const bcls  = isE?'bg':isX?'br':'bx';
+      const fcol  = s.score>=70?'#4ade80':s.score>=60?'#fbbf24':'#f87171';
+      const stops = (s.stop&&s.target)?`<div class="sig-st"><span>Stop</span> <b>$${s.stop}</b> <span>Target</span> <b>$${s.target}</b></div>`:'';
+      return `<div class="sig ${cls}">
+        <div class="sig-hd"><span><span class="sig-tk">${s.ticker}</span> &nbsp;<span class="badge ${bcls}">${lbl}</span></span><span class="sig-sc">${s.score}</span></div>
+        <div class="sig-bar"><div class="sig-fill" style="width:${s.score}%;background:${fcol}"></div></div>
+        <div class="sig-dt">${s.detail}</div>${stops}</div>`;
     }).join('');
   };
-  renderSig(DATA.signals.entries, 'entries-list');
-  renderSig(DATA.signals.exits,   'exits-list');
-}
+  renderList(DATA.signals.entries,'entries');
+  renderList(DATA.signals.exits,  'exits');
+})();
 
-// WATCHLIST SCORES
-function renderScored() {
+// ── WATCHLIST ──
+(function(){
   const items = DATA.signals.scored;
-  if (!items.length) { $('scored-list').innerHTML = '<div class="empty">Run /ema to populate</div>'; return; }
-  $('scored-list').innerHTML = items.map(r => {
-    const fillCls = r.score >= 70 ? 'fill-strong' : r.score >= 60 ? 'fill-good' : 'fill-weak';
-    return `<div class="meter-row">
-      <div class="meter-ticker">${r.ticker}</div>
-      <div class="meter-bar-wrap"><div class="meter-bar ${fillCls}" style="width:${r.score}%"></div></div>
-      <div class="meter-score">${r.score}</div>
-      <div class="meter-price">$${Number(r.price).toFixed(0)}</div>
-    </div>`;
+  if (!items.length){$('scored').innerHTML='<div class="empty">Run /ema to populate</div>';return;}
+  $('scored').innerHTML = items.map(r=>{
+    const col = r.score>=70?'#4ade80':r.score>=60?'#fbbf24':'#f87171';
+    return `<div class="meter"><div class="mtk">${r.ticker}</div><div class="mbar"><div class="mfill" style="width:${r.score}%;background:${col}"></div></div><div class="msc">${r.score}</div><div class="mpx">$${Number(r.price).toFixed(0)}</div></div>`;
   }).join('');
 
-  // Chart
-  const labels = items.map(r => r.ticker);
-  const scores = items.map(r => r.score);
-  const colors = scores.map(s => s >= 70 ? '#1a7a4a' : s >= 60 ? '#8a6914' : '#c0392b');
-  new Chart($('scoreChart'), {
-    type: 'bar',
-    data: { labels, datasets: [{ data: scores, backgroundColor: colors, borderRadius: 3, borderSkipped: false }] },
-    options: {
-      responsive: true, maintainAspectRatio: false,
-      plugins: { legend: { display: false } },
-      scales: {
-        x: { ticks: { font: { size: 10 }, color: '#aaaaaa', maxRotation: 45 }, grid: { display: false } },
-        y: { min: 0, max: 100, ticks: { font: { size: 10 }, color: '#aaaaaa' }, grid: { color: '#2a2a2a' } }
-      }
-    }
+  new Chart($('scoreChart'),{
+    type:'bar',
+    data:{labels:items.map(r=>r.ticker),datasets:[{data:items.map(r=>r.score),backgroundColor:items.map(r=>r.score>=70?'#4ade80':r.score>=60?'#fbbf24':'#f87171'),borderRadius:3,borderSkipped:false}]},
+    options:{responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{display:false}},
+      scales:{x:{ticks:{color:'#555',font:{size:10},maxRotation:45},grid:{display:false}},
+              y:{min:0,max:100,ticks:{color:'#555',font:{size:10}},grid:{color:'#1e1e1e'}}}}
   });
-}
+})();
 
-// JOURNAL
-function renderJournal() {
+// ── JOURNAL ──
+(function(){
   const s = DATA.journal.stats;
-  const metrics = [
-    { label: 'Sleep',  val: s.sleep    || '—', sub: '/10' },
-    { label: 'Mind',   val: s.mind     || '—', sub: '/10' },
-    { label: 'Body',   val: s.physical || '—', sub: '/10' },
-    { label: 'P&L',    val: s.pnl      || '—', sub: '' },
-  ];
-  $('checkin-stats').innerHTML = metrics.map(m =>
-    `<div class="stat"><div class="stat-label">${m.label}</div><div class="stat-val">${m.val}<span style="font-size:13px;color:var(--muted)">${m.sub}</span></div></div>`
-  ).join('');
+  $('j-stats').innerHTML =
+    `<div class="stat"><div class="stat-lbl">Sleep</div><div class="stat-val">${s.sleep||'—'}<span style="font-size:14px;color:#444">/10</span></div><div class="stat-sub">Mind ${s.mind||'—'}/10 · Body ${s.physical||'—'}/10</div></div>` +
+    `<div class="stat"><div class="stat-lbl">P&L Today</div><div class="stat-val ${s.pnl&&s.pnl[0]==='-'?'neg':'pos'}">${s.pnl||'—'}</div></div>`;
 
-  if (s.goal) {
-    $('goal-card').innerHTML = `<div class="card" style="margin-bottom:12px"><div class="card-body" style="font-size:13px"><span style="color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.08em;font-weight:600">Today's goal &nbsp;</span>${s.goal}</div></div>`;
-  }
+  if (s.goal) $('goal-box').innerHTML = `<div class="card" style="margin-bottom:12px"><div class="card-body"><span style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#555;font-weight:600">Goal &nbsp;</span><span style="font-size:13px">${s.goal}</span></div></div>`;
 
-  const jList = $('journal-list');
-  if (!DATA.journal.today.length) { jList.innerHTML = '<div class="empty">No entries today</div>'; return; }
-  jList.innerHTML = DATA.journal.today.map(e => {
-    const sent = e.sentiment ? `<span class="badge badge-${e.sentiment === 'positive' ? 'green' : e.sentiment === 'negative' ? 'red' : 'gray'}">${e.sentiment}</span>` : '';
-    return `<div class="journal-entry">
-      <div class="journal-meta"><span class="journal-time">${e.time}</span>${sent}</div>
-      <div class="journal-text">${e.entry}</div>
-    </div>`;
-  }).join('');
-}
+  $('j-list').innerHTML = DATA.journal.today.length
+    ? DATA.journal.today.map(e=>`<div class="je"><div class="jm"><span>${e.time}</span>${e.sentiment?`<span class="badge ${e.sentiment==='positive'?'bg':e.sentiment==='negative'?'br':'bx'}">${e.sentiment}</span>`:''}</div><div class="jt">${e.entry}</div></div>`).join('')
+    : '<div class="empty">No entries today</div>';
+})();
 
-// TRADES
-function renderTrades() {
-  const tList = $('trades-list');
-  if (!DATA.trades.length) { tList.innerHTML = '<div class="empty">No trades yet</div>'; return; }
-  tList.innerHTML = DATA.trades.map(t => {
-    const isBuy   = t.direction.toUpperCase() === 'BUY';
-    const badgeCls = isBuy ? 'badge-green' : 'badge-red';
-    const total    = Number(t.total || 0);
-    return `<div class="row">
-      <div class="row-left">
-        <div class="row-title"><span class="badge ${badgeCls}">${t.direction}</span> ${t.symbol}</div>
-        <div class="row-sub">${t.shares} sh @ $${t.price} · ${t.account} · ${t.date}</div>
-      </div>
-      <div class="row-right">
-        <div class="row-val">${fmt(total)}</div>
-        <div class="row-val2" style="color:var(--muted)">${t.status}</div>
-      </div>
-    </div>`;
-  }).join('');
-}
-
-renderTopbar();
-renderHoldings();
-renderSignals();
-renderScored();
-renderJournal();
-renderTrades();
+// ── TRADES ──
+$('t-list').innerHTML = DATA.trades.length
+  ? DATA.trades.map(t=>`<div class="row"><div class="rl"><div class="rt"><span class="badge ${t.direction==='BUY'?'bg':'br'}">${t.direction}</span> &nbsp;${t.symbol}</div><div class="rs">${t.shares} sh @ $${t.price} · ${t.account} · ${t.date}</div></div><div class="rr"><div class="rv">${fm(t.total)}</div><div class="rv2">${t.status}</div></div></div>`).join('')
+  : '<div class="empty">No trades yet</div>';
 </script>
 </body>
 </html>

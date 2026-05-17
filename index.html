@@ -24,7 +24,6 @@ body{background:#0d0d0d;color:#fff;font-family:'IBM Plex Sans',sans-serif;font-s
 .card{background:#161616;border:1px solid #222;border-radius:10px;margin-bottom:12px;overflow:hidden}
 .ch{padding:11px 14px;border-bottom:1px solid #222;display:flex;justify-content:space-between;align-items:center}
 .cl{font-size:10px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:#444}
-.cb{padding:12px 14px}
 .sl{font-size:10px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:#333;margin:16px 0 8px}
 .sl:first-child{margin-top:0}
 .sg{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
@@ -45,7 +44,6 @@ body{background:#0d0d0d;color:#fff;font-family:'IBM Plex Sans',sans-serif;font-s
 .se{border-left:3px solid #4ade80}.sx{border-left:3px solid #f87171}.sh{border-left:3px solid #333}
 .shd{padding:10px 14px;display:flex;justify-content:space-between;align-items:center}
 .stk{font-family:'IBM Plex Mono',monospace;font-size:16px;font-weight:500}
-.ssc{font-family:'IBM Plex Mono',monospace;font-size:11px;color:#555}
 .sbar{height:3px;background:#1e1e1e;margin:0 14px 8px}
 .sfl{height:100%;border-radius:2px}
 .sdt{padding:0 14px 10px;font-size:12px;color:#666;line-height:1.55}
@@ -70,8 +68,8 @@ body{background:#0d0d0d;color:#fff;font-family:'IBM Plex Sans',sans-serif;font-s
 <div class="top">
   <div class="brand">Trading Dashboard</div>
   <div class="nw-row">
-    <div><div class="nw" id="nw">—</div><div class="nw-pl" id="nwpl"></div></div>
-    <div class="ts" id="ts">—</div>
+    <div><div class="nw" id="nw">-</div><div class="nw-pl" id="nwpl"></div></div>
+    <div class="ts" id="ts">-</div>
   </div>
 </div>
 <div class="tabs">
@@ -87,46 +85,40 @@ body{background:#0d0d0d;color:#fff;font-family:'IBM Plex Sans',sans-serif;font-s
     <div class="sl">Portfolio breakdown</div>
     <div class="card">
       <div class="ch">
-        <span class="cl">Ring 1: Account &nbsp;·&nbsp; Ring 2: Cash/Invested &nbsp;·&nbsp; Ring 3: Holdings &nbsp;·&nbsp; Ring 4: P&L</span>
-        <span id="sb-tot" style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#555"></span>
+        <span class="cl">Ring 1=Account  2=Value  3=Holdings  4=P&L</span>
+        <span id="sb-tot" style="font-family:monospace;font-size:11px;color:#555"></span>
       </div>
-      <div id="sb-wrap" style="position:relative;height:1500px;padding:4px">
-        <canvas id="sb-canvas"></canvas>
-      </div>
-      <div id="sb-lgnd" style="padding:8px 14px;display:flex;flex-wrap:wrap;gap:5px;border-top:1px solid #1a1a1a"></div>
+      <canvas id="sb" style="display:block;width:100%"></canvas>
+      <div id="sb-key" style="padding:8px 14px;display:flex;flex-wrap:wrap;gap:5px;border-top:1px solid #1a1a1a"></div>
     </div>
-    <div class="sl">Accounts — largest first</div>
-    <div class="card" id="ac-list"></div>
-    <div class="sl">Positions — best P&L first</div>
-    <div class="card" id="pos-list"></div>
+    <div class="sl">Accounts</div><div class="card" id="ac-list"></div>
+    <div class="sl">Positions - best P&L first</div><div class="card" id="pos-list"></div>
   </div>
   <div id="t-signals" class="sec">
     <div class="sl" id="sig-tf"></div>
     <div class="sl">Entries</div><div id="entries"></div>
-    <div class="sl" style="margin-top:18px">Exits &amp; caution</div><div id="exits"></div>
+    <div class="sl" style="margin-top:18px">Exits</div><div id="exits"></div>
   </div>
   <div id="t-watchlist" class="sec">
     <div class="sl">EMA scores</div>
     <div class="card" id="wl-list"></div>
-    <div class="sl">Score chart</div>
-    <div class="card"><div style="padding:14px;position:relative;height:200px"><canvas id="sc-canvas"></canvas></div></div>
+    <div class="sl">Chart</div>
+    <div class="card"><div style="padding:14px;position:relative;height:200px"><canvas id="sc"></canvas></div></div>
   </div>
   <div id="t-journal" class="sec">
     <div class="sg" id="j-sg"></div>
     <div id="goal-box"></div>
-    <div class="sl">Today</div>
-    <div class="card" id="j-list"></div>
+    <div class="sl">Today</div><div class="card" id="j-list"></div>
   </div>
   <div id="t-trades" class="sec">
-    <div class="sl">Recent trades</div>
-    <div class="card" id="t-list"></div>
+    <div class="sl">Recent trades</div><div class="card" id="t-list"></div>
   </div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <script>
 /*DATA_START*/
 const DATA = {
-  "generated": "May 17, 2026  05:02 PM CT",
+  "generated": "May 17, 2026  05:04 PM CT",
   "net_worth": 2449796.97,
   "total_pl": 450629.19,
   "accounts": [
@@ -494,300 +486,295 @@ const DATA = {
 };
 /*DATA_END*/
 
-var $ = function(id) { return document.getElementById(id); };
-var fm = function(n) { return '$' + Math.abs(Math.round(n)).toLocaleString(); };
-var fd = function(n) { return (n >= 0 ? '+' : '-') + fm(n); };
-var fp = function(n) { return (n >= 0 ? '+' : '') + n.toFixed(1) + '%'; };
-var pc = function(n) { return n >= 0 ? 'g' : 'r'; };
+var $ = function(id){ return document.getElementById(id); };
+var fm = function(n){ return '$'+Math.abs(Math.round(n)).toLocaleString(); };
+var fd = function(n){ return (n>=0?'+':'-')+fm(n); };
+var fp = function(n){ return (n>=0?'+':'')+n.toFixed(1)+'%'; };
+var pc = function(n){ return n>=0?'g':'r'; };
 
-document.querySelectorAll('.tab').forEach(function(t) {
-  t.onclick = function() {
-    document.querySelectorAll('.tab').forEach(function(x) { x.classList.remove('on'); });
-    document.querySelectorAll('.sec').forEach(function(x) { x.classList.remove('on'); });
+document.querySelectorAll('.tab').forEach(function(t){
+  t.onclick=function(){
+    document.querySelectorAll('.tab').forEach(function(x){x.classList.remove('on');});
+    document.querySelectorAll('.sec').forEach(function(x){x.classList.remove('on');});
     t.classList.add('on');
-    document.getElementById('t-' + t.dataset.t).classList.add('on');
+    document.getElementById('t-'+t.dataset.t).classList.add('on');
   };
 });
 
 $('nw').textContent = fm(DATA.net_worth);
 $('ts').textContent = DATA.generated;
-$('nwpl').innerHTML = '<span class="' + pc(DATA.total_pl) + '">' + fd(DATA.total_pl) + ' unrealised</span>';
+$('nwpl').innerHTML = '<span class="'+pc(DATA.total_pl)+'">'+fd(DATA.total_pl)+' unrealised</span>';
 
-// HOLDINGS
-(function() {
-  var accts = DATA.accounts.filter(function(a) { return a.total > 0; })
-                            .sort(function(a, b) { return b.total - a.total; });
-  var tot  = accts.reduce(function(s, a) { return s + a.total; }, 0);
-  var cash = accts.reduce(function(s, a) { return s + a.cash; }, 0);
-  var inv  = accts.reduce(function(s, a) { return s + a.stock_total; }, 0);
-  var tpl  = accts.reduce(function(s, a) { return s + (a.stock_total - a.stock_cost); }, 0);
+// ── SUNBURST - pure canvas, zero Chart.js ────────────────────────
+(function(){
+  var accts = DATA.accounts.filter(function(a){return a.total>0;})
+                            .sort(function(a,b){return b.total-a.total;});
+  var tot   = accts.reduce(function(s,a){return s+a.total;},0);
+  var cash  = accts.reduce(function(s,a){return s+a.cash;},0);
+  var inv   = accts.reduce(function(s,a){return s+a.stock_total;},0);
+  var tpl   = accts.reduce(function(s,a){return s+(a.stock_total-a.stock_cost);},0);
 
   $('h-sg').innerHTML =
-    '<div class="st"><div class="stl">Invested</div><div class="stv">' + fm(inv) + '</div>' +
-    '<div class="sts ' + pc(tpl) + '">' + fd(tpl) + ' P&L</div></div>' +
-    '<div class="st"><div class="stl">Cash</div><div class="stv">' + fm(cash) + '</div>' +
-    '<div class="sts m">' + accts.length + ' accounts</div></div>';
-
-  var COLS = ['#60a5fa','#4ade80','#fbbf24','#f87171','#a78bfa','#fb923c','#34d399','#e879f9','#38bdf8'];
-
-  var pba = {};
-  DATA.positions.forEach(function(p) {
-    if (!pba[p.account]) pba[p.account] = [];
-    pba[p.account].push(p);
-  });
-
-  var r1d=[], r1c=[], r1l=[];
-  var r2d=[], r2c=[], r2l=[];
-  var r3d=[], r3c=[], r3l=[];
-  var r4d=[], r4c=[], r4l=[];
-
-  accts.forEach(function(a, i) {
-    var col = COLS[i % COLS.length];
-    var sn  = a.name.replace('G Fidelity ','G ').replace('R Fidelity ','R ')
-                    .replace('Robinhood','RH').replace('Etrade','ET')
-                    .replace('Intel ','').trim();
-    r1d.push(a.total); r1c.push(col + 'cc'); r1l.push(sn + ' ' + fm(a.total));
-
-    var parts = [];
-    if (a.cash > 0)        parts.push({v: a.cash,        c: '#2a2a2a', l: 'Cash ' + fm(a.cash)});
-    if (a.stock_total > 0) parts.push({v: a.stock_total, c: col+'88',  l: 'Stocks ' + fm(a.stock_total)});
-    parts.sort(function(x, y) { return y.v - x.v; });
-
-    var pos = (pba[a.name] || []).sort(function(x, y) { return y.shares * y.price - x.shares * x.price; });
-
-    parts.forEach(function(pt) {
-      r2d.push(pt.v); r2c.push(pt.c); r2l.push(pt.l);
-      if (pt.l.indexOf('Stocks') === 0 && pos.length) {
-        pos.forEach(function(p) {
-          var mv  = Math.round(p.shares * p.price);
-          var apl = Math.round((p.price - p.avg) * p.shares);
-          r3d.push(mv);  r3c.push(col + '55'); r3l.push(p.symbol + ' ' + fm(mv));
-          r4d.push(Math.max(Math.abs(apl), 1));
-          r4c.push(apl >= 0 ? 'rgba(74,222,128,0.8)' : 'rgba(248,113,113,0.8)');
-          r4l.push(fd(apl));
-        });
-      } else {
-        r3d.push(pt.v); r3c.push('rgba(0,0,0,0)'); r3l.push('');
-        r4d.push(pt.v); r4c.push('rgba(0,0,0,0)'); r4l.push('');
-      }
-    });
-  });
+    '<div class="st"><div class="stl">Invested</div><div class="stv">'+fm(inv)+'</div>'+
+    '<div class="sts '+pc(tpl)+'">'+fd(tpl)+' P&L</div></div>'+
+    '<div class="st"><div class="stl">Cash</div><div class="stv">'+fm(cash)+'</div>'+
+    '<div class="sts m">'+accts.length+' accounts</div></div>';
 
   $('sb-tot').textContent = fm(tot);
 
-  if (r1d.length === 0) {
-    $('sb-lgnd').innerHTML = '<span style="color:#444;font-size:12px">No data yet</span>';
-    return;
+  var COLS=['#60a5fa','#4ade80','#fbbf24','#f87171','#a78bfa','#fb923c','#34d399','#e879f9','#38bdf8','#818cf8'];
+
+  var pba={};
+  DATA.positions.forEach(function(p){
+    if(!pba[p.account]) pba[p.account]=[];
+    pba[p.account].push(p);
+  });
+
+  var canvas = $('sb');
+  var W = canvas.parentElement.clientWidth || 360;
+  var H = W;
+  canvas.width  = W;
+  canvas.height = H;
+  canvas.style.height = H+'px';
+  var ctx = canvas.getContext('2d');
+  var cx=W/2, cy=H/2;
+
+  // Ring radii
+  var hole = W*0.12;
+  var r1   = W*0.24;
+  var r2   = W*0.35;
+  var r3   = W*0.44;
+  var r4   = W*0.49;
+  var pad  = 0.012; // gap between slices in radians
+
+  function hex2rgb(hex,a){
+    var r=parseInt(hex.slice(1,3),16);
+    var g=parseInt(hex.slice(3,5),16);
+    var b=parseInt(hex.slice(5,7),16);
+    return 'rgba('+r+','+g+','+b+','+a+')';
   }
 
-  var allLabels = [r1l, r2l, r3l, r4l];
+  function drawSlice(ri,ro,sa,ea,fill){
+    if(ea-sa<pad*2) return;
+    var s=sa+pad/2, e=ea-pad/2;
+    ctx.beginPath();
+    ctx.arc(cx,cy,ro,s,e);
+    ctx.arc(cx,cy,ri,e,s,true);
+    ctx.closePath();
+    ctx.fillStyle=fill;
+    ctx.fill();
+  }
 
-  // Custom plugin: draw labels INSIDE each arc sector
-  var arcLabelPlugin = {
-    id: 'arcLabels',
-    afterDraw: function(chart) {
-      var ctx = chart.ctx;
-      var MIN_PCT = [0.07, 0.09, 0.11, 0.11]; // min sector size to show label
-      var SIZES   = [9, 8, 7.5, 7];
-      var WEIGHTS = ['600', '500', '400', '400'];
-
-      chart.data.datasets.forEach(function(ds, di) {
-        var meta  = chart.getDatasetMeta(di);
-        var total = ds.data.reduce(function(s, v) { return s + (v || 0); }, 0);
-        if (total === 0) return;
-
-        meta.data.forEach(function(arc, i) {
-          var lbl = allLabels[di][i];
-          if (!lbl || lbl === '') return;
-
-          var pct = (ds.data[i] || 0) / total;
-          if (pct < MIN_PCT[di]) return;
-
-          // Centroid of the arc sector
-          var mid = (arc.startAngle + arc.endAngle) / 2;
-          var r   = (arc.innerRadius + arc.outerRadius) / 2;
-          var cx  = arc.x + r * Math.cos(mid);
-          var cy  = arc.y + r * Math.sin(mid);
-
-          ctx.save();
-          ctx.fillStyle = '#ffffff';
-          ctx.textAlign = 'center';
-          ctx.textBaseline = 'middle';
-
-          // Split label into up to 2 lines
-          var parts = lbl.split(' ');
-          var line1 = parts[0];
-          var line2 = parts.slice(1).join(' ');
-
-          var fs = SIZES[di];
-          ctx.font = WEIGHTS[di] + ' ' + fs + 'px "IBM Plex Sans", sans-serif';
-
-          if (line2 && pct > MIN_PCT[di] * 1.5) {
-            ctx.fillText(line1, cx, cy - fs * 0.6);
-            ctx.font = '400 ' + (fs - 0.5) + 'px "IBM Plex Mono", monospace';
-            ctx.fillText(line2, cx, cy + fs * 0.7);
-          } else {
-            ctx.fillText(line1, cx, cy);
-          }
-          ctx.restore();
-        });
-      });
+  function drawLabel(ri,ro,sa,ea,line1,line2,col){
+    var span=ea-sa;
+    if(span<0.08) return;
+    var mid=sa+span/2;
+    var r=(ri+ro)/2;
+    var lx=cx+r*Math.cos(mid);
+    var ly=cy+r*Math.sin(mid);
+    var fs=Math.max(7,Math.min(12,span*(ri+ro)*0.09));
+    ctx.save();
+    ctx.textAlign='center';
+    ctx.textBaseline='middle';
+    ctx.fillStyle=col||'#fff';
+    if(line2&&span>0.14){
+      ctx.font='600 '+fs+'px "IBM Plex Sans",sans-serif';
+      ctx.fillText(line1,lx,ly-fs*0.65);
+      ctx.font='400 '+(fs-1)+'px "IBM Plex Mono",monospace';
+      ctx.fillStyle='#ccc';
+      ctx.fillText(line2,lx,ly+fs*0.65);
+    } else {
+      ctx.font='600 '+fs+'px "IBM Plex Sans",sans-serif';
+      ctx.fillText(line1,lx,ly);
     }
-  };
+    ctx.restore();
+  }
 
-  new Chart($('sb-canvas'), {
-    type: 'doughnut',
-    plugins: [arcLabelPlugin],
-    data: {
-      datasets: [
-        {data: r1d, backgroundColor: r1c, borderColor: '#0d0d0d', borderWidth: 2,   hoverOffset: 4},
-        {data: r2d, backgroundColor: r2c, borderColor: '#0d0d0d', borderWidth: 1.5, hoverOffset: 3},
-        {data: r3d, backgroundColor: r3c, borderColor: '#0d0d0d', borderWidth: 1,   hoverOffset: 2},
-        {data: r4d, backgroundColor: r4c, borderColor: '#0d0d0d', borderWidth: 0.5, hoverOffset: 1}
-      ]
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      cutout: '18%',
-      animation: {duration: 600},
-      plugins: {
-        legend: {display: false},
-        tooltip: {
-          callbacks: {
-            title: function(ctx) {
-              return ['Account','Cash vs Stocks','Holding','P&L'][ctx[0].datasetIndex];
-            },
-            label: function(ctx) {
-              var lbl = allLabels[ctx.datasetIndex][ctx.dataIndex] || '';
-              return lbl ? ' ' + lbl : ' ' + fm(ctx.raw);
-            }
-          }
-        }
+  // Fill background
+  ctx.fillStyle='#161616';
+  ctx.fillRect(0,0,W,H);
+
+  // Center label
+  ctx.textAlign='center'; ctx.textBaseline='middle';
+  ctx.fillStyle='#fff';
+  ctx.font='300 '+(W*0.055)+'px "IBM Plex Mono",monospace';
+  ctx.fillText(fm(tot),cx,cy-W*0.025);
+  ctx.fillStyle=tpl>=0?'#4ade80':'#f87171';
+  ctx.font='400 '+(W*0.032)+'px "IBM Plex Mono",monospace';
+  ctx.fillText(fd(tpl),cx,cy+W*0.03);
+  ctx.fillStyle='#444';
+  ctx.font='400 '+(W*0.022)+'px "IBM Plex Sans",sans-serif';
+  ctx.fillText('NET WORTH',cx,cy+W*0.065);
+
+  var TWO_PI=2*Math.PI;
+  var startAngle=-Math.PI/2; // start at top
+
+  accts.forEach(function(a,i){
+    var col=COLS[i%COLS.length];
+    var acctAngle=TWO_PI*(a.total/tot);
+    var endAngle=startAngle+acctAngle;
+
+    // SHORT name for labels
+    var sn=a.name
+      .replace('G Fidelity ','G ')
+      .replace('R Fidelity ','R ')
+      .replace('Robinhood','RH')
+      .replace('Etrade','ET')
+      .replace('Intel ','')
+      .trim();
+
+    // RING 1 - account name
+    drawSlice(hole,r1,startAngle,endAngle,col);
+    drawLabel(hole,r1,startAngle,endAngle,sn,'',null);
+
+    // Build holdings for this account: cash + stocks sorted by value desc
+    var pos=(pba[a.name]||[])
+      .map(function(p){
+        return {sym:p.symbol, mv:Math.round(p.shares*p.price), pl:Math.round((p.price-p.avg)*p.shares)};
+      })
+      .sort(function(x,y){return y.mv-x.mv;});
+
+    var holdings=[];
+    if(a.cash>0) holdings.push({lbl:'Cash',val:a.cash,isCash:true,pl:0});
+    pos.forEach(function(p){holdings.push({lbl:p.sym,val:p.mv,isCash:false,pl:p.pl});});
+    holdings.sort(function(x,y){return y.val-x.val;});
+
+    // Fix rounding so holdings sum to account total
+    if(holdings.length){
+      var hsum=holdings.reduce(function(s,h){return s+h.val;},0);
+      holdings[0].val+=(a.total-hsum);
+    }
+
+    var hStart=startAngle;
+    holdings.forEach(function(h){
+      var hAngle=acctAngle*(h.val/a.total);
+      var hEnd=hStart+hAngle;
+
+      // RING 2 - account value breakdown
+      var r2col=h.isCash?'#2a2a2a':hex2rgb(col,0.55);
+      drawSlice(r1,r2,hStart,hEnd,r2col);
+      drawLabel(r1,r2,hStart,hEnd,h.lbl,fm(h.val),null);
+
+      // RING 3 - holdings detail
+      var r3col=h.isCash?'#1e1e1e':hex2rgb(col,0.4);
+      drawSlice(r2,r3,hStart,hEnd,r3col);
+      drawLabel(r2,r3,hStart,hEnd,h.lbl,fm(h.val),null);
+
+      // RING 4 - P&L (outermost)
+      if(!h.isCash){
+        var plCol=h.pl>=0?'rgba(74,222,128,0.82)':'rgba(248,113,113,0.82)';
+        var plLbl=(h.pl>=0?'+':'')+fm(Math.abs(h.pl));
+        drawSlice(r3,r4,hStart,hEnd,plCol);
+        drawLabel(r3,r4,hStart,hEnd,plLbl,'',h.pl>=0?'#fff':'#fff');
+      } else {
+        drawSlice(r3,r4,hStart,hEnd,'rgba(10,10,10,0.5)');
       }
-    }
+
+      hStart=hEnd;
+    });
+
+    startAngle=endAngle;
   });
 
-  $('sb-lgnd').innerHTML =
-    COLS.slice(0, accts.length).map(function(c, i) {
-      var sn = accts[i].name.replace('G Fidelity ','G ').replace('R Fidelity ','R ')
-                            .replace('Intel ','').replace('Etrade','ET').replace('Robinhood','RH').trim();
-      return '<span style="font-size:9px;padding:2px 7px;border-radius:3px;background:' + c + '22;color:' + c + ';font-weight:600">' + sn + '</span>';
-    }).join('') +
-    '<span style="font-size:9px;padding:2px 7px;border-radius:3px;background:#4ade8022;color:#4ade80;font-weight:600">Profit</span>' +
-    '<span style="font-size:9px;padding:2px 7px;border-radius:3px;background:#f8717122;color:#f87171;font-weight:600">Loss</span>' +
-    '<span style="font-size:9px;padding:2px 7px;border-radius:3px;background:#33333366;color:#666;font-weight:600">Cash</span>';
+  // Legend
+  $('sb-key').innerHTML=
+    accts.map(function(a,i){
+      var c=COLS[i%COLS.length];
+      var sn=a.name.replace('G Fidelity ','G ').replace('R Fidelity ','R ').replace('Intel ','').replace('Etrade','ET').replace('Robinhood','RH').trim();
+      return '<span style="font-size:9px;padding:2px 7px;border-radius:3px;background:'+c+'22;color:'+c+';font-weight:600">'+sn+'</span>';
+    }).join('')+
+    '<span style="font-size:9px;padding:2px 7px;border-radius:3px;background:#4ade8022;color:#4ade80;font-weight:600">Profit</span>'+
+    '<span style="font-size:9px;padding:2px 7px;border-radius:3px;background:#f8717122;color:#f87171;font-weight:600">Loss</span>';
 
-  $('ac-list').innerHTML = accts.map(function(a) {
-    var apl = a.stock_total - a.stock_cost;
-    var aplP = a.stock_cost > 0 ? apl / a.stock_cost * 100 : 0;
-    var plStr = a.stock_cost > 0 ? ' <span class="' + pc(apl) + '">' + fd(apl) + ' (' + fp(aplP) + ')</span>' : '';
-    return '<div class="row"><div class="rl"><div class="rt">' + a.name + '</div>' +
-           '<div class="rs">Cash ' + fm(a.cash) + ' &nbsp;·&nbsp; Stocks ' + fm(a.stock_total) + plStr + '</div></div>' +
-           '<div class="rr"><div class="rv">' + fm(a.total) + '</div></div></div>';
+  $('ac-list').innerHTML=accts.map(function(a){
+    var apl=a.stock_total-a.stock_cost, aplP=a.stock_cost>0?apl/a.stock_cost*100:0;
+    var ps=a.stock_cost>0?' <span class="'+pc(apl)+'">'+fd(apl)+' ('+fp(aplP)+')</span>':'';
+    return '<div class="row"><div class="rl"><div class="rt">'+a.name+'</div>'+
+           '<div class="rs">Cash '+fm(a.cash)+' &middot; Stocks '+fm(a.stock_total)+ps+'</div></div>'+
+           '<div class="rr"><div class="rv">'+fm(a.total)+'</div></div></div>';
   }).join('');
 
-  var spos = DATA.positions.slice().sort(function(a, b) {
-    return (b.price - b.avg) * b.shares - (a.price - a.avg) * a.shares;
-  });
-  $('pos-list').innerHTML = spos.length ? spos.map(function(p) {
-    var pl = (p.price - p.avg) * p.shares;
-    var plP = (p.price - p.avg) / p.avg * 100;
-    return '<div class="row"><div class="rl">' +
-           '<div class="rt">' + p.symbol + ' <span class="m" style="font-size:11px;font-weight:400">' + p.account + '</span></div>' +
-           '<div class="rs">' + p.shares.toLocaleString() + ' sh &nbsp;·&nbsp; avg $' + p.avg.toFixed(2) + ' &rarr; $' + p.price.toFixed(2) + '</div></div>' +
-           '<div class="rr"><div class="rv ' + pc(pl) + '">' + fd(pl) + '</div>' +
-           '<div class="rv2 ' + pc(pl) + '">' + fp(plP) + '</div></div></div>';
-  }).join('') : '<div class="empty">No positions</div>';
+  var sp=DATA.positions.slice().sort(function(a,b){return(b.price-b.avg)*b.shares-(a.price-a.avg)*a.shares;});
+  $('pos-list').innerHTML=sp.map(function(p){
+    var pl=(p.price-p.avg)*p.shares,plP=(p.price-p.avg)/p.avg*100;
+    return '<div class="row"><div class="rl"><div class="rt">'+p.symbol+' <span class="m" style="font-size:11px;font-weight:400">'+p.account+'</span></div>'+
+           '<div class="rs">'+p.shares.toLocaleString()+' sh &middot; avg $'+p.avg.toFixed(2)+' to $'+p.price.toFixed(2)+'</div></div>'+
+           '<div class="rr"><div class="rv '+pc(pl)+'">'+fd(pl)+'</div>'+
+           '<div class="rv2 '+pc(pl)+'">'+fp(plP)+'</div></div></div>';
+  }).join('')||'<div class="empty">No positions</div>';
 })();
 
-// SIGNALS
-(function() {
-  $('sig-tf').textContent = 'Timeframe: ' + DATA.signals.tf;
-  var rend = function(items, el) {
-    if (!items.length) { $(el).innerHTML = '<div class="card"><div class="empty">No signals</div></div>'; return; }
-    $(el).innerHTML = items.map(function(s) {
-      var isE = s.type === 'ENTRY' || s.type === 'REENTRY';
-      var isX = s.type === 'TIER2_EXIT' || s.type === 'TIER1_EXIT';
-      var cls = isE ? 'se' : isX ? 'sx' : 'sh';
-      var lbl = isE ? (s.type === 'REENTRY' ? 'Re-entry' : 'Entry') : isX ? 'Exit' : 'Caution';
-      var bc  = isE ? 'bg' : isX ? 'br' : 'bx';
-      var fc  = s.score >= 70 ? '#4ade80' : s.score >= 60 ? '#fbbf24' : '#f87171';
-      var st  = (s.stop && s.target) ?
-        '<div class="sst"><span>Stop</span> <b>$' + s.stop + '</b> <span>Target</span> <b>$' + s.target + '</b></div>' : '';
-      return '<div class="sig ' + cls + '"><div class="shd">' +
-             '<span><span class="stk">' + s.ticker + '</span> &nbsp;<span class="bdg ' + bc + '">' + lbl + '</span></span>' +
-             '<span class="ssc">' + s.score + '</span></div>' +
-             '<div class="sbar"><div class="sfl" style="width:' + s.score + '%;background:' + fc + '"></div></div>' +
-             '<div class="sdt">' + s.detail + '</div>' + st + '</div>';
+// ── SIGNALS ───────────────────────────────────────────────────────
+(function(){
+  $('sig-tf').textContent='Timeframe: '+DATA.signals.tf;
+  var rend=function(items,el){
+    if(!items.length){$(el).innerHTML='<div class="card"><div class="empty">No signals</div></div>';return;}
+    $(el).innerHTML=items.map(function(s){
+      var isE=s.type==='ENTRY'||s.type==='REENTRY';
+      var isX=s.type==='TIER2_EXIT'||s.type==='TIER1_EXIT';
+      var cls=isE?'se':isX?'sx':'sh';
+      var lbl=isE?(s.type==='REENTRY'?'Re-entry':'Entry'):isX?'Exit':'Caution';
+      var bc=isE?'bg':isX?'br':'bx';
+      var fc=s.score>=70?'#4ade80':s.score>=60?'#fbbf24':'#f87171';
+      var st=(s.stop&&s.target)?'<div class="sst"><span>Stop</span> <b>$'+s.stop+'</b> <span>Target</span> <b>$'+s.target+'</b></div>':'';
+      return '<div class="sig '+cls+'"><div class="shd"><span><span class="stk">'+s.ticker+'</span> &nbsp;<span class="bdg '+bc+'">'+lbl+'</span></span><span style="font-family:monospace;font-size:11px;color:#555">'+s.score+'</span></div>'+
+             '<div class="sbar"><div class="sfl" style="width:'+s.score+'%;background:'+fc+'"></div></div>'+
+             '<div class="sdt">'+s.detail+'</div>'+st+'</div>';
     }).join('');
   };
-  rend(DATA.signals.entries, 'entries');
-  rend(DATA.signals.exits, 'exits');
+  rend(DATA.signals.entries,'entries');
+  rend(DATA.signals.exits,'exits');
 })();
 
-// WATCHLIST
-(function() {
-  var items = DATA.signals.scored;
-  if (!items.length) { $('wl-list').innerHTML = '<div class="empty">Run /ema to populate</div>'; return; }
-  $('wl-list').innerHTML = items.map(function(r) {
-    var c = r.score >= 70 ? '#4ade80' : r.score >= 60 ? '#fbbf24' : '#f87171';
-    return '<div class="mt"><div class="mtk">' + r.ticker + '</div>' +
-           '<div class="mb"><div class="mf" style="width:' + r.score + '%;background:' + c + '"></div></div>' +
-           '<div class="ms">' + r.score + '</div>' +
-           '<div class="mp">$' + Number(r.price).toFixed(0) + '</div></div>';
+// ── WATCHLIST ─────────────────────────────────────────────────────
+(function(){
+  var items=DATA.signals.scored;
+  if(!items.length){$('wl-list').innerHTML='<div class="empty">Run /ema to populate</div>';return;}
+  $('wl-list').innerHTML=items.map(function(r){
+    var c=r.score>=70?'#4ade80':r.score>=60?'#fbbf24':'#f87171';
+    return '<div class="mt"><div class="mtk">'+r.ticker+'</div>'+
+           '<div class="mb"><div class="mf" style="width:'+r.score+'%;background:'+c+'"></div></div>'+
+           '<div class="ms">'+r.score+'</div><div class="mp">$'+Number(r.price).toFixed(0)+'</div></div>';
   }).join('');
-  new Chart($('sc-canvas'), {
-    type: 'bar',
-    data: {
-      labels: items.map(function(r) { return r.ticker; }),
-      datasets: [{
-        data: items.map(function(r) { return r.score; }),
-        backgroundColor: items.map(function(r) { return r.score >= 70 ? '#4ade80' : r.score >= 60 ? '#fbbf24' : '#f87171'; }),
-        borderRadius: 3
-      }]
-    },
-    options: {
-      responsive: true, maintainAspectRatio: false,
-      plugins: {legend: {display: false}},
-      scales: {
-        x: {ticks: {color: '#555', font: {size: 10}}, grid: {display: false}},
-        y: {min: 0, max: 100, ticks: {color: '#555', font: {size: 10}}, grid: {color: '#1a1a1a'}}
-      }
-    }
+  new Chart($('sc'),{type:'bar',
+    data:{labels:items.map(function(r){return r.ticker;}),
+          datasets:[{data:items.map(function(r){return r.score;}),
+            backgroundColor:items.map(function(r){return r.score>=70?'#4ade80':r.score>=60?'#fbbf24':'#f87171';}),
+            borderRadius:3}]},
+    options:{responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{display:false}},
+      scales:{x:{ticks:{color:'#555',font:{size:10}},grid:{display:false}},
+              y:{min:0,max:100,ticks:{color:'#555',font:{size:10}},grid:{color:'#1a1a1a'}}}}
   });
 })();
 
-// JOURNAL
-(function() {
-  var s = DATA.journal.stats;
-  $('j-sg').innerHTML =
-    '<div class="st"><div class="stl">Sleep &middot; Mind &middot; Body</div>' +
-    '<div class="stv">' + (s.sleep || '—') + ' &middot; ' + (s.mind || '—') + ' &middot; ' + (s.physical || '—') + '</div>' +
-    '<div class="sts m">out of 10</div></div>' +
-    '<div class="st"><div class="stl">P&L Today</div>' +
-    '<div class="stv ' + (s.pnl && s.pnl[0] === '-' ? 'r' : 'g') + '">' + (s.pnl || '—') + '</div></div>';
-  if (s.goal) {
-    $('goal-box').innerHTML =
-      '<div class="card" style="margin-bottom:12px"><div class="cb">' +
-      '<span style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#444;font-weight:600">Goal &nbsp;</span>' +
-      '<span style="font-size:13px;color:#ccc">' + s.goal + '</span></div></div>';
-  }
-  $('j-list').innerHTML = DATA.journal.today.length ? DATA.journal.today.map(function(e) {
-    var sc = e.sentiment === 'positive' ? 'bg' : e.sentiment === 'negative' ? 'br' : 'bx';
-    return '<div class="je"><div class="jm"><span class="jtm">' + e.time + '</span>' +
-           (e.sentiment ? '<span class="bdg ' + sc + '">' + e.sentiment + '</span>' : '') +
-           '</div><div class="jt">' + e.entry + '</div></div>';
-  }).join('') : '<div class="empty">No entries today</div>';
+// ── JOURNAL ───────────────────────────────────────────────────────
+(function(){
+  var s=DATA.journal.stats;
+  $('j-sg').innerHTML=
+    '<div class="st"><div class="stl">Sleep &middot; Mind &middot; Body</div>'+
+    '<div class="stv">'+(s.sleep||'?')+' &middot; '+(s.mind||'?')+' &middot; '+(s.physical||'?')+'</div>'+
+    '<div class="sts m">out of 10</div></div>'+
+    '<div class="st"><div class="stl">P&L Today</div>'+
+    '<div class="stv '+(s.pnl&&s.pnl[0]==='-'?'r':'g')+'">'+(s.pnl||'-')+'</div></div>';
+  if(s.goal)$('goal-box').innerHTML='<div class="card" style="margin-bottom:12px"><div style="padding:12px 14px">'+
+    '<span style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#444;font-weight:600">Goal &nbsp;</span>'+
+    '<span style="font-size:13px;color:#ccc">'+s.goal+'</span></div></div>';
+  $('j-list').innerHTML=DATA.journal.today.length?DATA.journal.today.map(function(e){
+    var sc=e.sentiment==='positive'?'bg':e.sentiment==='negative'?'br':'bx';
+    return '<div class="je"><div class="jm"><span class="jtm">'+e.time+'</span>'+
+           (e.sentiment?'<span class="bdg '+sc+'">'+e.sentiment+'</span>':'')+
+           '</div><div class="jt">'+e.entry+'</div></div>';
+  }).join(''):'<div class="empty">No entries today</div>';
 })();
 
-// TRADES
-$('t-list').innerHTML = DATA.trades.length ? DATA.trades.map(function(t) {
-  return '<div class="row"><div class="rl">' +
-         '<div class="rt"><span class="bdg ' + (t.direction === 'BUY' ? 'bg' : 'br') + '">' + t.direction + '</span> &nbsp;' + t.symbol + '</div>' +
-         '<div class="rs">' + t.shares + ' sh @ $' + t.price + ' &nbsp;&middot;&nbsp; ' + t.account + ' &nbsp;&middot;&nbsp; ' + t.date + '</div></div>' +
-         '<div class="rr"><div class="rv">' + fm(t.total) + '</div><div class="rv2 m">' + t.status + '</div></div></div>';
-}).join('') : '<div class="empty">No trades</div>';
+// ── TRADES ────────────────────────────────────────────────────────
+$('t-list').innerHTML=DATA.trades.length?DATA.trades.map(function(t){
+  return '<div class="row"><div class="rl">'+
+    '<div class="rt"><span class="bdg '+(t.direction==='BUY'?'bg':'br')+'">'+t.direction+'</span> &nbsp;'+t.symbol+'</div>'+
+    '<div class="rs">'+t.shares+' sh @ $'+t.price+' &middot; '+t.account+' &middot; '+t.date+'</div></div>'+
+    '<div class="rr"><div class="rv">'+fm(t.total)+'</div><div class="rv2 m">'+t.status+'</div></div></div>';
+}).join(''):'<div class="empty">No trades</div>';
 </script>
 </body>
 </html>

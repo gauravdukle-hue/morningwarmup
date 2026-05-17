@@ -120,7 +120,7 @@ body{background:#0d0d0d;color:#fff;font-family:'IBM Plex Sans',sans-serif;font-s
     <div class="sl">Portfolio breakdown</div>
     <div class="card">
       <div class="ch"><span class="cl">Sunburst — Group · Account · Value · Holdings</span><span id="sb-tot" class="mono" style="font-size:11px;color:#444"></span></div>
-      <div class="chart-box" style="height:320px">
+      <div class="chart-box" style="height:420px">
         <canvas id="sb-canvas" role="img" aria-label="Portfolio sunburst chart">Portfolio allocation sunburst.</canvas>
       </div>
       <div class="lgnd" id="sb-lgnd"></div>
@@ -162,10 +162,11 @@ body{background:#0d0d0d;color:#fff;font-family:'IBM Plex Sans',sans-serif;font-s
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-datalabels/2.2.0/chartjs-plugin-datalabels.min.js"></script>
 <script>
 /*DATA_START*/
 const DATA = {
-  "generated": "May 17, 2026  11:56 AM CT",
+  "generated": "May 17, 2026  12:00 PM CT",
   "net_worth": 2449796.97,
   "total_pl": 450629.19,
   "accounts": [
@@ -637,35 +638,79 @@ $('nwpl').innerHTML = `<span class="${pc(pl)}">${fd(pl)} unrealised</span>`;
     });
   });
 
-  $('sb-tot').textContent = fm(tot)+' · '+(totalPL>=0?'+':'')+fm(totalPL)+' P&L';
+  $('sb-tot').textContent = fm(tot)+' · '+(totalPL>=0?'+':'-')+fm(totalPL)+' P&L';
+
+  // Register datalabels plugin
+  Chart.register(ChartDataLabels);
 
   const canvas=$('sb-canvas');
-  canvas.width  = canvas.parentElement.offsetWidth||320;
-  canvas.height = 320;
+  const cw = canvas.parentElement.offsetWidth||340;
+  canvas.width  = cw;
+  canvas.height = 420;
+
+  // Threshold: only show label if sector is > X% of ring total
+  function showLbl(ctx, minPct){
+    const data = ctx.dataset.data.filter(v=>v>0);
+    const tot  = data.reduce((s,v)=>s+v,0);
+    return tot>0 && ctx.dataset.data[ctx.dataIndex]/tot > minPct;
+  }
 
   new Chart(canvas,{
     type:'doughnut',
     data:{
       labels:r1l,
       datasets:[
-        {label:'Account',  data:r1d, backgroundColor:r1c, borderColor:'#0d0d0d', borderWidth:2,   hoverOffset:6},
-        {label:'Value',    data:r2d, backgroundColor:r2c, borderColor:'#0d0d0d', borderWidth:1.5, hoverOffset:4},
-        {label:'Holdings', data:r3d, backgroundColor:r3c, borderColor:'#0d0d0d', borderWidth:1,   hoverOffset:3},
-        {label:'P&L',      data:r4d, backgroundColor:r4c, borderColor:'#0d0d0d', borderWidth:0.5, hoverOffset:2}
+        {label:'Account',  data:r1d, backgroundColor:r1c, borderColor:'#0d0d0d', borderWidth:2,   hoverOffset:4},
+        {label:'Value',    data:r2d, backgroundColor:r2c, borderColor:'#0d0d0d', borderWidth:1.5, hoverOffset:3},
+        {label:'Holdings', data:r3d, backgroundColor:r3c, borderColor:'#0d0d0d', borderWidth:1,   hoverOffset:2},
+        {label:'P&L',      data:r4d, backgroundColor:r4c, borderColor:'#0d0d0d', borderWidth:0.5, hoverOffset:1}
       ]
     },
-    options:{responsive:false,cutout:'22%',
-      plugins:{legend:{display:false},tooltip:{callbacks:{
-        label:ctx=>{
-          const ds=ctx.datasetIndex,i=ctx.dataIndex;
-          const lbl=[r1l,r2l,r3l,r4l][ds][i];
-          return lbl?' '+lbl:'';
-        },
-        title:ctx=>{
-          const lbls=['Account','Value','Holding','P&L'];
-          return lbls[ctx[0].datasetIndex];
+    options:{
+      responsive:false,
+      cutout:'20%',
+      plugins:{
+        legend:{display:false},
+        tooltip:{callbacks:{
+          label:ctx=>{
+            const ds=ctx.datasetIndex,i=ctx.dataIndex;
+            const lbl=[r1l,r2l,r3l,r4l][ds][i];
+            return lbl?' '+lbl:'';
+          },
+          title:ctx=>(['Account','Value','Holding','P&L'][ctx[0].datasetIndex])
+        }},
+        datalabels:{
+          color:'#fff',
+          anchor:'center',
+          align:'center',
+          textAlign:'center',
+          font:(ctx)=>{
+            const sizes=[10,9,8,8];
+            return {size:sizes[ctx.datasetIndex],weight:ctx.datasetIndex<2?'600':'400',
+                    family:"'IBM Plex Sans',sans-serif"};
+          },
+          formatter:(val,ctx)=>{
+            const ds=ctx.datasetIndex, i=ctx.dataIndex;
+            const lbls=[r1l,r2l,r3l,r4l][ds];
+            const vals=[r1d,r2d,r3d,r4d][ds];
+            const lbl=lbls[i]||'';
+            const v=vals[i]||0;
+            if(!lbl||lbl===''||lbl==='—') return null;
+            if(ds===0) return lbl+'\n'+fm(v);
+            if(ds===1) return lbl.split(' ')[0]+'\n'+fm(v);
+            if(ds===2) return lbl.split(' ')[0];        // Just ticker
+            if(ds===3) return lbl;                      // P&L amount
+            return null;
+          },
+          display:(ctx)=>{
+            const ds=ctx.datasetIndex;
+            const minPct=[0.06,0.08,0.10,0.12][ds];
+            return showLbl(ctx,minPct);
+          },
+          overflow:'hidden',
+          clip:true,
         }
-      }}}
+      }
     }
   });
 

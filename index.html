@@ -7,13 +7,13 @@
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500&family=IBM+Plex+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{background:#0d0d0d;color:#fff;font-family:'IBM Plex Sans',sans-serif;font-size:14px}
+body{background:#0d0d0d;color:#fff;font-family:sans-serif;font-size:14px}
 .g{color:#4ade80}.r{color:#f87171}.m{color:#888}
 .top{background:#111;border-bottom:1px solid #222;padding:14px 16px;position:sticky;top:0;z-index:10}
 .brand{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:#444;margin-bottom:6px}
 .nw-row{display:flex;justify-content:space-between;align-items:flex-end}
-.nw{font-family:'IBM Plex Mono',monospace;font-size:28px;font-weight:300}
-.nw-pl{font-family:'IBM Plex Mono',monospace;font-size:12px;margin-top:3px}
+.nw{font-family:monospace;font-size:28px;font-weight:300}
+.nw-pl{font-family:monospace;font-size:12px;margin-top:3px}
 .ts{font-size:10px;color:#444;text-align:right}
 .tabs{display:flex;background:#111;border-bottom:1px solid #222;overflow-x:auto}
 .tabs::-webkit-scrollbar{display:none}
@@ -29,38 +29,38 @@ body{background:#0d0d0d;color:#fff;font-family:'IBM Plex Sans',sans-serif;font-s
 .sg{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
 .st{background:#161616;border:1px solid #222;border-radius:10px;padding:12px 14px}
 .stl{font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#444;margin-bottom:4px}
-.stv{font-family:'IBM Plex Mono',monospace;font-size:20px;font-weight:300}
-.sts{font-family:'IBM Plex Mono',monospace;font-size:11px;color:#555;margin-top:2px}
+.stv{font-family:monospace;font-size:20px;font-weight:300}
+.sts{font-family:monospace;font-size:11px;color:#555;margin-top:2px}
 .row{padding:10px 14px;border-bottom:1px solid #1a1a1a;display:flex;justify-content:space-between;align-items:center}
 .row:last-child{border-bottom:none}
 .rl{flex:1;min-width:0}.rr{text-align:right;flex-shrink:0;margin-left:10px}
 .rt{font-size:13px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .rs{font-size:11px;color:#555;margin-top:2px}
-.rv{font-family:'IBM Plex Mono',monospace;font-size:14px}
-.rv2{font-family:'IBM Plex Mono',monospace;font-size:11px;margin-top:2px;color:#555}
+.rv{font-family:monospace;font-size:14px}
+.rv2{font-family:monospace;font-size:11px;margin-top:2px;color:#555}
 .bdg{display:inline-block;font-size:10px;font-weight:600;padding:2px 6px;border-radius:3px;text-transform:uppercase}
 .bg{background:#0d2b1a;color:#4ade80}.br{background:#2b0d0d;color:#f87171}.bx{background:#1e1e1e;color:#666}
 .sig{background:#161616;border:1px solid #222;border-radius:10px;margin-bottom:8px;overflow:hidden}
 .se{border-left:3px solid #4ade80}.sx{border-left:3px solid #f87171}.sh{border-left:3px solid #333}
 .shd{padding:10px 14px;display:flex;justify-content:space-between;align-items:center}
-.stk{font-family:'IBM Plex Mono',monospace;font-size:16px;font-weight:500}
+.stk{font-family:monospace;font-size:16px;font-weight:500}
 .sbar{height:3px;background:#1e1e1e;margin:0 14px 8px}
 .sfl{height:100%;border-radius:2px}
 .sdt{padding:0 14px 10px;font-size:12px;color:#666;line-height:1.55}
-.sst{font-family:'IBM Plex Mono',monospace;font-size:11px;padding:7px 14px;border-top:1px solid #1a1a1a;display:flex;gap:14px}
+.sst{font-family:monospace;font-size:11px;padding:7px 14px;border-top:1px solid #1a1a1a;display:flex;gap:14px}
 .sst span{color:#444}.sst b{color:#ddd;font-weight:500}
 .mt{display:flex;align-items:center;gap:8px;padding:7px 14px;border-bottom:1px solid #111}
 .mt:last-child{border-bottom:none}
-.mtk{font-family:'IBM Plex Mono',monospace;font-size:11px;width:48px;flex-shrink:0}
+.mtk{font-family:monospace;font-size:11px;width:48px;flex-shrink:0}
 .mb{flex:1;height:5px;background:#1e1e1e;border-radius:3px;overflow:hidden}
 .mf{height:100%;border-radius:3px}
-.ms{font-family:'IBM Plex Mono',monospace;font-size:10px;color:#444;width:24px;text-align:right;flex-shrink:0}
-.mp{font-family:'IBM Plex Mono',monospace;font-size:10px;color:#333;width:56px;text-align:right;flex-shrink:0}
+.ms{font-family:monospace;font-size:10px;color:#444;width:24px;text-align:right;flex-shrink:0}
+.mp{font-family:monospace;font-size:10px;color:#333;width:56px;text-align:right;flex-shrink:0}
 .je{padding:10px 14px;border-bottom:1px solid #1a1a1a}
 .je:last-child{border-bottom:none}
 .jm{display:flex;gap:8px;align-items:center;margin-bottom:4px}
 .jt{font-size:13px;color:#ccc;line-height:1.5}
-.jtm{font-family:'IBM Plex Mono',monospace;font-size:10px;color:#444}
+.jtm{font-family:monospace;font-size:10px;color:#444}
 .empty{padding:20px;text-align:center;font-size:12px;color:#333}
 </style>
 </head>
@@ -85,12 +85,14 @@ body{background:#0d0d0d;color:#fff;font-family:'IBM Plex Sans',sans-serif;font-s
     <div class="sl">Portfolio breakdown</div>
     <div class="card">
       <div class="ch">
-        <span class="cl">Ring 1=Account  2=Value  3=Holdings  4=P&L</span>
+        <span class="cl">Ring 1=Account+Value  2=Holdings  3=P&L</span>
         <span id="sb-tot" style="font-family:monospace;font-size:11px;color:#555"></span>
       </div>
       <canvas id="sb" style="display:block;width:100%"></canvas>
       <div id="sb-key" style="padding:8px 14px;display:flex;flex-wrap:wrap;gap:5px;border-top:1px solid #1a1a1a"></div>
     </div>
+    <div class="sl">Cumulative Holdings</div>
+    <div class="card" id="cum-list"></div>
   </div>
   <div id="t-signals" class="sec">
     <div class="sl" id="sig-tf"></div>
@@ -116,7 +118,7 @@ body{background:#0d0d0d;color:#fff;font-family:'IBM Plex Sans',sans-serif;font-s
 <script>
 /*DATA_START*/
 const DATA = {
-  "generated": "May 18, 2026  04:18 PM CT",
+  "generated": "May 18, 2026  05:19 PM CT",
   "net_worth": 2440917.99,
   "total_pl": 441750.21,
   "accounts": [
@@ -595,7 +597,7 @@ $('nwpl').innerHTML = '<span class="'+pc(DATA.total_pl)+'">'+fd(DATA.total_pl)+'
   // Center label
   ctx.textAlign='center'; ctx.textBaseline='middle';
   ctx.fillStyle='#fff';
-  ctx.font='300 10px "IBM Plex Mono",monospace';
+  ctx.font='300 12px "IBM Plex Mono",monospace';
   ctx.fillText(fm(tot),cx,cy-10);
   ctx.fillStyle=tpl>=0?'#4ade80':'#f87171';
   ctx.font='400 8px "IBM Plex Mono",monospace';
@@ -623,7 +625,7 @@ $('nwpl').innerHTML = '<span class="'+pc(DATA.total_pl)+'">'+fd(DATA.total_pl)+'
 
     // RING 1 - account name
     drawSlice(hole,r1,startAngle,endAngle,col);
-    drawLabel(hole,r1,startAngle,endAngle,sn,'',null);
+    drawLabel(hole,r1,startAngle,endAngle,sn,fm(a.total),null);
 
     // Build holdings for this account: cash + stocks sorted by value desc
     var pos=(pba[a.name]||[])
@@ -673,6 +675,47 @@ $('nwpl').innerHTML = '<span class="'+pc(DATA.total_pl)+'">'+fd(DATA.total_pl)+'
 
     startAngle=endAngle;
   });
+
+  // Cumulative holdings across all accounts
+  var cumMap = {};
+  DATA.positions.forEach(function(p){
+    if(!cumMap[p.symbol]) cumMap[p.symbol] = {shares:0, cost:0, mv:0};
+    cumMap[p.symbol].shares += p.shares;
+    cumMap[p.symbol].cost   += p.shares * p.avg;
+    cumMap[p.symbol].mv     += p.shares * p.price;
+  });
+
+  var cumList = Object.keys(cumMap).map(function(sym){
+    var c = cumMap[sym];
+    var avgPrice = c.cost / c.shares;
+    var pl = c.mv - c.cost;
+    return {sym:sym, shares:c.shares, avg:avgPrice, invested:c.cost, mv:c.mv, pl:pl};
+  }).sort(function(a,b){ return b.mv-a.mv; });
+
+  if(cumList.length){
+    $('cum-list').innerHTML =
+      '<div class="row" style="border-bottom:1px solid #222">' +
+        '<div class="rl"><div style="font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#444">Symbol</div></div>' +
+        '<div style="font-family:monospace;font-size:10px;color:#444;text-align:right;width:70px">Shares</div>' +
+        '<div style="font-family:monospace;font-size:10px;color:#444;text-align:right;width:70px">Avg</div>' +
+        '<div style="font-family:monospace;font-size:10px;color:#444;text-align:right;width:80px">Invested</div>' +
+        '<div style="font-family:monospace;font-size:10px;color:#444;text-align:right;width:80px">P&L</div>' +
+      '</div>' +
+      cumList.map(function(c){
+        var plPct = (c.pl / c.cost * 100);
+        return '<div class="row">' +
+          '<div class="rl"><div class="rt" style="font-weight:600">' + c.sym + '</div>' +
+          '<div class="rs">' + c.shares.toLocaleString() + ' sh &middot; avg $' + c.avg.toFixed(2) + '</div></div>' +
+          '<div style="font-family:monospace;font-size:12px;text-align:right;width:70px">' + Math.round(c.shares).toLocaleString() + '</div>' +
+          '<div style="font-family:monospace;font-size:12px;text-align:right;width:70px">$' + c.avg.toFixed(2) + '</div>' +
+          '<div style="font-family:monospace;font-size:12px;text-align:right;width:80px">' + fm(c.invested) + '</div>' +
+          '<div style="font-family:monospace;font-size:12px;text-align:right;width:80px;color:' + (c.pl>=0?'#4ade80':'#f87171') + '">' +
+            (c.pl>=0?'+':'-') + fm(c.pl) + '<br><span style="font-size:10px">' + (plPct>=0?'+':'') + plPct.toFixed(1) + '%</span></div>' +
+        '</div>';
+      }).join('');
+  } else {
+    $('cum-list').innerHTML = '<div class="empty">No positions</div>';
+  }
 
   // Legend
   $('sb-key').innerHTML=

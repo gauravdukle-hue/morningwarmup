@@ -118,7 +118,7 @@ body{background:#0d0d0d;color:#fff;font-family:sans-serif;font-size:14px}
 <script>
 /*DATA_START*/
 const DATA = {
-  "generated": "May 18, 2026  05:28 PM CT",
+  "generated": "May 18, 2026  05:33 PM CT",
   "net_worth": 2440917.99,
   "total_pl": 441750.21,
   "accounts": [
@@ -650,24 +650,23 @@ $('nwpl').innerHTML = '<span class="'+pc(DATA.total_pl)+'">'+fd(DATA.total_pl)+'
       var hAngle=acctAngle*(h.val/a.total);
       var hEnd=hStart+hAngle;
 
-      // RING 2 - account value breakdown
-      var r2col=h.isCash?'#2a2a2a':hex2rgb(col,0.55);
-      drawSlice(r1,r2,hStart,hEnd,r2col);
-      drawLabel(r1,r2,hStart,hEnd,h.lbl,fm(h.val),null);
-
-      // RING 3 - holdings detail
-      var r3col=h.isCash?'#1e1e1e':hex2rgb(col,0.4);
-      drawSlice(r2,r3,hStart,hEnd,r3col);
-      drawLabel(r2,r3,hStart,hEnd,h.lbl,fm(h.val),null);
-
-      // RING 4 - P&L (outermost)
+      // RING 2 - holding name + value
       if(!h.isCash){
-        var plCol=h.pl>=0?'rgba(74,222,128,0.82)':'rgba(248,113,113,0.82)';
-        var plLbl=(h.pl>=0?'+':'')+fm(Math.abs(h.pl));
-        drawSlice(r3,r4,hStart,hEnd,plCol);
-        drawLabel(r3,r4,hStart,hEnd,plLbl,'',h.pl>=0?'#fff':'#fff');
+        drawSlice(r1,r2,hStart,hEnd,hex2rgb(col,0.45));
+        drawLabel(r1,r2,hStart,hEnd,h.lbl,fm(h.val),null);
       } else {
-        drawSlice(r3,r4,hStart,hEnd,'rgba(10,10,10,0.5)');
+        drawSlice(r1,r2,hStart,hEnd,'rgba(20,20,20,0.6)');
+        drawLabel(r1,r2,hStart,hEnd,'Cash',fm(h.val),'#666');
+      }
+
+      // RING 3 - P&L per holding (outermost)
+      if(!h.isCash){
+        var plCol=h.pl>=0?'rgba(74,222,128,0.85)':'rgba(248,113,113,0.85)';
+        var plLbl=(h.pl>=0?'+':'-')+fm(Math.abs(h.pl));
+        drawSlice(r2,r3,hStart,hEnd,plCol);
+        drawLabel(r2,r3,hStart,hEnd,plLbl,'',null);
+      } else {
+        drawSlice(r2,r3,hStart,hEnd,'rgba(10,10,10,0.4)');
       }
 
       hStart=hEnd;

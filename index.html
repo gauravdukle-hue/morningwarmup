@@ -69,7 +69,15 @@ body{background:#0d0d0d;color:#fff;font-family:sans-serif;font-size:14px}
   <div class="brand">Trading Dashboard</div>
   <div class="nw-row">
     <div><div class="nw" id="nw">-</div><div class="nw-pl" id="nwpl"></div></div>
+    <div style="display:flex;align-items:center;gap:10px">
     <div class="ts" id="ts">-</div>
+    <a href="https://t.me/Gdorbscannerbot?start=wealth"
+       style="font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
+              color:#0d0d0d;background:#4ade80;padding:5px 10px;border-radius:5px;
+              text-decoration:none;white-space:nowrap">
+      ↻ Refresh
+    </a>
+  </div>
   </div>
 </div>
 <div class="tabs">
@@ -111,58 +119,58 @@ body{background:#0d0d0d;color:#fff;font-family:sans-serif;font-size:14px}
     <div class="sl">Today</div><div class="card" id="j-list"></div>
   </div>
   <div id="t-trades" class="sec">
-    <div class="sl">Recent trades</div><div class="card" id="t-list"></div>
+    <div class="card" id="t-list"></div>
   </div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <script>
 /*DATA_START*/
 const DATA = {
-  "generated": "May 22, 2026  09:32 AM CT",
-  "net_worth": 2668465.44,
-  "total_pl": 669268.09,
+  "generated": "May 22, 2026  11:20 AM CT",
+  "net_worth": 2658638.66,
+  "total_pl": 659441.31,
   "accounts": [
     {
       "name": "R Intel Etrade",
       "cash": 0.0,
-      "stock_total": 621694.68,
+      "stock_total": 616331.28,
       "stock_cost": 233231.28,
-      "total": 621694.68
+      "total": 616331.28
     },
     {
       "name": "G Intel Etrade",
       "cash": 0.0,
-      "stock_total": 432922.47,
+      "stock_total": 429187.62,
       "stock_cost": 160065.0,
-      "total": 432922.47
+      "total": 429187.62
     },
     {
       "name": "R Fidelity 401K",
       "cash": 41118.76,
-      "stock_total": 372793.2,
+      "stock_total": 375878.88,
       "stock_cost": 373678.24,
-      "total": 413911.96
+      "total": 416997.64
     },
     {
       "name": "G Fidelity Individual",
       "cash": 2341.58,
-      "stock_total": 386429.25,
+      "stock_total": 383095.5,
       "stock_cost": 374188.99,
-      "total": 388770.83
+      "total": 385437.08
     },
     {
       "name": "G Fidelity 401K",
       "cash": 1758.0,
-      "stock_total": 293364.22,
+      "stock_total": 294409.22,
       "stock_cost": 294139.22,
-      "total": 295122.22
+      "total": 296167.22
     },
     {
       "name": "R Robinhood",
       "cash": 3568.0,
-      "stock_total": 276038.28,
+      "stock_total": 273656.88,
       "stock_cost": 279701.1,
-      "total": 279606.28
+      "total": 277224.88
     },
     {
       "name": "G Fidelity Managed",
@@ -174,37 +182,37 @@ const DATA = {
     {
       "name": "G Fidelity Roth",
       "cash": 27.0,
-      "stock_total": 35066.25,
+      "stock_total": 35356.5,
       "stock_cost": 34731.0,
-      "total": 35093.25
+      "total": 35383.5
     },
     {
       "name": "R Fidelity Roth",
       "cash": 46.39,
-      "stock_total": 28910.17,
+      "stock_total": 29149.47,
       "stock_cost": 28533.61,
-      "total": 28956.56
+      "total": 29195.86
     },
     {
       "name": "A1 Fidelity Roth",
       "cash": 94.72,
-      "stock_total": 10052.32,
+      "stock_total": 10135.53,
       "stock_cost": 9974.28,
-      "total": 10147.04
+      "total": 10230.25
     },
     {
       "name": "A2 Fidelity Roth",
       "cash": 94.72,
-      "stock_total": 10052.32,
+      "stock_total": 10135.53,
       "stock_cost": 9974.28,
-      "total": 10147.04
+      "total": 10230.25
     },
     {
       "name": "A3 Fidelity Roth",
       "cash": 94.72,
-      "stock_total": 10052.32,
+      "stock_total": 10135.53,
       "stock_cost": 9974.28,
-      "total": 10147.04
+      "total": 10230.25
     },
     {
       "name": "G Crypto",
@@ -223,9 +231,9 @@ const DATA = {
     {
       "name": "G Fidelity Health",
       "cash": 0.0,
-      "stock_total": 9273.07,
+      "stock_total": 9349.83,
       "stock_cost": 9189.18,
-      "total": 9273.07
+      "total": 9349.83
     },
     {
       "name": "R Robinhood Managed",
@@ -240,71 +248,78 @@ const DATA = {
       "symbol": "INTC",
       "shares": 5108.0,
       "avg": 45.66,
-      "price": 121.71,
+      "price": 120.66,
       "account": "R Intel Etrade"
     },
     {
       "symbol": "INTC",
       "shares": 3557.0,
       "avg": 45.0,
-      "price": 121.71,
+      "price": 120.66,
       "account": "G Intel Etrade"
     },
     {
       "symbol": "INTC",
       "shares": 3175.0,
       "avg": 117.85,
-      "price": 121.71,
+      "price": 120.66,
       "account": "G Fidelity Individual"
+    },
+    {
+      "symbol": "TQQQ",
+      "shares": 4784.0,
+      "avg": 78.11,
+      "price": 78.57,
+      "account": "R Fidelity 401K"
     },
     {
       "symbol": "TQQQ",
       "shares": 1000.0,
       "avg": 76.72,
-      "price": 77.92,
+      "price": 78.57,
       "account": "G Fidelity 401K"
-    },
-    {
-      "symbol": "TQQQ",
-      "shares": 371.0,
-      "avg": 76.91,
-      "price": 77.92,
-      "account": "R Fidelity Roth"
     },
     {
       "symbol": "TQQQ",
       "shares": 450.0,
       "avg": 77.18,
-      "price": 77.92,
+      "price": 78.57,
       "account": "G Fidelity Roth"
     },
     {
       "symbol": "TQQQ",
-      "shares": 119.0,
-      "avg": 77.22,
-      "price": 77.92,
-      "account": "G Fidelity Health"
+      "shares": 371.0,
+      "avg": 76.91,
+      "price": 78.57,
+      "account": "R Fidelity Roth"
     },
     {
       "symbol": "TQQQ",
       "shares": 129.0,
       "avg": 77.32,
-      "price": 77.92,
+      "price": 78.57,
       "account": "A1 Fidelity Roth"
     },
     {
       "symbol": "TQQQ",
       "shares": 129.0,
       "avg": 77.32,
-      "price": 77.92,
+      "price": 78.57,
       "account": "A2 Fidelity Roth"
     },
     {
       "symbol": "TQQQ",
       "shares": 129.0,
       "avg": 77.32,
-      "price": 77.92,
+      "price": 78.57,
       "account": "A3 Fidelity Roth"
+    },
+    {
+      "symbol": "TQQQ",
+      "shares": 119.0,
+      "avg": 77.22,
+      "price": 78.57,
+      "account": "G Fidelity Health"
     },
     {
       "symbol": "FETH",
@@ -314,24 +329,17 @@ const DATA = {
       "account": "G Fidelity 401K"
     },
     {
-      "symbol": "TQQQ",
-      "shares": 4784.0,
-      "avg": 78.11,
-      "price": 77.92,
-      "account": "R Fidelity 401K"
-    },
-    {
       "symbol": "DRAM",
       "shares": 1000.0,
       "avg": 55.18,
-      "price": 53.2,
+      "price": 53.6,
       "account": "G Fidelity 401K"
     },
     {
       "symbol": "INTC",
       "shares": 2268.0,
       "avg": 123.33,
-      "price": 121.71,
+      "price": 120.66,
       "account": "R Robinhood"
     }
   ],
@@ -803,13 +811,129 @@ $('nwpl').innerHTML = '<span class="'+pc(DATA.total_pl)+'">'+fd(DATA.total_pl)+'
   }).join(''):'<div class="empty">No entries today</div>';
 })();
 
-// ── TRADES ────────────────────────────────────────────────────────
-$('t-list').innerHTML=DATA.trades.length?DATA.trades.map(function(t){
-  return '<div class="row"><div class="rl">'+
-    '<div class="rt"><span class="bdg '+(t.direction==='BUY'?'bg':'br')+'">'+t.direction+'</span> &nbsp;'+t.symbol+'</div>'+
-    '<div class="rs">'+t.shares+' sh @ $'+t.price+' &middot; '+t.account+' &middot; '+t.date+'</div></div>'+
-    '<div class="rr"><div class="rv">'+fm(t.total)+'</div><div class="rv2 m">'+t.status+'</div></div></div>';
-}).join(''):'<div class="empty">No trades</div>';
+// ── TRADES — bubble view ──────────────────────────────────────────
+(function(){
+  var trades  = DATA.trades   || [];
+  var posList = DATA.positions|| [];
+  if(!trades.length){ $('t-list').innerHTML='<div class="empty" style="padding:20px;text-align:center;color:#333">No trades logged</div>'; return; }
+
+  // Position lookup: symbol → current price
+  var curPx={};
+  posList.forEach(function(p){ curPx[p.symbol]=(curPx[p.symbol]||p.price); });
+
+  var openT  = trades.filter(function(t){return t.status==='OPEN';});
+  var closedT= trades.filter(function(t){return t.status==='CLOSED';});
+
+  // Cumulative open positions (group by symbol)
+  var openMap={};
+  openT.forEach(function(t){
+    if(t.direction!=='BUY') return;
+    if(!openMap[t.symbol]) openMap[t.symbol]={sym:t.symbol,shares:0,cost:0,account:t.account};
+    openMap[t.symbol].shares+=t.shares;
+    openMap[t.symbol].cost  +=t.shares*t.price;
+  });
+  var openPos=Object.values(openMap).map(function(p){
+    p.avgCost=p.cost/p.shares;
+    p.cur=curPx[p.sym]||p.avgCost;
+    p.costVal=p.cost;
+    p.curVal =p.cur*p.shares;
+    p.pl=(p.cur-p.avgCost)*p.shares;
+    p.plPct=(p.cur-p.avgCost)/p.avgCost*100;
+    return p;
+  });
+
+  // Stats
+  var totalPL=openPos.reduce(function(s,p){return s+p.pl;},0)
+             +closedT.reduce(function(s,t){return s+(t.pl||0);},0);
+  var wins=closedT.filter(function(t){return (t.pl||0)>0;}).length;
+  var losses=closedT.filter(function(t){return (t.pl||0)<0;}).length;
+  var wr=wins+losses>0?Math.round(wins/(wins+losses)*100):null;
+
+  function fmtV(n){
+    var a=Math.abs(n);
+    if(a>=1000000) return '$'+(n/1000000).toFixed(1)+'M';
+    if(a>=1000)    return (n<0?'-':'')+'$'+(a/1000).toFixed(0)+'K';
+    return (n<0?'-':'')+'$'+a.toFixed(0);
+  }
+  function fmtPL(n){ return (n>=0?'+':'')+fmtV(n); }
+
+  function makeBubble(sym,sizeVal,allVals,l1,l2,l3,pl,isClosed){
+    var maxR=88,minR=36;
+    var maxV=Math.max.apply(null,allVals)||1;
+    var sz=minR+(maxR-minR)*Math.sqrt(sizeVal/maxV);
+    var bg=pl>0?'#16a34a':pl<0?'#dc2626':'#475569';
+    var fs=Math.max(10,Math.min(15,sz*0.17));
+    var fs2=Math.max(9,Math.min(12,sz*0.13));
+    var d=document.createElement('div');
+    d.style.cssText='width:'+sz+'px;height:'+sz+'px;border-radius:50%;background:'+bg+';'+
+      'display:flex;flex-direction:column;align-items:center;justify-content:center;flex-shrink:0;'+
+      'cursor:default;transition:transform .15s;'+
+      (isClosed?'opacity:.72;border:2px dashed rgba(255,255,255,.35);':'');
+    d.onmouseover=function(){this.style.transform='scale(1.07)';};
+    d.onmouseout =function(){this.style.transform='scale(1)';};
+    function sp(txt,s,op){
+      var e=document.createElement('span');
+      e.textContent=txt;
+      e.style.cssText='color:rgba(255,255,255,'+(op||1)+');font-size:'+s+'px;line-height:1.2;text-align:center;padding:0 3px;font-family:inherit';
+      d.appendChild(e);
+    }
+    sp(sym,fs);
+    sp(l1,fs2);
+    if(l2) sp(l2,fs2,0.85);
+    if(l3) sp(l3,Math.max(9,fs2-1),0.75);
+    d.title=sym+(isClosed?' (closed)':'')+' · '+fmtV(sizeVal)+(pl!==undefined?' · P&L: '+fmtPL(pl):'');
+    return d;
+  }
+
+  // Build HTML shell
+  var costVals=openPos.map(function(p){return p.costVal;});
+  var curVals =openPos.map(function(p){return p.curVal;});
+  var closedVals=closedT.map(function(t){return t.total||0;});
+
+  var shell=
+    '<div style="background:#161616;border-bottom:1px solid #1a1a1a">'+
+      '<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:1px;background:#1a1a1a">'+
+        '<div style="background:#161616;padding:12px 14px">'+
+          '<div style="font-size:10px;color:#444;font-weight:600;text-transform:uppercase;letter-spacing:.1em;margin-bottom:4px">Trades</div>'+
+          '<div style="font-family:monospace;font-size:18px;font-weight:300">'+(openT.length+closedT.length)+'</div>'+
+          '<div style="font-size:11px;color:#555;margin-top:2px">'+openT.length+' open · '+closedT.length+' closed</div></div>'+
+        '<div style="background:#161616;padding:12px 14px">'+
+          '<div style="font-size:10px;color:#444;font-weight:600;text-transform:uppercase;letter-spacing:.1em;margin-bottom:4px">Net P&L</div>'+
+          '<div style="font-family:monospace;font-size:18px;font-weight:300;color:'+(totalPL>=0?'#4ade80':'#f87171')+'">'+(totalPL>=0?'+':'')+fmtV(totalPL)+'</div>'+
+          '<div style="font-size:11px;color:#555;margin-top:2px">open + closed</div></div>'+
+        '<div style="background:#161616;padding:12px 14px">'+
+          '<div style="font-size:10px;color:#444;font-weight:600;text-transform:uppercase;letter-spacing:.1em;margin-bottom:4px">Win rate</div>'+
+          '<div style="font-family:monospace;font-size:18px;font-weight:300">'+(wr!==null?wr+'%':'—')+'</div>'+
+          '<div style="font-size:11px;color:#555;margin-top:2px">'+(wr!==null?wins+' W · '+losses+' L':'no closed trades')+'</div></div>'+
+      '</div></div>'+
+    '<div style="padding:12px 14px">'+
+      '<div style="font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#4ade80;margin-bottom:4px">Open — at cost</div>'+
+      '<div id="tb-cost" style="display:flex;flex-wrap:wrap;gap:10px;align-items:flex-end;min-height:40px"></div>'+
+      '<div style="font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#4ade80;margin:14px 0 4px">Open — current value</div>'+
+      '<div id="tb-cur" style="display:flex;flex-wrap:wrap;gap:10px;align-items:flex-end;min-height:40px"></div>'+
+      (closedT.length?
+        '<div style="font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#555;margin:14px 0 4px">Closed · dashed = realized</div>'+
+        '<div id="tb-closed" style="display:flex;flex-wrap:wrap;gap:10px;align-items:flex-end;min-height:40px"></div>':'')+
+      '<div style="display:flex;gap:14px;margin-top:14px;font-size:10px;color:#444;flex-wrap:wrap">'+
+        '<span style="display:flex;align-items:center;gap:5px"><span style="width:10px;height:10px;border-radius:50%;background:#16a34a;display:inline-block"></span>Profit</span>'+
+        '<span style="display:flex;align-items:center;gap:5px"><span style="width:10px;height:10px;border-radius:50%;background:#dc2626;display:inline-block"></span>Loss</span>'+
+        '<span>· Size = value · Dashed = closed</span></div>'+
+    '</div>';
+
+  $('t-list').innerHTML=shell;
+
+  openPos.forEach(function(p){
+    $('tb-cost').appendChild(makeBubble(p.sym,p.costVal,costVals,
+      fmtV(p.costVal),'@$'+p.avgCost.toFixed(0),null,p.pl,false));
+    $('tb-cur').appendChild(makeBubble(p.sym,p.curVal,curVals,
+      fmtV(p.curVal),fmtPL(p.pl),(p.plPct>=0?'+':'')+p.plPct.toFixed(0)+'%',p.pl,false));
+  });
+
+  closedT.forEach(function(t){
+    $('tb-closed').appendChild(makeBubble(t.symbol,t.total||0,closedVals,
+      fmtV(t.total||0),t.pl!==undefined?fmtPL(t.pl):'',null,t.pl||0,true));
+  });
+})();
 </script>
 </body>
 </html>

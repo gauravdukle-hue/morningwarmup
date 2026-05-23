@@ -118,7 +118,7 @@ body{background:#0d0d0d;color:#fff;font-family:'IBM Plex Sans',sans-serif;font-s
 <script>
 /*DATA_START*/
 const DATA = {
-  "generated": "May 23, 2026  04:00 AM CT",
+  "generated": "May 23, 2026  04:06 AM CT",
   "net_worth": 2636770.63,
   "total_pl": 628110.27,
   "accounts": [
@@ -629,6 +629,36 @@ $('nwpl').innerHTML = '<span class="'+pc(DATA.total_pl)+'">'+fd(DATA.total_pl)+'
   function fp2(n){return (n>=0?'+':'')+fv(n);}
   function sa(a){return a.replace('G Fidelity ','G ').replace('R Fidelity ','R ').replace('Intel ','').replace('Etrade','ET').replace('Robinhood','RH').trim();}
 
+  function bubCash(acct,amount,maxV){
+    var minR=40,maxR=80;
+    var sz=maxV>0?minR+(maxR-minR)*Math.sqrt(amount/maxV):minR;
+    sz=Math.max(minR,Math.min(maxR,sz));
+    var id="bub"+(Math.random()*99999|0);
+    var fsSmall=Math.max(9,Math.min(11,sz*0.1));
+    setTimeout(function(){
+      var el=document.getElementById(id);if(!el)return;
+      var cv=el.querySelector("canvas");if(!cv)return;
+      var ctx2=cv.getContext("2d"),r=sz/2;
+      var g1=ctx2.createRadialGradient(r*0.42,r*0.36,r*0.04,r,r,r*1.04);
+      g1.addColorStop(0,"#e2e8f0");g1.addColorStop(0.18,"#94a3b8");
+      g1.addColorStop(0.44,"#475569");g1.addColorStop(0.72,"#1e293b");g1.addColorStop(1,"#0f172a");
+      ctx2.beginPath();ctx2.arc(r,r,r-0.5,0,Math.PI*2);ctx2.fillStyle=g1;ctx2.fill();
+      var gS=ctx2.createRadialGradient(r*0.4,r*0.28,0,r*0.46,r*0.36,r*0.27);
+      gS.addColorStop(0,"rgba(255,255,255,.85)");gS.addColorStop(0.38,"rgba(255,255,255,.28)");
+      gS.addColorStop(1,"rgba(255,255,255,0)");
+      ctx2.beginPath();ctx2.arc(r,r,r-0.5,0,Math.PI*2);ctx2.fillStyle=gS;ctx2.fill();
+      el.style.filter="drop-shadow(0 6px 14px rgba(0,0,0,.5))";
+    },0);
+    var fsSym=Math.max(10,Math.min(14,sz*0.155));
+    return '<div class="ball" id="'+id+'" title="Cash | '+acct+' | '+fv(amount)+'" style="position:relative;width:'+sz+'px;height:'+sz+'px;flex-shrink:0;">'+
+      '<canvas width="'+sz+'" height="'+sz+'" style="position:absolute;top:0;left:0;border-radius:50%;"></canvas>'+
+      '<div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;border-radius:50%;overflow:hidden;pointer-events:none;">'+
+      '<span style="color:#fff;font-size:'+fsSym+'px;font-weight:700;line-height:1.2;text-align:center;text-shadow:0 2px 5px rgba(0,0,0,.8)">CASH</span>'+
+      (sz>=56?'<span style="color:rgba(255,255,255,.75);font-size:'+fsSmall+'px;line-height:1.2;text-align:center">'+acct+'</span>':'')+
+      '<span style="color:rgba(255,255,255,.9);font-size:'+Math.max(10,sz*0.13)+'px;font-weight:700;line-height:1.3;text-align:center;text-shadow:0 1px 4px rgba(0,0,0,.6)">'+fv(amount)+'</span>'+
+      '</div></div>';
+  }
+
   var _bubIdx=0;
   function bub(sym,acct,avgPx,curPx,pl,plPct,val,maxV,dashed){
     var minR=52,maxR=110;
@@ -644,11 +674,11 @@ $('nwpl').innerHTML = '<span class="'+pc(DATA.total_pl)+'">'+fd(DATA.total_pl)+'
     var html='<div class="ball" id="'+id+'" title="'+tip+'" style="position:relative;width:'+sz+'px;height:'+sz+'px;flex-shrink:0;">'+
       '<canvas width="'+sz+'" height="'+sz+'" style="position:absolute;top:0;left:0;border-radius:50%;"></canvas>'+
       '<div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;border-radius:50%;overflow:hidden;pointer-events:none;">'+
-      '<span style="color:#fff;font-size:'+fsSym+'px;font-weight:700;line-height:1.2;text-align:center;text-shadow:0 2px 6px rgba(0,0,0,.7)">'+sym+'</span>'+
-      '<span style="color:rgba(255,255,255,.82);font-size:'+fsSmall+'px;line-height:1.2;text-align:center;text-shadow:0 1px 3px rgba(0,0,0,.6)">'+acct+'</span>'+
-      '<span style="color:rgba(255,255,255,.65);font-size:'+fsSmall+'px;line-height:1.2;text-align:center">$'+avgPx+' &rarr; $'+curPx+'</span>'+
-      '<span style="color:#fff;font-size:'+fsPL+'px;font-weight:800;line-height:1.3;text-align:center;text-shadow:0 1px 6px rgba(0,0,0,.5)">'+(pl>=0?"+":"")+fv(pl)+'</span>'+
-      '<span style="color:rgba(255,255,255,.8);font-size:'+fsSmall+'px;line-height:1.1;text-align:center">'+(plPct>=0?"+":"")+plPct.toFixed(0)+'%</span>'+
+      '<span style="color:#fff;font-size:'+Math.max(11,fsSym)+'px;font-weight:700;line-height:1.2;text-align:center;text-shadow:0 2px 6px rgba(0,0,0,.8)">'+sym+'</span>'+
+      (sz>=62?'<span style="color:rgba(255,255,255,.82);font-size:'+fsSmall+'px;line-height:1.2;text-align:center;text-shadow:0 1px 3px rgba(0,0,0,.6)">'+acct+'</span>':'')+
+      (sz>=68?'<span style="color:rgba(255,255,255,.65);font-size:'+fsSmall+'px;line-height:1.2;text-align:center">$'+avgPx+' &rarr; $'+curPx+'</span>':'')+
+      '<span style="color:#fff;font-size:'+Math.max(10,fsPL)+'px;font-weight:800;line-height:1.3;text-align:center;text-shadow:0 1px 6px rgba(0,0,0,.5)">'+(pl>=0?"+":"")+fv(pl)+'</span>'+
+      (sz>=60?'<span style="color:rgba(255,255,255,.8);font-size:'+fsSmall+'px;line-height:1.1;text-align:center">'+(plPct>=0?"+":"")+plPct.toFixed(0)+'%</span>':'')+
       '</div></div>';
 
     setTimeout(function(){
@@ -700,17 +730,26 @@ $('nwpl').innerHTML = '<span class="'+pc(DATA.total_pl)+'">'+fd(DATA.total_pl)+'
   // Section 1 — every individual trade
   var v1=trades.map(function(t){return t.total||0;});
   var m1=Math.max.apply(null,v1.concat([1]));
-  // Section 1: sort by abs(P&L) desc, size by abs(P&L)
+  // Section 1: include cash as grey balls
+  var cashBalls=[];
+  (DATA.accounts||[]).forEach(function(a){
+    if(a.cash>0) cashBalls.push({symbol:'CASH',account:a.name,cash:a.cash});
+  });
   var ts1=trades.map(function(t){
     var isBuy=t.direction==='BUY';
     var cur=curPx[t.symbol]||t.price;
     var pl=t.status==='CLOSED'?(t.pl||0):(isBuy?(cur-t.price)*t.shares:0);
     var plPct=t.price>0?(pl/(t.shares*t.price)*100):0;
     return {t:t,cur:cur,pl:pl,plPct:plPct};
-  }).sort(function(a,b){return Math.abs(b.pl)-Math.abs(a.pl);});
+  }).sort(function(a,b){return b.pl-a.pl;});
   var maxPL1=Math.max.apply(null,ts1.map(function(x){return Math.abs(x.pl);}).concat([1]));
   var s1=ts1.map(function(x){
     return bub(x.t.symbol,sa(x.t.account),x.t.price.toFixed(2),x.cur.toFixed(2),x.pl,x.plPct,Math.abs(x.pl),maxPL1,x.t.status==='CLOSED');
+  }).join('');
+  // Add cash balls (grey, neutral) - sized relative to max PL
+  var maxCash=Math.max.apply(null,cashBalls.map(function(c){return c.cash;}).concat([1]));
+  s1+=cashBalls.map(function(c){
+    return bubCash(sa(c.account),c.cash,maxCash);
   }).join('');
 
   // Section 2 — by symbol + account
@@ -732,13 +771,30 @@ $('nwpl').innerHTML = '<span class="'+pc(DATA.total_pl)+'">'+fd(DATA.total_pl)+'
     a2.push(gg);
   }
   var m2=Math.max.apply(null,a2.map(function(g){return g.total;}).concat([1]));
-  a2.sort(function(a,b){return Math.abs(b.pl)-Math.abs(a.pl);});
+  a2.sort(function(a,b){return b.pl-a.pl;});
   var maxPL2=Math.max.apply(null,a2.map(function(g){return Math.abs(g.pl);}).concat([1]));
-  var s2=a2.map(function(g){
-    var cx=curPx[g.sym]||g.avg;
-    var pp=g.avg>0?g.pl/(g.shares*g.avg)*100:0;
-    return bub(g.sym,sa(g.acct),g.avg.toFixed(2),cx.toFixed(2),g.pl,pp,Math.abs(g.pl),maxPL2,!g.open);
-  }).join('');
+  // Group a2 by account for section 2
+  var acctGroups={};
+  a2.forEach(function(g){
+    var k=g.acct;
+    if(!acctGroups[k]) acctGroups[k]=[];
+    acctGroups[k].push(g);
+  });
+  var s2='';
+  Object.keys(acctGroups).forEach(function(acctName){
+    var grp=acctGroups[acctName];
+    grp.sort(function(a,b){return b.pl-a.pl;});
+    var grpMax=Math.max.apply(null,grp.map(function(g){return Math.abs(g.pl);}).concat([1]));
+    s2+='<div style="width:100%;margin-bottom:8px;">';
+    s2+='<div style="font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#555;margin-bottom:6px;padding-left:2px">'+sa(acctName)+'</div>';
+    s2+='<div style="display:flex;flex-wrap:wrap;gap:10px;align-items:flex-end;justify-content:flex-start;">';
+    grp.forEach(function(g){
+      var cx=curPx[g.sym]||g.avg;
+      var pp=g.avg>0?g.pl/(g.shares*g.avg)*100:0;
+      s2+=bub(g.sym,sa(g.acct),g.avg.toFixed(2),cx.toFixed(2),g.pl,pp,Math.abs(g.pl),grpMax,!g.open);
+    });
+    s2+='</div></div>';
+  });
 
   // Section 3 — by symbol across all accounts
   var g3={};
@@ -760,7 +816,7 @@ $('nwpl').innerHTML = '<span class="'+pc(DATA.total_pl)+'">'+fd(DATA.total_pl)+'
     a3.push(ggg);
   }
   var m3=Math.max.apply(null,a3.map(function(g){return g.total;}).concat([1]));
-  a3.sort(function(a,b){return Math.abs(b.pl)-Math.abs(a.pl);});
+  a3.sort(function(a,b){return b.pl-a.pl;});
   var maxPL3=Math.max.apply(null,a3.map(function(g){return Math.abs(g.pl);}).concat([1]));
   var s3=a3.map(function(g){
     var cx=curPx[g.sym]||g.avg;

@@ -118,7 +118,7 @@ body{background:#0d0d0d;color:#fff;font-family:'IBM Plex Sans',sans-serif;font-s
 <script>
 /*DATA_START*/
 const DATA = {
-  "generated": "May 23, 2026  04:06 AM CT",
+  "generated": "May 23, 2026  04:15 AM CT",
   "net_worth": 2636770.63,
   "total_pl": 628110.27,
   "accounts": [
@@ -743,13 +743,16 @@ $('nwpl').innerHTML = '<span class="'+pc(DATA.total_pl)+'">'+fd(DATA.total_pl)+'
     return {t:t,cur:cur,pl:pl,plPct:plPct};
   }).sort(function(a,b){return b.pl-a.pl;});
   var maxPL1=Math.max.apply(null,ts1.map(function(x){return Math.abs(x.pl);}).concat([1]));
-  var s1=ts1.map(function(x){
-    return bub(x.t.symbol,sa(x.t.account),x.t.price.toFixed(2),x.cur.toFixed(2),x.pl,x.plPct,Math.abs(x.pl),maxPL1,x.t.status==='CLOSED');
-  }).join('');
-  // Add cash balls (grey, neutral) - sized relative to max PL
-  var maxCash=Math.max.apply(null,cashBalls.map(function(c){return c.cash;}).concat([1]));
-  s1+=cashBalls.map(function(c){
-    return bubCash(sa(c.account),c.cash,maxCash);
+  // Merge cash into section 1, treating cash amount as pl for sort+size
+  var allS1=ts1.map(function(x){return {pl:x.pl,html:bub(x.t.symbol,sa(x.t.account),x.t.price.toFixed(2),x.cur.toFixed(2),x.pl,x.plPct,Math.abs(x.pl),1,x.t.status==='CLOSED'),isCash:false};});
+  cashBalls.forEach(function(c){ allS1.push({pl:c.cash,html:null,isCash:true,cash:c.cash,acct:c.account}); });
+  allS1.sort(function(a,b){return b.pl-a.pl;});
+  var maxS1=Math.max.apply(null,allS1.map(function(x){return Math.abs(x.pl);}).concat([1]));
+  var s1=allS1.map(function(x){
+    if(x.isCash) return bubCash(sa(x.acct),x.cash,maxS1);
+    var t=x; var xo=ts1.filter(function(y){return y.pl===x.pl;})[0];
+    if(!xo) return '';
+    return bub(xo.t.symbol,sa(xo.t.account),xo.t.price.toFixed(2),xo.cur.toFixed(2),xo.pl,xo.plPct,Math.abs(xo.pl),maxS1,xo.t.status==='CLOSED');
   }).join('');
 
   // Section 2 — by symbol + account
@@ -787,7 +790,7 @@ $('nwpl').innerHTML = '<span class="'+pc(DATA.total_pl)+'">'+fd(DATA.total_pl)+'
     var grpMax=Math.max.apply(null,grp.map(function(g){return Math.abs(g.pl);}).concat([1]));
     s2+='<div style="width:100%;margin-bottom:8px;">';
     s2+='<div style="font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#555;margin-bottom:6px;padding-left:2px">'+sa(acctName)+'</div>';
-    s2+='<div style="display:flex;flex-wrap:wrap;gap:10px;align-items:flex-end;justify-content:flex-start;">';
+    s2+='<div style="display:flex;flex-wrap:wrap;gap:10px;align-items:flex-end;justify-content:center;">';
     grp.forEach(function(g){
       var cx=curPx[g.sym]||g.avg;
       var pp=g.avg>0?g.pl/(g.shares*g.avg)*100:0;
@@ -817,8 +820,17 @@ $('nwpl').innerHTML = '<span class="'+pc(DATA.total_pl)+'">'+fd(DATA.total_pl)+'
   }
   var m3=Math.max.apply(null,a3.map(function(g){return g.total;}).concat([1]));
   a3.sort(function(a,b){return b.pl-a.pl;});
-  var maxPL3=Math.max.apply(null,a3.map(function(g){return Math.abs(g.pl);}).concat([1]));
-  var s3=a3.map(function(g){
+  // Build all-S3 including cash
+  var allS3=a3.map(function(g){return {pl:g.pl,isCash:false,g:g};});
+  // Add per-account cash as separate entries
+  (DATA.accounts||[]).forEach(function(a){
+    if(a.cash>0) allS3.push({pl:a.cash,isCash:true,cash:a.cash,acct:a.name});
+  });
+  allS3.sort(function(a,b){return b.pl-a.pl;});
+  var maxPL3=Math.max.apply(null,allS3.map(function(x){return Math.abs(x.pl);}).concat([1]));
+  var s3=allS3.map(function(x){
+    if(x.isCash) return bubCash(sa(x.acct),x.cash,maxPL3);
+    var g=x.g;
     var cx=curPx[g.sym]||g.avg;
     var pp=g.avg>0?g.pl/(g.shares*g.avg)*100:0;
     return bub(g.sym,g.naccts+' acct'+(g.naccts>1?'s':''),g.avg.toFixed(2),cx.toFixed(2),g.pl,pp,Math.abs(g.pl),maxPL3,!g.open);

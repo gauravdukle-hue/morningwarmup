@@ -118,7 +118,7 @@ body{background:#0d0d0d;color:#fff;font-family:'IBM Plex Sans',sans-serif;font-s
 <script>
 /*DATA_START*/
 const DATA = {
-  "generated": "May 23, 2026  04:15 AM CT",
+  "generated": "May 23, 2026  04:38 AM CT",
   "net_worth": 2636770.63,
   "total_pl": 628110.27,
   "accounts": [
@@ -630,7 +630,7 @@ $('nwpl').innerHTML = '<span class="'+pc(DATA.total_pl)+'">'+fd(DATA.total_pl)+'
   function sa(a){return a.replace('G Fidelity ','G ').replace('R Fidelity ','R ').replace('Intel ','').replace('Etrade','ET').replace('Robinhood','RH').trim();}
 
   function bubCash(acct,amount,maxV){
-    var minR=40,maxR=80;
+    var minR=52,maxR=110;
     var sz=maxV>0?minR+(maxR-minR)*Math.sqrt(amount/maxV):minR;
     sz=Math.max(minR,Math.min(maxR,sz));
     var id="bub"+(Math.random()*99999|0);
@@ -783,21 +783,22 @@ $('nwpl').innerHTML = '<span class="'+pc(DATA.total_pl)+'">'+fd(DATA.total_pl)+'
     if(!acctGroups[k]) acctGroups[k]=[];
     acctGroups[k].push(g);
   });
-  var s2='';
+  var s2='<div style="display:flex;flex-wrap:wrap;gap:20px 32px;justify-content:center;align-items:flex-start;">';
   Object.keys(acctGroups).forEach(function(acctName){
     var grp=acctGroups[acctName];
     grp.sort(function(a,b){return b.pl-a.pl;});
     var grpMax=Math.max.apply(null,grp.map(function(g){return Math.abs(g.pl);}).concat([1]));
-    s2+='<div style="width:100%;margin-bottom:8px;">';
-    s2+='<div style="font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#555;margin-bottom:6px;padding-left:2px">'+sa(acctName)+'</div>';
-    s2+='<div style="display:flex;flex-wrap:wrap;gap:10px;align-items:flex-end;justify-content:center;">';
+    s2+='<div style="display:flex;flex-direction:column;align-items:center;gap:6px;">';
+    s2+='<div style="font-size:9px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#555;text-align:center;max-width:120px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+sa(acctName)+'</div>';
+    s2+='<div style="display:flex;flex-wrap:wrap;gap:8px;align-items:flex-end;justify-content:center;">';
     grp.forEach(function(g){
       var cx=curPx[g.sym]||g.avg;
       var pp=g.avg>0?g.pl/(g.shares*g.avg)*100:0;
-      s2+=bub(g.sym,sa(g.acct),g.avg.toFixed(2),cx.toFixed(2),g.pl,pp,Math.abs(g.pl),grpMax,!g.open);
+      s2+=bub(g.sym,'',g.avg.toFixed(2),cx.toFixed(2),g.pl,pp,Math.abs(g.pl),grpMax,!g.open);
     });
     s2+='</div></div>';
   });
+  s2+='</div>';
 
   // Section 3 — by symbol across all accounts
   var g3={};

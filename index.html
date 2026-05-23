@@ -61,6 +61,8 @@ body{background:#0d0d0d;color:#fff;font-family:'IBM Plex Sans',sans-serif;font-s
 .jt{font-size:13px;color:#ccc;line-height:1.5}
 .jtm{font-family:'IBM Plex Mono',monospace;font-size:10px;color:#444}
 .empty{padding:20px;text-align:center;font-size:12px;color:#333}
+.ball{transition:transform .15s;cursor:default;flex-shrink:0;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;}
+.ball:hover{transform:scale(1.07)}
 </style>
 </head>
 <body>
@@ -115,391 +117,7 @@ body{background:#0d0d0d;color:#fff;font-family:'IBM Plex Sans',sans-serif;font-s
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <script>
 /*DATA_START*/
-const DATA = {
-  "generated": "May 23, 2026  03:43 AM CT",
-  "net_worth": 2636770.63,
-  "total_pl": 628110.27,
-  "accounts": [
-    {
-      "name": "R Intel Etrade",
-      "cash": 0.0,
-      "stock_total": 612193.8,
-      "stock_cost": 233231.28,
-      "total": 612193.8
-    },
-    {
-      "name": "G Intel Etrade",
-      "cash": 0.0,
-      "stock_total": 426306.45,
-      "stock_cost": 160065.0,
-      "total": 426306.45
-    },
-    {
-      "name": "R Fidelity 401K",
-      "cash": 41118.76,
-      "stock_total": 372051.68,
-      "stock_cost": 373678.24,
-      "total": 413170.44
-    },
-    {
-      "name": "G Fidelity Individual",
-      "cash": 258873.58,
-      "stock_total": 119850.0,
-      "stock_cost": 127120.0,
-      "total": 378723.58
-    },
-    {
-      "name": "G Fidelity 401K",
-      "cash": 1758.0,
-      "stock_total": 292999.22,
-      "stock_cost": 294139.22,
-      "total": 294757.22
-    },
-    {
-      "name": "R Robinhood",
-      "cash": 3568.0,
-      "stock_total": 271819.8,
-      "stock_cost": 279701.1,
-      "total": 275387.8
-    },
-    {
-      "name": "G Fidelity Managed",
-      "cash": 112000.0,
-      "stock_total": 0.0,
-      "stock_cost": 0.0,
-      "total": 112000.0
-    },
-    {
-      "name": "G Fidelity Roth",
-      "cash": 27.0,
-      "stock_total": 34996.5,
-      "stock_cost": 34731.0,
-      "total": 35023.5
-    },
-    {
-      "name": "R Fidelity Roth",
-      "cash": 46.39,
-      "stock_total": 28852.67,
-      "stock_cost": 28533.61,
-      "total": 28899.06
-    },
-    {
-      "name": "A1 Fidelity Roth",
-      "cash": 94.72,
-      "stock_total": 10032.33,
-      "stock_cost": 9974.28,
-      "total": 10127.05
-    },
-    {
-      "name": "A2 Fidelity Roth",
-      "cash": 94.72,
-      "stock_total": 10032.33,
-      "stock_cost": 9974.28,
-      "total": 10127.05
-    },
-    {
-      "name": "A3 Fidelity Roth",
-      "cash": 94.72,
-      "stock_total": 10032.33,
-      "stock_cost": 9974.28,
-      "total": 10127.05
-    },
-    {
-      "name": "G Crypto",
-      "cash": 10000.0,
-      "stock_total": 0.0,
-      "stock_cost": 0.0,
-      "total": 10000.0
-    },
-    {
-      "name": "G Etrade",
-      "cash": 9673.0,
-      "stock_total": 0.0,
-      "stock_cost": 0.0,
-      "total": 9673.0
-    },
-    {
-      "name": "G Fidelity Health",
-      "cash": 0.0,
-      "stock_total": 9254.63,
-      "stock_cost": 9189.18,
-      "total": 9254.63
-    },
-    {
-      "name": "R Robinhood Managed",
-      "cash": 1000.0,
-      "stock_total": 0.0,
-      "stock_cost": 0.0,
-      "total": 1000.0
-    }
-  ],
-  "positions": [
-    {
-      "symbol": "INTC",
-      "shares": 5108.0,
-      "avg": 45.66,
-      "price": 119.85,
-      "account": "R Intel Etrade"
-    },
-    {
-      "symbol": "INTC",
-      "shares": 3557.0,
-      "avg": 45.0,
-      "price": 119.85,
-      "account": "G Intel Etrade"
-    },
-    {
-      "symbol": "TQQQ",
-      "shares": 1000.0,
-      "avg": 76.72,
-      "price": 77.77,
-      "account": "G Fidelity 401K"
-    },
-    {
-      "symbol": "TQQQ",
-      "shares": 371.0,
-      "avg": 76.91,
-      "price": 77.77,
-      "account": "R Fidelity Roth"
-    },
-    {
-      "symbol": "TQQQ",
-      "shares": 450.0,
-      "avg": 77.18,
-      "price": 77.77,
-      "account": "G Fidelity Roth"
-    },
-    {
-      "symbol": "TQQQ",
-      "shares": 119.0,
-      "avg": 77.22,
-      "price": 77.77,
-      "account": "G Fidelity Health"
-    },
-    {
-      "symbol": "TQQQ",
-      "shares": 129.0,
-      "avg": 77.32,
-      "price": 77.77,
-      "account": "A1 Fidelity Roth"
-    },
-    {
-      "symbol": "TQQQ",
-      "shares": 129.0,
-      "avg": 77.32,
-      "price": 77.77,
-      "account": "A2 Fidelity Roth"
-    },
-    {
-      "symbol": "TQQQ",
-      "shares": 129.0,
-      "avg": 77.32,
-      "price": 77.77,
-      "account": "A3 Fidelity Roth"
-    },
-    {
-      "symbol": "FETH",
-      "shares": 3861.0,
-      "avg": 42.02,
-      "price": 42.02,
-      "account": "G Fidelity 401K"
-    },
-    {
-      "symbol": "TQQQ",
-      "shares": 4784.0,
-      "avg": 78.11,
-      "price": 77.77,
-      "account": "R Fidelity 401K"
-    },
-    {
-      "symbol": "DRAM",
-      "shares": 1000.0,
-      "avg": 55.18,
-      "price": 52.99,
-      "account": "G Fidelity 401K"
-    },
-    {
-      "symbol": "INTC",
-      "shares": 1000.0,
-      "avg": 127.12,
-      "price": 119.85,
-      "account": "G Fidelity Individual"
-    },
-    {
-      "symbol": "INTC",
-      "shares": 2268.0,
-      "avg": 123.33,
-      "price": 119.85,
-      "account": "R Robinhood"
-    }
-  ],
-  "signals": {
-    "tf": "4hr",
-    "entries": [],
-    "exits": [],
-    "scored": []
-  },
-  "journal": {
-    "today": [],
-    "stats": {}
-  },
-  "trades": [
-    {
-      "date": "",
-      "symbol": "FETH",
-      "direction": "BUY",
-      "shares": 3861.0,
-      "price": 42.02,
-      "total": 162239.22,
-      "account": "g401k",
-      "status": "OPEN",
-      "pl": 0.0
-    },
-    {
-      "date": "",
-      "symbol": "TQQQ",
-      "direction": "BUY",
-      "shares": 1000.0,
-      "price": 76.72,
-      "total": 76720.0,
-      "account": "g401k",
-      "status": "OPEN",
-      "pl": 1050.0
-    },
-    {
-      "date": "",
-      "symbol": "DRAM",
-      "direction": "BUY",
-      "shares": 1000.0,
-      "price": 55.18,
-      "total": 55180.0,
-      "account": "g401k",
-      "status": "OPEN",
-      "pl": -2190.0
-    },
-    {
-      "date": "",
-      "symbol": "TQQQ",
-      "direction": "BUY",
-      "shares": 4784.0,
-      "price": 78.11,
-      "total": 373678.24,
-      "account": "r401k",
-      "status": "OPEN",
-      "pl": -1626.56
-    },
-    {
-      "date": "",
-      "symbol": "INTC",
-      "direction": "BUY",
-      "shares": 1000.0,
-      "price": 127.12,
-      "total": 127120.0,
-      "account": "gfid",
-      "status": "OPEN",
-      "pl": -7270.0
-    },
-    {
-      "date": "",
-      "symbol": "TQQQ",
-      "direction": "BUY",
-      "shares": 119.0,
-      "price": 77.22,
-      "total": 9189.18,
-      "account": "ghealth",
-      "status": "OPEN",
-      "pl": 65.45
-    },
-    {
-      "date": "",
-      "symbol": "TQQQ",
-      "direction": "BUY",
-      "shares": 450.0,
-      "price": 77.18,
-      "total": 34731.0,
-      "account": "groth",
-      "status": "OPEN",
-      "pl": 265.5
-    },
-    {
-      "date": "",
-      "symbol": "TQQQ",
-      "direction": "BUY",
-      "shares": 371.0,
-      "price": 76.91,
-      "total": 28533.61,
-      "account": "rroth",
-      "status": "OPEN",
-      "pl": 319.06
-    },
-    {
-      "date": "",
-      "symbol": "TQQQ",
-      "direction": "BUY",
-      "shares": 129.0,
-      "price": 77.32,
-      "total": 9974.28,
-      "account": "a1roth",
-      "status": "OPEN",
-      "pl": 58.05
-    },
-    {
-      "date": "",
-      "symbol": "TQQQ",
-      "direction": "BUY",
-      "shares": 129.0,
-      "price": 77.32,
-      "total": 9974.28,
-      "account": "a2roth",
-      "status": "OPEN",
-      "pl": 58.05
-    },
-    {
-      "date": "",
-      "symbol": "TQQQ",
-      "direction": "BUY",
-      "shares": 129.0,
-      "price": 77.32,
-      "total": 9974.28,
-      "account": "a3roth",
-      "status": "OPEN",
-      "pl": 58.05
-    },
-    {
-      "date": "",
-      "symbol": "INTC",
-      "direction": "BUY",
-      "shares": 2268.0,
-      "price": 123.33,
-      "total": 279701.1,
-      "account": "robin",
-      "status": "OPEN",
-      "pl": -7881.3
-    },
-    {
-      "date": "",
-      "symbol": "INTC",
-      "direction": "BUY",
-      "shares": 3557.0,
-      "price": 45.0,
-      "total": 160065.0,
-      "account": "gietrade",
-      "status": "OPEN",
-      "pl": 266241.45
-    },
-    {
-      "date": "",
-      "symbol": "INTC",
-      "direction": "BUY",
-      "shares": 5108.0,
-      "price": 45.66,
-      "total": 233231.28,
-      "account": "rietrade",
-      "status": "OPEN",
-      "pl": 378962.52
-    }
-  ]
-};
+const DATA = {"generated":"May 17 2026  09:00 AM CT","net_worth":2450000,"total_pl":635814,"accounts":[{"name":"R Intel Etrade","cash":0,"stock_total":649635,"stock_cost":232930,"total":649635},{"name":"G Intel Etrade","cash":168856,"stock_total":452379,"stock_cost":159565,"total":621235},{"name":"R Fidelity 401K","cash":414797,"stock_total":0,"stock_cost":0,"total":414797},{"name":"G Fidelity 401K","cash":78424,"stock_total":82400,"stock_cost":76720,"total":160824},{"name":"G Fidelity Indiv","cash":129689,"stock_total":25000,"stock_cost":22000,"total":154689},{"name":"R Robinhood","cash":284,"stock_total":149941,"stock_cost":149941,"total":150225},{"name":"G Crypto","cash":10000,"stock_total":88571,"stock_cost":162248,"total":98571},{"name":"G Fidelity Roth","cash":34855,"stock_total":0,"stock_cost":0,"total":34855},{"name":"R Fidelity Roth","cash":28580,"stock_total":0,"stock_cost":0,"total":28580}],"positions":[{"symbol":"INTC","shares":5108,"avg":45.66,"price":115.2,"account":"R Intel Etrade"},{"symbol":"INTC","shares":3557,"avg":45.0,"price":115.2,"account":"G Intel Etrade"},{"symbol":"TQQQ","shares":1000,"avg":76.72,"price":82.4,"account":"G Fidelity 401K"},{"symbol":"INTC","shares":1268,"avg":118.25,"price":115.2,"account":"R Robinhood"},{"symbol":"FETH","shares":3861,"avg":42.02,"price":22.94,"account":"G Crypto"},{"symbol":"NVDA","shares":50,"avg":180.0,"price":231.61,"account":"G Fidelity Indiv"}],"signals":{"tf":"4hr","entries":[{"type":"ENTRY","ticker":"NVDA","score":78,"price":231.61,"ema":218.4,"detail":"Pullback to 9 EMA on low vol (1st touch)","stop":218.4,"target":262.21},{"type":"REENTRY","ticker":"AMD","score":71,"price":440.03,"ema":425.1,"detail":"Was below EMA 2 bars, reclaimed strong","stop":425.1,"target":485.0}],"exits":[{"type":"CAUTION","ticker":"GEV","score":61,"price":842.08,"ema":870.0,"detail":"Hold - first dip below EMA"},{"type":"TIER1_EXIT","ticker":"RIOT","score":60,"price":15.68,"ema":17.2,"detail":"Weakness building - watch next close"}],"scored":[{"ticker":"NVDA","score":78,"price":231.61},{"ticker":"AMD","score":73,"price":440.03},{"ticker":"TSLA","score":71,"price":442.53},{"ticker":"MU","score":68,"price":102.4},{"ticker":"INTC","score":65,"price":115.2},{"ticker":"GEV","score":61,"price":842.08},{"ticker":"RIOT","score":60,"price":15.68}]},"journal":{"today":[{"time":"08:45 AM","entry":"Watching NVDA for a clean EMA touch.","sentiment":"positive"},{"time":"09:15 AM","entry":"Chased RIOT after open - stopped out.","sentiment":"negative"}],"stats":{"sleep":7,"mind":8,"physical":7,"goal":"Only A+ setups today.","pnl":"+$1,240"}},"trades":[{"date":"2026-05-17","symbol":"TQQQ","direction":"BUY","shares":1000,"price":76.72,"total":76720,"account":"G Fidelity 401K","status":"OPEN"},{"date":"2026-05-16","symbol":"INTC","direction":"BUY","shares":1268,"price":118.25,"total":149941,"account":"R Robinhood","status":"OPEN"},{"date":"2026-05-15","symbol":"NVDA","direction":"SELL","shares":50,"price":228.4,"total":11420,"account":"G Fidelity Indiv","status":"CLOSED"}]};
 /*DATA_END*/
 
 var $ = function(id){ return document.getElementById(id); };
@@ -627,28 +245,69 @@ $('nwpl').innerHTML = '<span class="'+pc(DATA.total_pl)+'">'+fd(DATA.total_pl)+'
   function fp2(n){return (n>=0?'+':'')+fv(n);}
   function sa(a){return a.replace('G Fidelity ','G ').replace('R Fidelity ','R ').replace('Intel ','').replace('Etrade','ET').replace('Robinhood','RH').trim();}
 
+  var _bubIdx=0;
   function bub(sym,acct,avgPx,curPx,pl,plPct,val,maxV,dashed){
     var minR=52,maxR=110;
-    var sz=maxV>0?minR+(maxR-minR)*Math.sqrt(Math.max(0,val)/maxV):minR;
+    var sz=maxV>0?minR+(maxR-minR)*Math.sqrt(Math.abs(pl)/maxV):minR;
     sz=Math.max(minR,Math.min(maxR,sz));
-    var bg=pl>0?'#15803d':pl<0?'#b91c1c':'#475569';
-    var bdr=dashed?'border:2px dashed rgba(255,255,255,.4);opacity:.8;':'';
-    var pad=Math.round(sz*0.1);
-    var innerW=sz-pad*2;
-    var fsSym=Math.max(10,Math.min(16,sz*0.16));
-    var fsAcct=Math.max(9,Math.min(12,sz*0.115));
-    var fsPx=Math.max(9,Math.min(11,sz*0.105));
-    var fsPL=Math.max(9,Math.min(13,sz*0.13));
-    var plColor=pl>=0?'#86efac':'#fca5a5';
-    return '<div style="width:'+sz+'px;height:'+sz+'px;border-radius:50%;background:'+bg+';'+bdr+
-      'display:flex;flex-direction:column;align-items:center;justify-content:center;flex-shrink:0;">'+
-      '<div style="width:'+innerW+'px;display:flex;flex-direction:column;align-items:center;gap:1px">'+
-      '<span style="color:#fff;font-size:'+fsSym+'px;font-weight:600;line-height:1.2;text-align:center">'+sym+'</span>'+
-      '<span style="color:rgba(255,255,255,.75);font-size:'+fsAcct+'px;line-height:1.2;text-align:center">'+acct+'</span>'+
-      '<span style="color:rgba(255,255,255,.65);font-size:'+fsPx+'px;line-height:1.2;text-align:center">$'+avgPx+' &#8594; $'+curPx+'</span>'+
-      '<span style="color:'+plColor+';font-size:'+fsPL+'px;font-weight:600;line-height:1.3;text-align:center">'+(pl>=0?'+':'')+fv(pl)+'</span>'+
-      '<span style="color:'+plColor+';font-size:'+fsPx+'px;line-height:1.1;text-align:center;opacity:.85">'+(plPct>=0?'+':'')+plPct.toFixed(0)+'%</span>'+
+    var id="bub"+(_bubIdx++);
+
+    var fsSym=Math.max(10,Math.min(15,sz*0.155));
+    var fsSmall=Math.max(9,Math.min(11,sz*0.1));
+    var fsPL=Math.max(10,Math.min(14,sz*0.135));
+    var tip=sym+" | "+acct+" | avg $"+avgPx+" now $"+curPx+" | "+(pl>=0?"+":"")+fv(pl)+" ("+plPct.toFixed(1)+"%)";
+
+    var html='<div class="ball" id="'+id+'" title="'+tip+'" style="position:relative;width:'+sz+'px;height:'+sz+'px;flex-shrink:0;">'+
+      '<canvas width="'+sz+'" height="'+sz+'" style="position:absolute;top:0;left:0;border-radius:50%;"></canvas>'+
+      '<div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;border-radius:50%;overflow:hidden;pointer-events:none;">'+
+      '<span style="color:#fff;font-size:'+fsSym+'px;font-weight:700;line-height:1.2;text-align:center;text-shadow:0 2px 6px rgba(0,0,0,.7)">'+sym+'</span>'+
+      '<span style="color:rgba(255,255,255,.82);font-size:'+fsSmall+'px;line-height:1.2;text-align:center;text-shadow:0 1px 3px rgba(0,0,0,.6)">'+acct+'</span>'+
+      '<span style="color:rgba(255,255,255,.65);font-size:'+fsSmall+'px;line-height:1.2;text-align:center">$'+avgPx+' &rarr; $'+curPx+'</span>'+
+      '<span style="color:#fff;font-size:'+fsPL+'px;font-weight:800;line-height:1.3;text-align:center;text-shadow:0 1px 6px rgba(0,0,0,.5)">'+(pl>=0?"+":"")+fv(pl)+'</span>'+
+      '<span style="color:rgba(255,255,255,.8);font-size:'+fsSmall+'px;line-height:1.1;text-align:center">'+(plPct>=0?"+":"")+plPct.toFixed(0)+'%</span>'+
       '</div></div>';
+
+    setTimeout(function(){
+      var el=document.getElementById(id);
+      if(!el) return;
+      var cv=el.querySelector("canvas");
+      if(!cv) return;
+      var ctx2=cv.getContext("2d");
+      var r=sz/2;
+      var isP=pl>=0;
+      var c1=isP?"#052e16":"#450a0a";
+      var c2=isP?"#166534":"#991b1b";
+      var c3=isP?"#16a34a":"#dc2626";
+      var c4=isP?"#4ade80":"#f87171";
+      var c5=isP?"#bbf7d0":"#fecaca";
+      if(dashed){c1=isP?"#0f2d1a":"#2a0f0f";c3=isP?"#166534":"#b91c1c";c4=isP?"#22c55e":"#ef4444";}
+
+      var g1=ctx2.createRadialGradient(r*0.42,r*0.36,r*0.04,r,r,r*1.04);
+      g1.addColorStop(0,c5);g1.addColorStop(0.18,c4);g1.addColorStop(0.44,c3);
+      g1.addColorStop(0.72,c2);g1.addColorStop(1,c1);
+      ctx2.beginPath();ctx2.arc(r,r,r-0.5,0,Math.PI*2);ctx2.fillStyle=g1;ctx2.fill();
+
+      var g2=ctx2.createRadialGradient(r*1.28,r*1.32,r*0.08,r*1.1,r*1.12,r*0.88);
+      g2.addColorStop(0,"rgba(0,0,0,.52)");g2.addColorStop(1,"rgba(0,0,0,0)");
+      ctx2.beginPath();ctx2.arc(r,r,r-0.5,0,Math.PI*2);ctx2.fillStyle=g2;ctx2.fill();
+
+      var gS=ctx2.createRadialGradient(r*0.4,r*0.28,0,r*0.46,r*0.36,r*0.27);
+      gS.addColorStop(0,"rgba(255,255,255,.9)");gS.addColorStop(0.38,"rgba(255,255,255,.32)");
+      gS.addColorStop(1,"rgba(255,255,255,0)");
+      ctx2.beginPath();ctx2.arc(r,r,r-0.5,0,Math.PI*2);ctx2.fillStyle=gS;ctx2.fill();
+
+      var gG=ctx2.createRadialGradient(r,r*0.16,0,r,r*0.24,r*0.44);
+      gG.addColorStop(0,"rgba(255,255,255,.16)");gG.addColorStop(1,"rgba(255,255,255,0)");
+      ctx2.beginPath();ctx2.arc(r,r,r-0.5,0,Math.PI*2);ctx2.fillStyle=gG;ctx2.fill();
+
+      if(dashed){
+        ctx2.save();ctx2.beginPath();ctx2.arc(r,r,r-3,0,Math.PI*2);
+        ctx2.strokeStyle="rgba(255,255,255,.4)";ctx2.lineWidth=2;ctx2.setLineDash([5,4]);
+        ctx2.stroke();ctx2.restore();
+      }
+      el.style.filter="drop-shadow(0 8px 20px rgba(0,0,0,.6)) drop-shadow(0 2px 4px rgba(0,0,0,.4))";
+    },0);
+    return html;
   }
 
   function secHdr(label,col){return '<div style="font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:'+(col||'#4ade80')+';margin:16px 14px 8px">'+label+'</div>';}
@@ -657,13 +316,17 @@ $('nwpl').innerHTML = '<span class="'+pc(DATA.total_pl)+'">'+fd(DATA.total_pl)+'
   // Section 1 — every individual trade
   var v1=trades.map(function(t){return t.total||0;});
   var m1=Math.max.apply(null,v1.concat([1]));
-  var ts1=trades.slice().sort(function(a,b){return (b.total||0)-(a.total||0);});
-  var s1=ts1.map(function(t){
+  // Section 1: sort by abs(P&L) desc, size by abs(P&L)
+  var ts1=trades.map(function(t){
     var isBuy=t.direction==='BUY';
     var cur=curPx[t.symbol]||t.price;
     var pl=t.status==='CLOSED'?(t.pl||0):(isBuy?(cur-t.price)*t.shares:0);
     var plPct=t.price>0?(pl/(t.shares*t.price)*100):0;
-    return bub(t.symbol,sa(t.account),t.price.toFixed(2),cur.toFixed(2),pl,plPct,t.total||0,m1,t.status==='CLOSED');
+    return {t:t,cur:cur,pl:pl,plPct:plPct};
+  }).sort(function(a,b){return Math.abs(b.pl)-Math.abs(a.pl);});
+  var maxPL1=Math.max.apply(null,ts1.map(function(x){return Math.abs(x.pl);}).concat([1]));
+  var s1=ts1.map(function(x){
+    return bub(x.t.symbol,sa(x.t.account),x.t.price.toFixed(2),x.cur.toFixed(2),x.pl,x.plPct,Math.abs(x.pl),maxPL1,x.t.status==='CLOSED');
   }).join('');
 
   // Section 2 — by symbol + account
@@ -685,12 +348,12 @@ $('nwpl').innerHTML = '<span class="'+pc(DATA.total_pl)+'">'+fd(DATA.total_pl)+'
     a2.push(gg);
   }
   var m2=Math.max.apply(null,a2.map(function(g){return g.total;}).concat([1]));
-  a2.sort(function(a,b){return b.total-a.total;});
-  var cur2x,plPct2;
+  a2.sort(function(a,b){return Math.abs(b.pl)-Math.abs(a.pl);});
+  var maxPL2=Math.max.apply(null,a2.map(function(g){return Math.abs(g.pl);}).concat([1]));
   var s2=a2.map(function(g){
-    cur2x=curPx[g.sym]||g.avg;
-    plPct2=g.avg>0?g.pl/(g.shares*g.avg)*100:0;
-    return bub(g.sym,sa(g.acct),g.avg.toFixed(2),cur2x.toFixed(2),g.pl,plPct2,g.total,m2,!g.open);
+    var cx=curPx[g.sym]||g.avg;
+    var pp=g.avg>0?g.pl/(g.shares*g.avg)*100:0;
+    return bub(g.sym,sa(g.acct),g.avg.toFixed(2),cx.toFixed(2),g.pl,pp,Math.abs(g.pl),maxPL2,!g.open);
   }).join('');
 
   // Section 3 — by symbol across all accounts
@@ -713,12 +376,12 @@ $('nwpl').innerHTML = '<span class="'+pc(DATA.total_pl)+'">'+fd(DATA.total_pl)+'
     a3.push(ggg);
   }
   var m3=Math.max.apply(null,a3.map(function(g){return g.total;}).concat([1]));
-  a3.sort(function(a,b){return b.total-a.total;});
-  var cur3x,plPct3;
+  a3.sort(function(a,b){return Math.abs(b.pl)-Math.abs(a.pl);});
+  var maxPL3=Math.max.apply(null,a3.map(function(g){return Math.abs(g.pl);}).concat([1]));
   var s3=a3.map(function(g){
-    cur3x=curPx[g.sym]||g.avg;
-    plPct3=g.avg>0?g.pl/(g.shares*g.avg)*100:0;
-    return bub(g.sym,g.naccts+' acct'+(g.naccts>1?'s':''),g.avg.toFixed(2),cur3x.toFixed(2),g.pl,plPct3,g.total,m3,!g.open);
+    var cx=curPx[g.sym]||g.avg;
+    var pp=g.avg>0?g.pl/(g.shares*g.avg)*100:0;
+    return bub(g.sym,g.naccts+' acct'+(g.naccts>1?'s':''),g.avg.toFixed(2),cx.toFixed(2),g.pl,pp,Math.abs(g.pl),maxPL3,!g.open);
   }).join('');
 
   // Stats

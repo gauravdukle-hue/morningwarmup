@@ -118,7 +118,7 @@ body{background:#0d0d0d;color:#fff;font-family:'IBM Plex Sans',sans-serif;font-s
 <script>
 /*DATA_START*/
 const DATA = {
-  "generated": "May 25, 2026  02:30 PM CT",
+  "generated": "May 25, 2026  02:36 PM CT",
   "net_worth": 2636770.63,
   "total_pl": 628110.27,
   "accounts": [
@@ -236,9 +236,49 @@ const DATA = {
     }
   ],
   "account_meta": {
+    "gfidmanaged": {
+      "name": "G Fidelity Managed",
+      "total": 112000.0
+    },
+    "rietrade": {
+      "name": "R Intel Etrade",
+      "total": 612193.8
+    },
+    "a2roth": {
+      "name": "A2 Fidelity Roth",
+      "total": 10127.05
+    },
+    "ghealth": {
+      "name": "G Fidelity Health",
+      "total": 9254.63
+    },
+    "getrade": {
+      "name": "G Etrade",
+      "total": 9673.0
+    },
+    "robin": {
+      "name": "R Robinhood",
+      "total": 275387.8
+    },
     "groth": {
       "name": "G Fidelity Roth",
       "total": 35023.5
+    },
+    "robinmanaged": {
+      "name": "R Robinhood Managed",
+      "total": 1000.0
+    },
+    "r401k": {
+      "name": "R Fidelity 401K",
+      "total": 413170.44
+    },
+    "gfid": {
+      "name": "G Fidelity Individual",
+      "total": 378723.58
+    },
+    "gcrypto": {
+      "name": "G Crypto",
+      "total": 10000.0
     },
     "a3roth": {
       "name": "A3 Fidelity Roth",
@@ -248,57 +288,17 @@ const DATA = {
       "name": "G Intel Etrade",
       "total": 426306.45
     },
-    "gfidmanaged": {
-      "name": "G Fidelity Managed",
-      "total": 112000.0
-    },
-    "r401k": {
-      "name": "R Fidelity 401K",
-      "total": 413170.44
-    },
-    "a2roth": {
-      "name": "A2 Fidelity Roth",
-      "total": 10127.05
-    },
-    "rietrade": {
-      "name": "R Intel Etrade",
-      "total": 612193.8
-    },
     "g401k": {
       "name": "G Fidelity 401K",
       "total": 294757.22
-    },
-    "ghealth": {
-      "name": "G Fidelity Health",
-      "total": 9254.63
-    },
-    "gcrypto": {
-      "name": "G Crypto",
-      "total": 10000.0
-    },
-    "robin": {
-      "name": "R Robinhood",
-      "total": 275387.8
-    },
-    "rroth": {
-      "name": "R Fidelity Roth",
-      "total": 28899.06
-    },
-    "getrade": {
-      "name": "G Etrade",
-      "total": 9673.0
     },
     "a1roth": {
       "name": "A1 Fidelity Roth",
       "total": 10127.05
     },
-    "gfid": {
-      "name": "G Fidelity Individual",
-      "total": 378723.58
-    },
-    "robinmanaged": {
-      "name": "R Robinhood Managed",
-      "total": 1000.0
+    "rroth": {
+      "name": "R Fidelity Roth",
+      "total": 28899.06
     }
   },
   "positions": [
@@ -409,7 +409,13 @@ const DATA = {
   },
   "journal": {
     "today": [],
-    "stats": {}
+    "stats": {
+      "sleep": "",
+      "mind": "",
+      "physical": "",
+      "goal": "",
+      "pnl": ""
+    }
   },
   "trades": [
     {
@@ -901,10 +907,9 @@ $('nwpl').innerHTML = '<span class="'+pc(DATA.total_pl)+'">'+fd(DATA.total_pl)+'
   a3.sort(function(a,b){return b.pl-a.pl;});
   // Build all-S3 including cash
   var allS3=a3.map(function(g){return {pl:g.pl,isCash:false,g:g};});
-  // Add per-account cash as separate entries
-  (DATA.accounts||[]).forEach(function(a){
-    if(a.cash>0) allS3.push({pl:a.cash,isCash:true,cash:a.cash,acct:a.name});
-  });
+  // Merge ALL account cash into a single combined cash ball (stocks stay separate per symbol)
+  var totalCash=(DATA.accounts||[]).reduce(function(s,a){return s+(a.cash>0?a.cash:0);},0);
+  if(totalCash>0) allS3.push({pl:totalCash,isCash:true,cash:totalCash,acct:'All accounts'});
   allS3.sort(function(a,b){return Math.abs(b.pl)-Math.abs(a.pl);});
   var maxPL3=Math.max.apply(null,allS3.map(function(x){return Math.abs(x.pl);}).concat([1]));
   var s3=allS3.map(function(x){

@@ -118,7 +118,7 @@ body{background:#0d0d0d;color:#fff;font-family:'IBM Plex Sans',sans-serif;font-s
 <script>
 /*DATA_START*/
 const DATA = {
-  "generated": "May 25, 2026  02:00 PM CT",
+  "generated": "May 25, 2026  02:09 PM CT",
   "net_worth": 2636770.63,
   "total_pl": 628110.27,
   "accounts": [
@@ -654,7 +654,7 @@ $('nwpl').innerHTML = '<span class="'+pc(DATA.total_pl)+'">'+fd(DATA.total_pl)+'
       '<canvas width="'+sz+'" height="'+sz+'" style="position:absolute;top:0;left:0;border-radius:50%;"></canvas>'+
       '<div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;border-radius:50%;overflow:hidden;pointer-events:none;">'+
       '<span style="color:#fff;font-size:'+fsSym+'px;font-weight:700;line-height:1.2;text-align:center;text-shadow:0 2px 5px rgba(0,0,0,.8)">CASH</span>'+
-      (sz>=56?'<span style="color:rgba(255,255,255,.75);font-size:'+fsSmall+'px;line-height:1.2;text-align:center">'+acct+'</span>':'')+
+      '<span style="color:rgba(255,255,255,.75);font-size:'+fsSmall+'px;line-height:1.2;text-align:center">'+acct+'</span>'+
       '<span style="color:rgba(255,255,255,.9);font-size:'+Math.max(10,sz*0.13)+'px;font-weight:700;line-height:1.3;text-align:center;text-shadow:0 1px 4px rgba(0,0,0,.6)">'+fv(amount)+'</span>'+
       '</div></div>';
   }
@@ -675,7 +675,7 @@ $('nwpl').innerHTML = '<span class="'+pc(DATA.total_pl)+'">'+fd(DATA.total_pl)+'
       '<canvas width="'+sz+'" height="'+sz+'" style="position:absolute;top:0;left:0;border-radius:50%;"></canvas>'+
       '<div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;border-radius:50%;overflow:hidden;pointer-events:none;">'+
       '<span style="color:#fff;font-size:'+Math.max(11,fsSym)+'px;font-weight:700;line-height:1.2;text-align:center;text-shadow:0 2px 6px rgba(0,0,0,.8)">'+sym+'</span>'+
-      (sz>=62?'<span style="color:rgba(255,255,255,.82);font-size:'+fsSmall+'px;line-height:1.2;text-align:center;text-shadow:0 1px 3px rgba(0,0,0,.6)">'+acct+'</span>':'')+
+      (acct?'<span style="color:rgba(255,255,255,.82);font-size:'+fsSmall+'px;line-height:1.2;text-align:center;text-shadow:0 1px 3px rgba(0,0,0,.6)">'+acct+'</span>':'')+
       (sz>=68?'<span style="color:rgba(255,255,255,.65);font-size:'+fsSmall+'px;line-height:1.2;text-align:center">$'+avgPx+' &rarr; $'+curPx+'</span>':'')+
       '<span style="color:#fff;font-size:'+Math.max(10,fsPL)+'px;font-weight:800;line-height:1.3;text-align:center;text-shadow:0 1px 6px rgba(0,0,0,.5)">'+(pl>=0?"+":"")+fv(pl)+'</span>'+
       (sz>=60?'<span style="color:rgba(255,255,255,.8);font-size:'+fsSmall+'px;line-height:1.1;text-align:center">'+(plPct>=0?"+":"")+plPct.toFixed(0)+'%</span>':'')+
@@ -746,7 +746,7 @@ $('nwpl').innerHTML = '<span class="'+pc(DATA.total_pl)+'">'+fd(DATA.total_pl)+'
   // Merge cash into section 1, treating cash amount as pl for sort+size
   var allS1=ts1.map(function(x){return {pl:x.pl,html:bub(x.t.symbol,sa(x.t.account),x.t.price.toFixed(2),x.cur.toFixed(2),x.pl,x.plPct,Math.abs(x.pl),1,x.t.status==='CLOSED'),isCash:false};});
   cashBalls.forEach(function(c){ allS1.push({pl:c.cash,html:null,isCash:true,cash:c.cash,acct:c.account}); });
-  allS1.sort(function(a,b){return b.pl-a.pl;});
+  allS1.sort(function(a,b){return Math.abs(b.pl)-Math.abs(a.pl);});
   var maxS1=Math.max.apply(null,allS1.map(function(x){return Math.abs(x.pl);}).concat([1]));
   var s1=allS1.map(function(x){
     if(x.isCash) return bubCash(sa(x.acct),x.cash,maxS1);
@@ -786,7 +786,7 @@ $('nwpl').innerHTML = '<span class="'+pc(DATA.total_pl)+'">'+fd(DATA.total_pl)+'
   var s2='<div style="display:flex;flex-wrap:wrap;gap:20px 32px;justify-content:center;align-items:flex-start;">';
   Object.keys(acctGroups).forEach(function(acctName){
     var grp=acctGroups[acctName];
-    grp.sort(function(a,b){return b.pl-a.pl;});
+    grp.sort(function(a,b){return Math.abs(b.pl)-Math.abs(a.pl);});
     var grpMax=Math.max.apply(null,grp.map(function(g){return Math.abs(g.pl);}).concat([1]));
     s2+='<div style="display:flex;flex-direction:column;align-items:center;gap:6px;">';
     s2+='<div style="font-size:9px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#555;text-align:center;max-width:120px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+sa(acctName)+'</div>';
@@ -827,14 +827,15 @@ $('nwpl').innerHTML = '<span class="'+pc(DATA.total_pl)+'">'+fd(DATA.total_pl)+'
   (DATA.accounts||[]).forEach(function(a){
     if(a.cash>0) allS3.push({pl:a.cash,isCash:true,cash:a.cash,acct:a.name});
   });
-  allS3.sort(function(a,b){return b.pl-a.pl;});
+  allS3.sort(function(a,b){return Math.abs(b.pl)-Math.abs(a.pl);});
   var maxPL3=Math.max.apply(null,allS3.map(function(x){return Math.abs(x.pl);}).concat([1]));
   var s3=allS3.map(function(x){
     if(x.isCash) return bubCash(sa(x.acct),x.cash,maxPL3);
     var g=x.g;
     var cx=curPx[g.sym]||g.avg;
     var pp=g.avg>0?g.pl/(g.shares*g.avg)*100:0;
-    return bub(g.sym,g.naccts+' acct'+(g.naccts>1?'s':''),g.avg.toFixed(2),cx.toFixed(2),g.pl,pp,Math.abs(g.pl),maxPL3,!g.open);
+    var acctLbl=g.naccts===1?sa(Object.keys(g.acctSeen)[0]):g.naccts+' accts';
+    return bub(g.sym,acctLbl,g.avg.toFixed(2),cx.toFixed(2),g.pl,pp,Math.abs(g.pl),maxPL3,!g.open);
   }).join('');
 
   // Stats

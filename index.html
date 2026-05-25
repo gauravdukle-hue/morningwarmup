@@ -118,7 +118,7 @@ body{background:#0d0d0d;color:#fff;font-family:'IBM Plex Sans',sans-serif;font-s
 <script>
 /*DATA_START*/
 const DATA = {
-  "generated": "May 25, 2026  02:14 PM CT",
+  "generated": "May 25, 2026  02:26 PM CT",
   "net_worth": 2636770.63,
   "total_pl": 628110.27,
   "accounts": [
@@ -235,6 +235,72 @@ const DATA = {
       "total": 1000.0
     }
   ],
+  "account_meta": {
+    "a3roth": {
+      "name": "A3 Fidelity Roth",
+      "total": 10127.05
+    },
+    "gfid": {
+      "name": "G Fidelity Individual",
+      "total": 378723.58
+    },
+    "a1roth": {
+      "name": "A1 Fidelity Roth",
+      "total": 10127.05
+    },
+    "a2roth": {
+      "name": "A2 Fidelity Roth",
+      "total": 10127.05
+    },
+    "getrade": {
+      "name": "G Etrade",
+      "total": 9673.0
+    },
+    "gfidmanaged": {
+      "name": "G Fidelity Managed",
+      "total": 112000.0
+    },
+    "groth": {
+      "name": "G Fidelity Roth",
+      "total": 35023.5
+    },
+    "rroth": {
+      "name": "R Fidelity Roth",
+      "total": 28899.06
+    },
+    "robinmanaged": {
+      "name": "R Robinhood Managed",
+      "total": 1000.0
+    },
+    "g401k": {
+      "name": "G Fidelity 401K",
+      "total": 294757.22
+    },
+    "r401k": {
+      "name": "R Fidelity 401K",
+      "total": 413170.44
+    },
+    "rietrade": {
+      "name": "R Intel Etrade",
+      "total": 612193.8
+    },
+    "robin": {
+      "name": "R Robinhood",
+      "total": 275387.8
+    },
+    "ghealth": {
+      "name": "G Fidelity Health",
+      "total": 9254.63
+    },
+    "gcrypto": {
+      "name": "G Crypto",
+      "total": 10000.0
+    },
+    "gietrade": {
+      "name": "G Intel Etrade",
+      "total": 426306.45
+    }
+  },
   "positions": [
     {
       "symbol": "INTC",
@@ -789,18 +855,30 @@ $('nwpl').innerHTML = '<span class="'+pc(DATA.total_pl)+'">'+fd(DATA.total_pl)+'
     if(!acctGroups[k]) acctGroups[k]=[];
     acctGroups[k].push(g);
   });
-  var s2='<div style="display:flex;flex-wrap:wrap;gap:20px 32px;justify-content:center;align-items:flex-start;">';
-  Object.keys(acctGroups).forEach(function(acctName){
+  var s2='<div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px 12px;align-items:start;justify-items:center;">';
+  var AM=DATA.account_meta||{};
+  // Account size = true total (cash+stock) when the bridge is present, else total position value held
+  function acctSize(name){
+    var posVal=acctGroups[name].reduce(function(s,g){return s+(g.total||0);},0);
+    return (AM[name]&&AM[name].total!=null)?AM[name].total:posVal;
+  }
+  var orderedAccts=Object.keys(acctGroups).sort(function(x,y){return acctSize(y)-acctSize(x);});
+  orderedAccts.forEach(function(acctName){
     var grp=acctGroups[acctName];
     grp.sort(function(a,b){return Math.abs(b.pl)-Math.abs(a.pl);});
     var grpMax=Math.max.apply(null,grp.map(function(g){return Math.abs(g.pl);}).concat([1]));
-    s2+='<div style="display:flex;flex-direction:column;align-items:center;gap:6px;">';
-    s2+='<div style="font-size:9px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#555;text-align:center;max-width:120px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+sa(acctName)+'</div>';
+    var fullName=(AM[acctName]&&AM[acctName].name)?AM[acctName].name:acctName;
+    var shortName=sa(fullName);
+    s2+='<div style="display:flex;flex-direction:column;align-items:center;gap:5px;">';
+    s2+='<div style="text-align:center;max-width:160px">'+
+        '<div style="font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#bbb;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+shortName+'</div>'+
+        '<div style="font-family:\'IBM Plex Mono\',monospace;font-size:11px;color:#4ade80;margin-top:1px">'+fv(acctSize(acctName))+'</div>'+
+        '</div>';
     s2+='<div style="display:flex;flex-wrap:wrap;gap:8px;align-items:flex-end;justify-content:center;">';
     grp.forEach(function(g){
       var cx=curPx[g.sym]||g.avg;
       var pp=g.avg>0?g.pl/(g.shares*g.avg)*100:0;
-      s2+=bub(g.sym,'',g.avg.toFixed(2),cx.toFixed(2),g.pl,pp,Math.abs(g.pl),grpMax,!g.open);
+      s2+=bub(g.sym,shortName,g.avg.toFixed(2),cx.toFixed(2),g.pl,pp,Math.abs(g.pl),grpMax,!g.open);
     });
     s2+='</div></div>';
   });

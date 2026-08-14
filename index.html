@@ -120,9 +120,9 @@ body{background:#0d0d0d;color:#fff;font-family:'IBM Plex Sans',sans-serif;font-s
 <script>
 /*DATA_START*/
 const DATA = {
-  "generated": "Aug 13, 2026  05:30 PM CT",
-  "net_worth": 2927625.28,
-  "total_pl": 904745.5,
+  "generated": "Aug 13, 2026  07:16 PM CT",
+  "net_worth": 2956834.93,
+  "total_pl": 904042.63,
   "accounts": [
     {
       "name": "R Intel Etrade",
@@ -146,18 +146,18 @@ const DATA = {
       "total": 482766.64
     },
     {
+      "name": "G Fidelity 401K",
+      "cash": 1137.0,
+      "stock_total": 407846.88,
+      "stock_cost": 383432.03,
+      "total": 408983.88
+    },
+    {
       "name": "G Intel Etrade",
       "cash": 0.0,
       "stock_total": 389956.01,
       "stock_cost": 64216.21,
       "total": 389956.01
-    },
-    {
-      "name": "G Fidelity 401K",
-      "cash": 1137.0,
-      "stock_total": 378350.38,
-      "stock_cost": 353519.51,
-      "total": 379487.38
     },
     {
       "name": "R Robinhood",
@@ -235,35 +235,18 @@ const DATA = {
       "stock_total": 0.0,
       "stock_cost": 0.0,
       "total": 1000.0
-    },
-    {
-      "name": "55.870",
-      "cash": 0.0,
-      "stock_total": 286.85,
-      "stock_cost": 0.0,
-      "total": 286.85
     }
   ],
   "account_meta": {
-    "gfid": {
-      "name": "G Fidelity Individual",
-      "total": 518286.16,
-      "cash": 3.0
+    "gfidmanaged": {
+      "name": "G Fidelity Managed",
+      "total": 115000.0,
+      "cash": 115000.0
     },
-    "getrade": {
-      "name": "G Etrade",
-      "total": 10682.75,
-      "cash": 0.0
-    },
-    "55.870": {
-      "name": "55.870",
-      "total": 286.85,
-      "cash": 0.0
-    },
-    "g401k": {
-      "name": "G Fidelity 401K",
-      "total": 379487.38,
-      "cash": 1137.0
+    "a1roth": {
+      "name": "A1 Fidelity Roth",
+      "total": 12777.97,
+      "cash": 94.72
     },
     "groth": {
       "name": "G Fidelity Roth",
@@ -275,55 +258,60 @@ const DATA = {
       "total": 304994.24,
       "cash": 7008.0
     },
+    "rroth": {
+      "name": "R Fidelity Roth",
+      "total": 41095.69,
+      "cash": 46.39
+    },
+    "gfid": {
+      "name": "G Fidelity Individual",
+      "total": 518286.16,
+      "cash": 3.0
+    },
     "robinmanaged": {
       "name": "R Robinhood Managed",
       "total": 1000.0,
       "cash": 1000.0
     },
-    "a2roth": {
-      "name": "A2 Fidelity Roth",
-      "total": 12777.97,
-      "cash": 94.72
+    "getrade": {
+      "name": "G Etrade",
+      "total": 10682.75,
+      "cash": 0.0
     },
-    "gcrypto": {
-      "name": "G Crypto",
-      "total": 12000.0,
-      "cash": 12000.0
+    "g401k": {
+      "name": "G Fidelity 401K",
+      "total": 408983.88,
+      "cash": 1137.0
     },
     "gietrade": {
       "name": "G Intel Etrade",
       "total": 389956.01,
       "cash": 0.0
     },
+    "a2roth": {
+      "name": "A2 Fidelity Roth",
+      "total": 12777.97,
+      "cash": 94.72
+    },
     "ghealth": {
       "name": "G Fidelity Health",
       "total": 21879.96,
       "cash": 3980.0
     },
-    "r401k": {
-      "name": "R Fidelity 401K",
-      "total": 482766.64,
-      "cash": 41.76
-    },
-    "rroth": {
-      "name": "R Fidelity Roth",
-      "total": 41095.69,
-      "cash": 46.39
-    },
-    "gfidmanaged": {
-      "name": "G Fidelity Managed",
-      "total": 115000.0,
-      "cash": 115000.0
+    "gcrypto": {
+      "name": "G Crypto",
+      "total": 12000.0,
+      "cash": 12000.0
     },
     "rietrade": {
       "name": "R Intel Etrade",
       "total": 566152.93,
       "cash": 0.0
     },
-    "a1roth": {
-      "name": "A1 Fidelity Roth",
-      "total": 12777.97,
-      "cash": 94.72
+    "r401k": {
+      "name": "R Fidelity 401K",
+      "total": 482766.64,
+      "cash": 41.76
     },
     "a3roth": {
       "name": "A3 Fidelity Roth",
@@ -403,17 +391,17 @@ const DATA = {
       "account": "G Etrade"
     },
     {
-      "symbol": "DRAM",
-      "shares": 5.0,
-      "avg": 0.0,
-      "price": 57.37,
-      "account": "55.870"
-    },
-    {
       "symbol": "FETH",
       "shares": 3861.0,
       "avg": 42.02,
       "price": 42.02,
+      "account": "G Fidelity 401K"
+    },
+    {
+      "symbol": "MULL",
+      "shares": 1364.0,
+      "avg": 21.93,
+      "price": 21.62,
       "account": "G Fidelity 401K"
     },
     {
@@ -493,14 +481,14 @@ const DATA = {
     },
     {
       "date": "",
-      "symbol": "DRAM",
+      "symbol": "MULL",
       "direction": "BUY",
-      "shares": 5.0,
-      "price": 0.0,
-      "total": 0.0,
-      "account": "55.870",
+      "shares": 1364.0,
+      "price": 21.93,
+      "total": 29912.52,
+      "account": "g401k",
       "status": "OPEN",
-      "pl": 286.85,
+      "pl": -416.02,
       "grade": "",
       "sale_price": "",
       "note": ""

@@ -120,51 +120,51 @@ body{background:#0d0d0d;color:#fff;font-family:'IBM Plex Sans',sans-serif;font-s
 <script>
 /*DATA_START*/
 const DATA = {
-  "generated": "Sep 04, 2026  08:00 AM CT",
-  "net_worth": 2731843.37,
-  "total_pl": 679051.07,
+  "generated": "Sep 04, 2026  08:30 AM CT",
+  "net_worth": 2750820.49,
+  "total_pl": 698028.19,
   "accounts": [
     {
       "name": "G Fidelity Individual",
       "cash": 3.0,
-      "stock_total": 499910.45,
+      "stock_total": 505776.08,
       "stock_cost": 491469.31,
-      "total": 499913.45
+      "total": 505779.08
     },
     {
       "name": "R Intel Etrade",
       "cash": 0.0,
-      "stock_total": 495972.26,
+      "stock_total": 500409.28,
       "stock_cost": 67962.16,
-      "total": 495972.26
+      "total": 500409.28
     },
     {
       "name": "R Fidelity 401K",
       "cash": 41.76,
-      "stock_total": 453820.32,
+      "stock_total": 455301.28,
       "stock_cost": 440827.2,
-      "total": 453862.08
+      "total": 455343.04
     },
     {
       "name": "G Fidelity 401K",
       "cash": 1137.0,
-      "stock_total": 393536.07,
+      "stock_total": 394264.33,
       "stock_cost": 383432.03,
-      "total": 394673.07
+      "total": 395401.33
     },
     {
       "name": "G Intel Etrade",
       "cash": 0.0,
-      "stock_total": 341616.82,
+      "stock_total": 344672.96,
       "stock_cost": 64216.21,
-      "total": 341616.82
+      "total": 344672.96
     },
     {
       "name": "R Robinhood",
       "cash": 7008.0,
-      "stock_total": 261047.68,
+      "stock_total": 263383.04,
       "stock_cost": 319317.76,
-      "total": 268055.68
+      "total": 270391.04
     },
     {
       "name": "G Fidelity Managed",
@@ -176,23 +176,23 @@ const DATA = {
     {
       "name": "G Fidelity Roth",
       "cash": 27.0,
-      "stock_total": 42724.64,
+      "stock_total": 42878.56,
       "stock_cost": 41292.0,
-      "total": 42751.64
+      "total": 42905.56
     },
     {
       "name": "R Fidelity Roth",
       "cash": 46.39,
-      "stock_total": 42054.51,
+      "stock_total": 42615.82,
       "stock_cost": 38477.84,
-      "total": 42100.9
+      "total": 42662.21
     },
     {
       "name": "G Fidelity Health",
       "cash": 3980.0,
-      "stock_total": 16743.44,
+      "stock_total": 16803.76,
       "stock_cost": 13887.52,
-      "total": 20723.44
+      "total": 20783.76
     },
     {
       "name": "G Crypto",
@@ -204,23 +204,23 @@ const DATA = {
     {
       "name": "A1 Fidelity Roth",
       "cash": 94.72,
-      "stock_total": 11111.03,
+      "stock_total": 11210.43,
       "stock_cost": 13928.18,
-      "total": 11205.75
+      "total": 11305.15
     },
     {
       "name": "A2 Fidelity Roth",
       "cash": 94.72,
-      "stock_total": 11111.03,
+      "stock_total": 11210.43,
       "stock_cost": 13928.18,
-      "total": 11205.75
+      "total": 11305.15
     },
     {
       "name": "A3 Fidelity Roth",
       "cash": 94.72,
-      "stock_total": 11111.03,
+      "stock_total": 11210.43,
       "stock_cost": 13928.18,
-      "total": 11205.75
+      "total": 11305.15
     },
     {
       "name": "G Etrade",
@@ -238,20 +238,30 @@ const DATA = {
     }
   ],
   "account_meta": {
-    "gfidmanaged": {
-      "name": "G Fidelity Managed",
-      "total": 115000.0,
-      "cash": 115000.0
+    "robin": {
+      "name": "R Robinhood",
+      "total": 270391.04,
+      "cash": 7008.0
     },
-    "a2roth": {
-      "name": "A2 Fidelity Roth",
-      "total": 11205.75,
+    "groth": {
+      "name": "G Fidelity Roth",
+      "total": 42905.56,
+      "cash": 27.0
+    },
+    "a3roth": {
+      "name": "A3 Fidelity Roth",
+      "total": 11305.15,
       "cash": 94.72
     },
-    "a1roth": {
-      "name": "A1 Fidelity Roth",
-      "total": 11205.75,
-      "cash": 94.72
+    "gcrypto": {
+      "name": "G Crypto",
+      "total": 12000.0,
+      "cash": 12000.0
+    },
+    "r401k": {
+      "name": "R Fidelity 401K",
+      "total": 455343.04,
+      "cash": 41.76
     },
     "getrade": {
       "name": "G Etrade",
@@ -260,63 +270,53 @@ const DATA = {
     },
     "rietrade": {
       "name": "R Intel Etrade",
-      "total": 495972.26,
-      "cash": 0.0
-    },
-    "a3roth": {
-      "name": "A3 Fidelity Roth",
-      "total": 11205.75,
-      "cash": 94.72
-    },
-    "gietrade": {
-      "name": "G Intel Etrade",
-      "total": 341616.82,
+      "total": 500409.28,
       "cash": 0.0
     },
     "rroth": {
       "name": "R Fidelity Roth",
-      "total": 42100.9,
+      "total": 42662.21,
       "cash": 46.39
     },
-    "r401k": {
-      "name": "R Fidelity 401K",
-      "total": 453862.08,
-      "cash": 41.76
+    "a2roth": {
+      "name": "A2 Fidelity Roth",
+      "total": 11305.15,
+      "cash": 94.72
+    },
+    "ghealth": {
+      "name": "G Fidelity Health",
+      "total": 20783.76,
+      "cash": 3980.0
+    },
+    "gfid": {
+      "name": "G Fidelity Individual",
+      "total": 505779.08,
+      "cash": 3.0
+    },
+    "gietrade": {
+      "name": "G Intel Etrade",
+      "total": 344672.96,
+      "cash": 0.0
+    },
+    "gfidmanaged": {
+      "name": "G Fidelity Managed",
+      "total": 115000.0,
+      "cash": 115000.0
     },
     "g401k": {
       "name": "G Fidelity 401K",
-      "total": 394673.07,
+      "total": 395401.33,
       "cash": 1137.0
-    },
-    "groth": {
-      "name": "G Fidelity Roth",
-      "total": 42751.64,
-      "cash": 27.0
     },
     "robinmanaged": {
       "name": "R Robinhood Managed",
       "total": 1000.0,
       "cash": 1000.0
     },
-    "ghealth": {
-      "name": "G Fidelity Health",
-      "total": 20723.44,
-      "cash": 3980.0
-    },
-    "robin": {
-      "name": "R Robinhood",
-      "total": 268055.68,
-      "cash": 7008.0
-    },
-    "gfid": {
-      "name": "G Fidelity Individual",
-      "total": 499913.45,
-      "cash": 3.0
-    },
-    "gcrypto": {
-      "name": "G Crypto",
-      "total": 12000.0,
-      "cash": 12000.0
+    "a1roth": {
+      "name": "A1 Fidelity Roth",
+      "total": 11305.15,
+      "cash": 94.72
     }
   },
   "positions": [
@@ -324,35 +324,35 @@ const DATA = {
       "symbol": "INTC",
       "shares": 5411.0,
       "avg": 12.56,
-      "price": 91.66,
+      "price": 92.48,
       "account": "R Intel Etrade"
     },
     {
       "symbol": "INTC",
       "shares": 3727.0,
       "avg": 17.23,
-      "price": 91.66,
+      "price": 92.48,
       "account": "G Intel Etrade"
     },
     {
       "symbol": "SNDK",
       "shares": 202.28,
       "avg": 1311.1,
-      "price": 1565.11,
+      "price": 1586.0,
       "account": "G Fidelity Individual"
     },
     {
       "symbol": "TQQQ",
       "shares": 2801.0,
       "avg": 68.29,
-      "price": 72.17,
+      "price": 72.43,
       "account": "G Fidelity 401K"
     },
     {
       "symbol": "TQQQ",
       "shares": 5696.0,
       "avg": 70.7,
-      "price": 72.17,
+      "price": 72.43,
       "account": "R Fidelity 401K"
     },
     {
@@ -366,21 +366,21 @@ const DATA = {
       "symbol": "SNDK",
       "shares": 26.87,
       "avg": 1432.0,
-      "price": 1565.11,
+      "price": 1586.0,
       "account": "R Fidelity Roth"
     },
     {
       "symbol": "TQQQ",
       "shares": 232.0,
       "avg": 59.86,
-      "price": 72.17,
+      "price": 72.43,
       "account": "G Fidelity Health"
     },
     {
       "symbol": "TQQQ",
       "shares": 592.0,
       "avg": 69.75,
-      "price": 72.17,
+      "price": 72.43,
       "account": "G Fidelity Roth"
     },
     {
@@ -408,35 +408,35 @@ const DATA = {
       "symbol": "INTC",
       "shares": 121.22,
       "avg": 114.9,
-      "price": 91.66,
+      "price": 92.48,
       "account": "A1 Fidelity Roth"
     },
     {
       "symbol": "INTC",
       "shares": 121.22,
       "avg": 114.9,
-      "price": 91.66,
+      "price": 92.48,
       "account": "A2 Fidelity Roth"
     },
     {
       "symbol": "INTC",
       "shares": 121.22,
       "avg": 114.9,
-      "price": 91.66,
+      "price": 92.48,
       "account": "A3 Fidelity Roth"
     },
     {
       "symbol": "INTC",
       "shares": 2000.0,
       "avg": 113.13,
-      "price": 91.66,
+      "price": 92.48,
       "account": "G Fidelity Individual"
     },
     {
       "symbol": "INTC",
       "shares": 2848.0,
       "avg": 112.12,
-      "price": 91.66,
+      "price": 92.48,
       "account": "R Robinhood"
     }
   ],
@@ -474,7 +474,7 @@ const DATA = {
       "total": 191280.29,
       "account": "g401k",
       "status": "OPEN",
-      "pl": 10867.88,
+      "pl": 11596.14,
       "grade": "",
       "sale_price": "",
       "note": ""
@@ -502,7 +502,7 @@ const DATA = {
       "total": 402707.2,
       "account": "r401k",
       "status": "OPEN",
-      "pl": 8373.12,
+      "pl": 9854.08,
       "grade": "",
       "sale_price": "",
       "note": ""
@@ -530,7 +530,7 @@ const DATA = {
       "total": 226260.0,
       "account": "gfid",
       "status": "OPEN",
-      "pl": -42940.0,
+      "pl": -41300.0,
       "grade": "",
       "sale_price": "",
       "note": ""
@@ -544,7 +544,7 @@ const DATA = {
       "total": 265209.31,
       "account": "gfid",
       "status": "OPEN",
-      "pl": 51381.14,
+      "pl": 55606.77,
       "grade": "",
       "sale_price": "",
       "note": ""
@@ -558,7 +558,7 @@ const DATA = {
       "total": 13887.52,
       "account": "ghealth",
       "status": "OPEN",
-      "pl": 2855.92,
+      "pl": 2916.24,
       "grade": "",
       "sale_price": "",
       "note": ""
@@ -572,7 +572,7 @@ const DATA = {
       "total": 41292.0,
       "account": "groth",
       "status": "OPEN",
-      "pl": 1432.64,
+      "pl": 1586.56,
       "grade": "",
       "sale_price": "",
       "note": ""
@@ -586,7 +586,7 @@ const DATA = {
       "total": 38477.84,
       "account": "rroth",
       "status": "OPEN",
-      "pl": 3576.67,
+      "pl": 4137.98,
       "grade": "",
       "sale_price": "",
       "note": ""
@@ -600,7 +600,7 @@ const DATA = {
       "total": 13928.18,
       "account": "a1roth",
       "status": "OPEN",
-      "pl": -2817.15,
+      "pl": -2717.75,
       "grade": "",
       "sale_price": "",
       "note": ""
@@ -614,7 +614,7 @@ const DATA = {
       "total": 13928.18,
       "account": "a2roth",
       "status": "OPEN",
-      "pl": -2817.15,
+      "pl": -2717.75,
       "grade": "",
       "sale_price": "",
       "note": ""
@@ -628,7 +628,7 @@ const DATA = {
       "total": 13928.18,
       "account": "a3roth",
       "status": "OPEN",
-      "pl": -2817.15,
+      "pl": -2717.75,
       "grade": "",
       "sale_price": "",
       "note": ""
@@ -642,7 +642,7 @@ const DATA = {
       "total": 319317.76,
       "account": "robin",
       "status": "OPEN",
-      "pl": -58270.08,
+      "pl": -55934.72,
       "grade": "",
       "sale_price": "",
       "note": ""
@@ -670,7 +670,7 @@ const DATA = {
       "total": 64216.21,
       "account": "gietrade",
       "status": "OPEN",
-      "pl": 277400.61,
+      "pl": 280456.75,
       "grade": "",
       "sale_price": "",
       "note": ""
@@ -684,7 +684,7 @@ const DATA = {
       "total": 67962.16,
       "account": "rietrade",
       "status": "OPEN",
-      "pl": 428010.1,
+      "pl": 432447.12,
       "grade": "",
       "sale_price": "",
       "note": ""
